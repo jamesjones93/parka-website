@@ -10,7 +10,6 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const fs = require("fs");
 const server = require("http").Server(app);
-const portfolio = require("./data/portfolio");
 
 app.use(
     bodyParser.urlencoded({
@@ -49,7 +48,23 @@ app.use(function(req, res, next) {
     next();
 });
 
-// ========================================================================
+// ======================================================================== Login SignUp
+
+app.post("/register-user", (req, res) => {
+    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
+        res.json({
+            error: "Please fill out all the forms to sign up."
+        });
+    } else {
+        if (req.body.password != req.body.confirmPassword) {
+            res.json({
+                error: "Your passwords didn't match, please try again."
+            });
+        } else {
+            //hash password, create a random unique access code and store to database
+        }
+    }
+});
 
 // ========================================================================
 
