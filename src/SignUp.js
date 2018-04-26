@@ -33,7 +33,7 @@ class SignUp extends React.Component {
                 <input
                     className="left-input"
                     placeholder="Email"
-                    type="text"
+                    type="email"
                     ref={input => {
                         this.email = input;
                     }}

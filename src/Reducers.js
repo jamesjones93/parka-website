@@ -1,5 +1,10 @@
 export default function(state = {}, action) {
-    if (action.type == "TOGGLE_TO_SIGNUP") {
+    if (action.type == "CHECK_LOGIN") {
+        state = {
+            ...state,
+            user: action.user
+        };
+    } else if (action.type == "TOGGLE_TO_SIGNUP") {
         state = {
             ...state,
             toggleLoginSignUp: action.toggleLoginSignUp
@@ -15,11 +20,12 @@ export default function(state = {}, action) {
             releases: action.toggleLoginSignUp
         };
     } else if (action.type == "SIGNUP_SUCCESS") {
+        console.log("ACTION", action);
         state = {
             ...state,
-            success: true
+            user: action.user
         };
-    } else if (action.type == "SIGNUP_USER") {
+    } else if (action.type == "SIGNUP_ERROR") {
         state = {
             ...state,
             error: action.error

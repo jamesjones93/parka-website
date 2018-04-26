@@ -10,6 +10,8 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const fs = require("fs");
 const server = require("http").Server(app);
+const db = require("./db");
+const hash = require("./hash");
 
 app.use(
     bodyParser.urlencoded({
@@ -50,6 +52,18 @@ app.use(function(req, res, next) {
 
 // ======================================================================== Login SignUp
 
+app.get("/check-login", (req, res) => {
+    if (req.session.user) {
+        res.json({
+            user: req.session.user
+        });
+    } else {
+        res.json({
+            user: null
+        });
+    }
+});
+
 app.post("/register-user", (req, res) => {
     if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
         res.json({
@@ -61,7 +75,33 @@ app.post("/register-user", (req, res) => {
                 error: "Your passwords didn't match, please try again."
             });
         } else {
+            const accessCode = Math.floor(1000 + Math.random() * 9000);
+
             //hash password, create a random unique access code and store to database
+            hash.hashPassword(req.body.password).then(hashedPassword => {
+                console.log("hashed ", hashedPassword);
+
+                return db
+                    .signUp(req.body.email, accessCode, hashedPassword)
+                    .then(result => {
+                        req.session.user = {
+                            email: result.rows[0].email,
+                            accessCode: result.rows[0].access_code
+                        };
+                    })
+                    .then(() => {
+                        res.json({
+                            user: req.session.user
+                        });
+                    })
+                    .catch(error => {
+                        console.log("Error: " + error);
+                        res.json({
+                            error:
+                                "Something went wrong. You might be registered already."
+                        });
+                    });
+            });
         }
     }
 });

@@ -19,7 +19,11 @@ class Login extends React.Component {
         return (
             <div className="left-inputs" id="login">
                 <h1>LOGIN</h1>
-                <input className="left-input" placeholder="User ID / Email" />
+                <input
+                    type="email"
+                    className="left-input"
+                    placeholder="User ID / Email"
+                />
                 <input
                     type="password"
                     className="left-input"
