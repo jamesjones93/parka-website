@@ -26,7 +26,6 @@ class App extends React.Component {
             <div>
                 <BrowserRouter>
                     <div>
-                        {!this.props.user && <LoginSignUp />}
                         <Route exact path="/home" component={Home} />
                     </div>
                 </BrowserRouter>

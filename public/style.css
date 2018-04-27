@@ -23,13 +23,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     overflow: hidden;
 }
 
 .left-logo {
     width: 300px;
     margin: 0 0 30px 0;
+    position: absolute;
+    top: 120px;
 }
 
 .left-inputs {
@@ -108,4 +110,31 @@ body {
 
 #signup-error {
     color: red;
+}
+
+#loginsignup-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    top: 250px;
+}
+
+.loginsignup-enter {
+    opacity: 0.01;
+}
+
+.loginsignup-enter.loginsignup-enter-active {
+    opacity: 1;
+    position: absolute;
+    transition: opacity 600ms ease-in;
+}
+
+.loginsignup-leave {
+    opacity: 1;
+}
+
+.loginsignup-leave.loginsignup-leave-active {
+    opacity: 0.01;
+    transition: opacity 600ms ease-in;
 }
