@@ -30,6 +30,17 @@ export default function(state = {}, action) {
             ...state,
             error: action.error
         };
+    } else if (action.type == "LOGIN_ERROR") {
+        state = {
+            ...state,
+            error: action.error
+        };
+    } else if (action.type == "LOGIN_SUCCESS") {
+        console.log(action.user);
+        state = {
+            ...state,
+            user: action.user
+        };
     }
 
     return state;

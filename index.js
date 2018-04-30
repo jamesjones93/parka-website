@@ -12,6 +12,7 @@ const fs = require("fs");
 const server = require("http").Server(app);
 const db = require("./db");
 const hash = require("./hash");
+const releases = require("./data/releases");
 
 app.use(
     bodyParser.urlencoded({
@@ -65,44 +66,79 @@ app.get("/check-login", (req, res) => {
 });
 
 app.post("/register-user", (req, res) => {
-    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
+    console.log(req.body.email);
+    if (!req.body.email) {
         res.json({
-            error: "Please fill out all the forms to sign up."
+            error: "Please enter your email address to sign up."
         });
     } else {
-        if (req.body.password != req.body.confirmPassword) {
-            res.json({
-                error: "Your passwords didn't match, please try again."
+        const accessCode = Math.floor(1000 + Math.random() * 9000);
+
+        db
+            .signUp(req.body.email, accessCode)
+            .then(result => {
+                req.session.user = {
+                    email: result.rows[0].email,
+                    accessCode: result.rows[0].access_code
+                };
+            })
+            .then(() => {
+                res.json({
+                    user: req.session.user
+                });
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+                res.json({
+                    error:
+                        "Something went wrong. You might be registered already."
+                });
             });
-        } else {
-            const accessCode = Math.floor(1000 + Math.random() * 9000);
+    }
+});
 
-            //hash password, create a random unique access code and store to database
-            hash.hashPassword(req.body.password).then(hashedPassword => {
-                console.log("hashed ", hashedPassword);
+app.post("/user-login", (req, res) => {
+    console.log("adfasfdsafsa", req.body.email);
 
-                return db
-                    .signUp(req.body.email, accessCode, hashedPassword)
-                    .then(result => {
+    if (!req.body.email || !req.body.accessCode) {
+        res.json({
+            error: "Incorrect email / password."
+        });
+    } else {
+        db
+            .checkLogin(req.body.email)
+            .then(results => {
+                if (!results.rows[0]) {
+                    res.json({
+                        error: "Incorrect email / password."
+                    });
+                } else {
+                    if (
+                        req.body.email == results.rows[0].email &&
+                        req.body.accessCode == results.rows[0].access_code
+                    ) {
                         req.session.user = {
-                            email: result.rows[0].email,
-                            accessCode: result.rows[0].access_code
+                            email: results.rows[0].email,
+                            accessCode: results.rows[0].access_code
                         };
-                    })
-                    .then(() => {
+
                         res.json({
                             user: req.session.user
                         });
-                    })
-                    .catch(error => {
-                        console.log("Error: " + error);
+                    } else {
                         res.json({
-                            error:
-                                "Something went wrong. You might be registered already."
+                            error: "Incorrect email / password."
                         });
-                    });
+                    }
+                }
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+
+                res.json({
+                    error: "Incorrect email / password."
+                });
             });
-        }
     }
 });
 

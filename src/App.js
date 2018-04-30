@@ -10,7 +10,16 @@ import * as PropTypes from "prop-types";
 import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
 import LoginSignUp from "./LoginSignUp";
+import Release from "./Release";
 import { checkLogin } from "./Actions";
+import { injectGlobal } from "styled-components";
+
+injectGlobal`
+    body {
+        margin: 0;
+
+    }
+`;
 
 class App extends React.Component {
     constructor(props) {
@@ -27,6 +36,7 @@ class App extends React.Component {
                 <BrowserRouter>
                     <div>
                         <Route exact path="/home" component={Home} />
+                        <Route exact path="/release" component={Release} />
                     </div>
                 </BrowserRouter>
             </div>
@@ -35,9 +45,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log(state.hideLeftWindow);
     return {
-        user: state.user
+        release: state.release
     };
 };
 

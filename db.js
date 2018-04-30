@@ -11,8 +11,18 @@ var db = spicedPg(
 
 exports.signUp = function(...params) {
     return db.query(
-        `INSERT INTO users (email, access_code, password)
-        VALUES ($1, $2, $3) RETURNING *`,
+        `INSERT INTO users (email, access_code)
+        VALUES ($1, $2) RETURNING *`,
+        params
+    );
+};
+
+exports.checkLogin = function(...params) {
+    return db.query(
+        `
+        SELECT email, access_code FROM users
+        WHERE email = $1
+        `,
         params
     );
 };

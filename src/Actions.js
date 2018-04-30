@@ -25,7 +25,6 @@ export function toLogin() {
 }
 
 export function signUp(userData) {
-    console.log(userData);
     return axios.post("/register-user", userData).then(function({ data }) {
         console.log("DATA", data.user);
         if (data.user) {
@@ -43,7 +42,19 @@ export function signUp(userData) {
 }
 
 export function userLogin(userData) {
-    console.log(userData);
+    return axios.post("/user-login", userData).then(function({ data }) {
+        console.log(data);
 
-    return axios.post("/user-login", userData).then(function({ data }) {});
+        if (data.error) {
+            return {
+                type: "LOGIN_ERROR",
+                error: data.error
+            };
+        } else {
+            return {
+                type: "LOGIN_SUCCESS",
+                user: data.user
+            };
+        }
+    });
 }
