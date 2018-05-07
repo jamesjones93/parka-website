@@ -2,6 +2,9 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
+    first VARCHAR(200),
+    last VARCHAR(200),
+    phone VARCHAR(20) UNIQUE,
     email VARCHAR(200) UNIQUE,
     access_code INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

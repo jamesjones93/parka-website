@@ -19,6 +19,10 @@ injectGlobal`
         margin: 0;
 
     }
+    a {
+        text-decoration: none;
+        color: white;
+    }
 `;
 
 class App extends React.Component {
@@ -26,16 +30,14 @@ class App extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.props.dispatch(checkLogin());
-    }
+    componentDidMount() {}
 
     render() {
         return (
             <div>
                 <BrowserRouter>
                     <div>
-                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
                     </div>
                 </BrowserRouter>

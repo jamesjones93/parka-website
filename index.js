@@ -13,6 +13,8 @@ const server = require("http").Server(app);
 const db = require("./db");
 const hash = require("./hash");
 const releases = require("./data/releases");
+var nodemailer = require("nodemailer");
+var mysql = require("mysql");
 
 app.use(
     bodyParser.urlencoded({
@@ -26,7 +28,11 @@ app.use(compression());
 
 app.use(express.static("public"));
 
+let secrets;
+
 if (process.env.NODE_ENV != "production") {
+    secrets = require("./secrets");
+
     app.use(
         "/bundle.js",
         require("http-proxy-middleware")({
@@ -38,7 +44,7 @@ if (process.env.NODE_ENV != "production") {
 }
 
 const cookieSessionMiddleware = cookieSession({
-    secret: process.env.SECRET || require("./secrets").secret,
+    secret: process.env.SECRET || secrets.secret,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 
@@ -50,6 +56,62 @@ app.use(function(req, res, next) {
     res.cookie("mytoken", req.csrfToken());
     next();
 });
+
+var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "parkarecords",
+        pass: process.env.EMAIL_PASS || secrets.emailPass
+    }
+});
+
+var connection = mysql.createConnection({
+    host: process.env.RDS_HOSTNAME || secrets.sqlHost,
+    user: process.env.RDS_USERNAME || secrets.sqlUser,
+    password: process.env.RDS_PASSWORD || secrets.sqlPassword,
+    port: process.env.RDS_PORT || secrets.sqlHostPort
+});
+
+function handleDisconnect() {
+    connection.connect(function(err) {
+        if (err) {
+            console.log("error when connecting to db:", err);
+            setTimeout(handleDisconnect, 2000);
+        }
+    });
+
+    connection.on("error", function(err) {
+        console.log("db error", err);
+        if (err.code === "PROTOCOL_CONNECTION_LOST") {
+            handleDisconnect();
+        } else {
+            throw err;
+        }
+    });
+}
+
+// ======================================================================== Nodemailer
+
+let sendMail = function(userEmail, accessCode) {
+    var mailOptions = {
+        from: "parkarecords@gmail.com",
+        to: userEmail,
+        subject: "Thank you for enrolling in Parka.World!",
+        html: `
+        <h2 style="font-size: 18px;">Thank you for enrolling in Parka.World!</h2>
+        <p style="font-size: 13px;">Your access code is <strong>${accessCode}</strong></p>
+        <p style="font-size: 13px;">We will be launching this coming June with free merchandise and exclusive content using your access code via the Parka.World website.</p>
+`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sent: " + info.response);
+        }
+    });
+};
 
 // ======================================================================== Login SignUp
 
@@ -67,15 +129,25 @@ app.get("/check-login", (req, res) => {
 
 app.post("/register-user", (req, res) => {
     console.log(req.body.email);
-    if (!req.body.email) {
+    if (!req.body.firstName || !req.body.lastName || !req.body.email) {
         res.json({
-            error: "Please enter your email address to sign up."
+            error: "Looks like you missed something. Please try again."
         });
     } else {
         const accessCode = Math.floor(1000 + Math.random() * 9000);
 
+        if (!req.body.phoneNumber) {
+            req.body.phoneNumber = null;
+        }
+
         db
-            .signUp(req.body.email, accessCode)
+            .signUp(
+                req.body.firstName,
+                req.body.lastName,
+                req.body.email,
+                req.body.phoneNumber,
+                accessCode
+            )
             .then(result => {
                 req.session.user = {
                     email: result.rows[0].email,
@@ -83,6 +155,7 @@ app.post("/register-user", (req, res) => {
                 };
             })
             .then(() => {
+                sendMail(req.body.email, accessCode);
                 res.json({
                     user: req.session.user
                 });
@@ -149,3 +222,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () => console.log("Im listening"));
+
+// ========================================================================

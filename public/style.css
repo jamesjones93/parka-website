@@ -16,3 +16,7 @@
     opacity: 0.01;
     transition: opacity 800ms ease-in;
 }
+
+#mail-link {
+    color: white;
+}

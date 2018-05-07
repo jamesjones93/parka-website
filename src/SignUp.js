@@ -20,7 +20,10 @@ class SignUp extends React.Component {
     signUp() {
         console.log(this.email.value);
         let userData = {
+            firstName: this.firstName.value,
+            lastName: this.lastName.value,
             email: this.email.value
+            // phoneNumber: this.phoneNumber.value
         };
         console.log("adfa", userData);
         this.props.dispatch(signUp(userData));
@@ -29,20 +32,39 @@ class SignUp extends React.Component {
     render() {
         return (
             <Container>
-                <h1>SIGN UP</h1>
-                <Input
+                <ComingSoon>Parka World, coming soon...</ComingSoon>
+                <br />
+                <ReqAccessCode>
+                    Request access code for exclusive content, music & merch
+                </ReqAccessCode>
+
+                <InputField
+                    placeholder="First name"
+                    type="text"
+                    innerRef={input => {
+                        this.firstName = input;
+                    }}
+                />
+
+                <InputField
+                    placeholder="Last name"
+                    type="text"
+                    innerRef={input => {
+                        this.lastName = input;
+                    }}
+                />
+
+                <InputField
                     placeholder="Email"
                     type="text"
                     innerRef={input => {
                         this.email = input;
                     }}
                 />
-                <RegisterButton onClick={this.signUp}>Register</RegisterButton>
-                <RegisterText className="left-register-link">
-                    Already registered? Click{" "}
-                    <HereLink onClick={this.swapToLogin}>here</HereLink> to
-                    login.
-                </RegisterText>
+
+                <RegisterButton onClick={this.signUp}>
+                    Request Access Code
+                </RegisterButton>
 
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
@@ -51,6 +73,20 @@ class SignUp extends React.Component {
         );
     }
 }
+
+// <InputField
+//     placeholder="Number (optional)"
+//     type="text"
+//     innerRef={input => {
+//         this.phoneNumber = input;
+//     }}
+// />
+
+// <RegisterText className="left-register-link">
+//     Already registered? Click{" "}
+//     <HereLink onClick={this.swapToLogin}>here</HereLink> to
+//     login.
+// </RegisterText>
 
 const mapStateToProps = function(state) {
     return {
@@ -61,66 +97,120 @@ const mapStateToProps = function(state) {
 export default connect(mapStateToProps)(SignUp);
 
 const transition = `
-    -moz-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    -webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
+    -moz-transition: all 0.15s ease-in;
+    -o-transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in;
 `;
 
 const Container = styled.div`
     text-align: center;
+    color: black;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    h1 {
+        font-size: 35px;
+        margin: 0 0 30px 0;
+        color: black;
+    }
 `;
 
-const Input = styled.input`
-    color: white;
-    height: 45px;
-    width: 300px;
-    margin: 10px 0 10px 0;
+const ComingSoon = styled.p`
+    font-size: 27px;
+    margin: 0 0 20px 0;
+    font-weight: bold;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 60px;
+        margin: 0 auto;
+        padding: 50px 0 40px 0;
+    }
+`;
+
+const ReqAccessCode = styled.p`
     font-size: 20px;
+    width: 370px;
+    line-height: 1.4;
+    padding: 0 0 15px 0;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 45px;
+        width: 80%;
+        margin: 0 auto;
+    }
+`;
+
+const InputField = styled.input`
+    ${transition} color: black;
+    height: 45px;
+    width: 325px;
+    margin: 10px 0 10px 0;
+    font-size: 22px;
     background-color: inherit;
     border: none;
-    border-bottom: 1px solid white;
+    display: block;
+    border-bottom: 1px solid black;
     :hover {
-        ${transition} border-bottom: 1px solid red;
+        border-bottom: 1px solid white;
+        color: white;
         ::placeholder {
-            ${transition} color: red;
+            ${transition} color: white;
         }
     }
 
     :focus {
         outline: none;
-        border-bottom: 1px solid red;
-        color: red;
+        border-bottom: 1px solid white;
+        color: white;
         ::placeholder {
-            ${transition} color: red;
+            ${transition} color: white;
         }
     }
 
     ::placeholder {
-        ${transition} color: white;
+        ${transition} color: black;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+        height: 100px;
+
+        font-size: 45px;
+        margin: 30px 0;
     }
 `;
 
 const RegisterButton = styled.button`
-    color: white;
-    height: 45px;
-    width: 305px;
+    ${transition} color: black;
+    height: 50px;
+    width: 325px;
     padding: 0 10px;
     margin: 10px 0 10px 0;
     font-size: 20px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1px solid white;
+    border: 1px solid black;
 
     :hover {
-        ${transition} color: red;
-        border: 1px solid red;
+        color: white;
+        border: 1px solid white;
     }
     cursor: pointer;
 
     :focus {
         outline: none;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+        height: 100px;
+        margin: 25px 0;
+        font-size: 45px;
+        height: 140px;
     }
 `;
 
@@ -129,14 +219,19 @@ const RegisterText = styled.p`
 `;
 
 const HereLink = styled.span`
-    cursor: pointer;
+    ${transition} cursor: pointer;
+    border-bottom: 1px solid black;
+    padding: 0 0 2px 0;
+
     :hover {
-        ${transition} color: red;
+        color: white;
         padding: 0 0 5px 0;
-        border-bottom: 1px solid red;
+        border-bottom: 1px solid white;
     }
 `;
 
 const ErrorMessage = styled.p`
-    color: red;
+    color: white;
+    width: 220px;
+    margin: 0 auto;
 `;

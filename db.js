@@ -1,18 +1,18 @@
 var spicedPg = require("spiced-pg");
 
 if (!process.env.DATABASE_URL) {
-    var { dbUser, dbPass } = require("./secrets");
+    var { dbUser, dbPass, sqlUser, sqlPassword } = require("./secrets");
 }
 
 var db = spicedPg(
     process.env.DATABASE_URL ||
-        `postgres:${dbUser}:${dbPass}@localhost:5432/parka`
+        `postgres:${sqlUser}:${sqlPassword}@parkadb.c5ydoo1vsjev.us-east-1.rds.amazonaws.com:5432/parkaRecords`
 );
 
 exports.signUp = function(...params) {
     return db.query(
-        `INSERT INTO users (email, access_code)
-        VALUES ($1, $2) RETURNING *`,
+        `INSERT INTO users (first, last, email, phone, access_code)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
         params
     );
 };

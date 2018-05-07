@@ -69,48 +69,56 @@ const mapStateToProps = function(state) {
 export default connect(mapStateToProps)(Login);
 
 const transition = `
-    -moz-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    -webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
+    -moz-transition: all 0.15s ease-in;
+    -o-transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in;
 `;
 
 const Container = styled.div`
     text-align: center;
+    color: black;
+
+    h1 {
+        font-size: 35px;
+        margin: 0 0 30px 0;
+        color: black;
+    }
 `;
 
 const Input = styled.input`
-    color: white;
+    ${transition} color: black;
     height: 45px;
     width: 300px;
     margin: 10px 0 10px 0;
     font-size: 20px;
     background-color: inherit;
+    display: block;
     border: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
     :hover {
-        ${transition} border-bottom: 1px solid red;
+        border-bottom: 1px solid white;
         ::placeholder {
-            ${transition} color: red;
+            ${transition} color: white;
         }
     }
 
     :focus {
         outline: none;
-        border-bottom: 1px solid red;
-        color: red;
+        border-bottom: 1px solid white;
+        color: white;
         ::placeholder {
-            ${transition} color: red;
+            ${transition} color: white;
         }
     }
 
     ::placeholder {
-        ${transition} color: white;
+        ${transition} color: black;
     }
 `;
 
 const LoginButton = styled.button`
-    color: white;
+    ${transition} color: black;
     height: 45px;
     width: 305px;
     padding: 0 10px;
@@ -119,11 +127,11 @@ const LoginButton = styled.button`
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1px solid white;
+    border: 1px solid black;
 
     :hover {
-        ${transition} color: red;
-        border: 1px solid red;
+        color: white;
+        border: 1px solid white;
     }
     cursor: pointer;
 
@@ -137,17 +145,20 @@ const RegisterText = styled.p`
 `;
 
 const HereLink = styled.span`
-    cursor: pointer;
+    ${transition} cursor: pointer;
+    border-bottom: 1px solid black;
+    padding: 0 0 2px 0;
+
     :hover {
-        ${transition} color: red;
+        color: white;
         padding: 0 0 5px 0;
-        border-bottom: 1px solid red;
+        border-bottom: 1px solid white;
     }
 `;
 
 const ErrorMessage = styled.p`
     margin: 0 auto;
     text-align: center;
-    color: red;
+    color: black;
     width: 300px;
 `;
