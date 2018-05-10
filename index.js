@@ -65,34 +65,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-var connection = mysql.createConnection({
-    host: process.env.RDS_HOSTNAME || require("./secrets").sqlHost,
-    user: process.env.RDS_USERNAME || require("./secrets").sqlUser,
-    password: process.env.RDS_PASSWORD || require("./secrets").sqlPassword,
-    port: process.env.RDS_PORT || require("./secrets").sqlHostPort,
-    timeout: 60000
-});
-
-function handleDisconnect() {
-    connection.connect(function(err) {
-        if (err) {
-            console.log("error when connecting to db:", err);
-            setTimeout(handleDisconnect, 3000);
-        }
-    });
-
-    connection.on("error", function(err) {
-        console.log("db error", err);
-        if (err.code === "PROTOCOL_CONNECTION_LOST") {
-            handleDisconnect();
-        } else {
-            throw err;
-        }
-    });
-}
-
-handleDisconnect();
-
 // ======================================================================== Nodemailer
 
 let sendMail = function(userEmail, accessCode) {
