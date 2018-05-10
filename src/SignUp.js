@@ -122,9 +122,9 @@ const ComingSoon = styled.p`
     text-align: left;
 
     @media only screen and (max-device-width: 768px) {
-        font-size: 60px;
-        margin: 0 auto;
+        font-size: 50px;
         padding: 50px 0 40px 0;
+        margin: 0 auto;
     }
 `;
 
@@ -139,6 +139,8 @@ const ReqAccessCode = styled.p`
         font-size: 45px;
         width: 80%;
         margin: 0 auto;
+
+        text-align: center;
     }
 `;
 
@@ -180,7 +182,11 @@ const InputField = styled.input`
         height: 100px;
 
         font-size: 45px;
-        margin: 30px 0;
+        margin: 30px 0 0 10%;
+
+        ::placeholder {
+            font-size: 45px;
+        }
     }
 `;
 
@@ -209,7 +215,7 @@ const RegisterButton = styled.button`
     @media only screen and (max-device-width: 768px) {
         width: 80%;
         height: 100px;
-        margin: 25px 0;
+        margin: 65px 0 0 10%;
         font-size: 45px;
         height: 140px;
     }
