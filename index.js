@@ -44,7 +44,7 @@ if (process.env.NODE_ENV != "production") {
 }
 
 const cookieSessionMiddleware = cookieSession({
-    secret: process.env.SECRET || secrets.secret,
+    secret: process.env.SECRET || require("./secrets").secret,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 
@@ -61,22 +61,23 @@ var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         user: "parkarecords",
-        pass: process.env.EMAIL_PASS || secrets.emailPass
+        pass: process.env.EMAIL_PASS || require("./secrets").emailPass
     }
 });
 
 var connection = mysql.createConnection({
-    host: process.env.RDS_HOSTNAME || secrets.sqlHost,
-    user: process.env.RDS_USERNAME || secrets.sqlUser,
-    password: process.env.RDS_PASSWORD || secrets.sqlPassword,
-    port: process.env.RDS_PORT || secrets.sqlHostPort
+    host: process.env.RDS_HOSTNAME || require("./secrets").sqlHost,
+    user: process.env.RDS_USERNAME || require("./secrets").sqlUser,
+    password: process.env.RDS_PASSWORD || require("./secrets").sqlPassword,
+    port: process.env.RDS_PORT || require("./secrets").sqlHostPort,
+    timeout: 60000
 });
 
 function handleDisconnect() {
     connection.connect(function(err) {
         if (err) {
             console.log("error when connecting to db:", err);
-            setTimeout(handleDisconnect, 2000);
+            setTimeout(handleDisconnect, 3000);
         }
     });
 
@@ -89,6 +90,8 @@ function handleDisconnect() {
         }
     });
 }
+
+handleDisconnect();
 
 // ======================================================================== Nodemailer
 

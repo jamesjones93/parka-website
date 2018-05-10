@@ -54,7 +54,7 @@ const LeftContainer = styled.div`
 `;
 
 const Logo = styled.img`
-    width: 400px;
+    width: 215px;
     margin: 0 0 30px 0;
 
     @media only screen and (max-device-width: 768px) {

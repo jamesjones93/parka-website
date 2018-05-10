@@ -32,14 +32,14 @@ class SignUp extends React.Component {
     render() {
         return (
             <Container>
-                <ComingSoon>Parka World, coming soon...</ComingSoon>
+                <ComingSoon>PARKA.WORLD COMING SOON</ComingSoon>
                 <br />
                 <ReqAccessCode>
-                    Request access code for exclusive content, music & merch
+                    REQUEST ACCESS CODE FOR EXCLUSIVE CONTENT & FREE MERCH
                 </ReqAccessCode>
 
                 <InputField
-                    placeholder="First name"
+                    placeholder="first name"
                     type="text"
                     innerRef={input => {
                         this.firstName = input;
@@ -47,7 +47,7 @@ class SignUp extends React.Component {
                 />
 
                 <InputField
-                    placeholder="Last name"
+                    placeholder="last name"
                     type="text"
                     innerRef={input => {
                         this.lastName = input;
@@ -55,7 +55,7 @@ class SignUp extends React.Component {
                 />
 
                 <InputField
-                    placeholder="Email"
+                    placeholder="email"
                     type="text"
                     innerRef={input => {
                         this.email = input;
@@ -63,7 +63,7 @@ class SignUp extends React.Component {
                 />
 
                 <RegisterButton onClick={this.signUp}>
-                    Request Access Code
+                    request access code
                 </RegisterButton>
 
                 {this.props.error && (
@@ -109,8 +109,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    align-items: center;
-
     h1 {
         font-size: 35px;
         margin: 0 0 30px 0;
@@ -119,9 +117,9 @@ const Container = styled.div`
 `;
 
 const ComingSoon = styled.p`
-    font-size: 27px;
-    margin: 0 0 20px 0;
-    font-weight: bold;
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    text-align: left;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 60px;
@@ -131,10 +129,11 @@ const ComingSoon = styled.p`
 `;
 
 const ReqAccessCode = styled.p`
-    font-size: 20px;
+    font-size: 30px;
     width: 370px;
-    line-height: 1.4;
+    line-height: 1.2;
     padding: 0 0 15px 0;
+    text-align: left;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 45px;
@@ -145,14 +144,14 @@ const ReqAccessCode = styled.p`
 
 const InputField = styled.input`
     ${transition} color: black;
-    height: 45px;
-    width: 325px;
-    margin: 10px 0 10px 0;
+    height: 55px;
+    width: 350px;
+    margin: 0px 0 10px 0;
     font-size: 22px;
     background-color: inherit;
     border: none;
     display: block;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
     :hover {
         border-bottom: 1px solid white;
         color: white;
@@ -172,6 +171,8 @@ const InputField = styled.input`
 
     ::placeholder {
         ${transition} color: black;
+
+        font-size: 28px;
     }
 
     @media only screen and (max-device-width: 768px) {
@@ -185,15 +186,15 @@ const InputField = styled.input`
 
 const RegisterButton = styled.button`
     ${transition} color: black;
-    height: 50px;
-    width: 325px;
+    height: 70px;
+    width: 350px;
     padding: 0 10px;
-    margin: 10px 0 10px 0;
-    font-size: 20px;
+    margin: 40px 0 10px 0;
+    font-size: 28px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1px solid black;
+    border: 2px solid black;
 
     :hover {
         color: white;
@@ -232,6 +233,7 @@ const HereLink = styled.span`
 
 const ErrorMessage = styled.p`
     color: white;
-    width: 220px;
+    text-align: center;
+    width: 280px;
     margin: 0 auto;
 `;

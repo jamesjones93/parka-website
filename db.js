@@ -2,11 +2,13 @@ var spicedPg = require("spiced-pg");
 
 if (!process.env.DATABASE_URL) {
     var { dbUser, dbPass, sqlUser, sqlPassword } = require("./secrets");
+} else {
+    var { dbUser, dbPass, sqlUser, sqlPassword } = process.ENV;
 }
 
 var db = spicedPg(
     process.env.DATABASE_URL ||
-        `postgres:${sqlUser}:${sqlPassword}@parkadb.c5ydoo1vsjev.us-east-1.rds.amazonaws.com:5432/parkaRecords`
+        `postgres:${dbUser}:${dbPass}@localhost:5432/parka`
 );
 
 exports.signUp = function(...params) {
