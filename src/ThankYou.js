@@ -14,8 +14,7 @@ export default class Release extends React.Component {
                 <Div>
                     <Logo src="/logo/parkalogoblack.png" />
                     <H2>
-                        PLEASE CHECK YOUR EMAIL OR TEXT MESSAGES FOR YOUR
-                        PERSONAL ACCESS CODE
+                        PLEASE CHECK YOUR EMAIL FOR YOUR PERSONAL ACCESS CODE
                     </H2>
                     <br />
                     <H3>
