@@ -28,11 +28,7 @@ app.use(compression());
 
 app.use(express.static("public"));
 
-let secrets;
-
 if (process.env.NODE_ENV != "production") {
-    secrets = require("./secrets");
-
     app.use(
         "/bundle.js",
         require("http-proxy-middleware")({
