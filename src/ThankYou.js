@@ -12,7 +12,7 @@ export default class Release extends React.Component {
         return (
             <Container>
                 <Div>
-                    <Logo src="/public/logo/parkalogo.png" />
+                    <Logo src="/logo/parkalogoblack.png" />
                     <H2>
                         PLEASE CHECK YOUR EMAIL OR TEXT MESSAGES FOR YOUR
                         PERSONAL ACCESS CODE
