@@ -16,7 +16,7 @@ class Home extends React.Component {
         return (
             <LeftContainer>
                 <LoginSignUpContainer>
-                    <Logo src="/logo/parkalogo.png" />
+                    <Logo src="/public/logo/parkalogo.png" />
                     <ReactCSSTransitionGroup
                         transitionName="loginsignup"
                         transitionEnterTimeout={1100}
