@@ -25,7 +25,6 @@ class SignUp extends React.Component {
             email: this.email.value
             // phoneNumber: this.phoneNumber.value
         };
-        console.log("adfa", userData);
         this.props.dispatch(signUp(userData));
     }
 
@@ -44,6 +43,11 @@ class SignUp extends React.Component {
                     innerRef={input => {
                         this.firstName = input;
                     }}
+                    onKeyPress={e => {
+                        if (e.key == "Enter") {
+                            this.signUp();
+                        }
+                    }}
                 />
 
                 <InputField
@@ -52,6 +56,11 @@ class SignUp extends React.Component {
                     innerRef={input => {
                         this.lastName = input;
                     }}
+                    onKeyPress={e => {
+                        if (e.key == "Enter") {
+                            this.signUp();
+                        }
+                    }}
                 />
 
                 <InputField
@@ -59,6 +68,11 @@ class SignUp extends React.Component {
                     type="text"
                     innerRef={input => {
                         this.email = input;
+                    }}
+                    onKeyPress={e => {
+                        if (e.key == "Enter") {
+                            this.signUp();
+                        }
                     }}
                 />
 
