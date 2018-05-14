@@ -240,7 +240,7 @@ const HereLink = styled.span`
 const ErrorMessage = styled.p`
     color: white;
     text-align: center;
-    width: 370px;
+    width: 350px;
     margin: 0 auto;
 
     @media only screen and (max-device-width: 768px) {
