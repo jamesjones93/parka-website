@@ -149,7 +149,7 @@ const InputField = styled.input`
     height: 55px;
     width: 350px;
     margin: 0px 0 10px 0;
-    font-size: 22px;
+    font-size: 28px;
     background-color: inherit;
     border: none;
     display: block;
@@ -242,6 +242,7 @@ const ErrorMessage = styled.p`
     text-align: center;
     width: 320px;
     margin: 0 auto;
+    padding: 0px;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 27px;
