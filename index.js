@@ -40,7 +40,7 @@ if (process.env.NODE_ENV != "production") {
 }
 
 const cookieSessionMiddleware = cookieSession({
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || require("./secrets").secret,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 

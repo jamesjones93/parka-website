@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "./axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -31,27 +30,25 @@ class Login extends React.Component {
     render() {
         return (
             <Container>
-                <h1>LOGIN</h1>
-                <Input
+                <LoginTitle>LOGIN</LoginTitle>
+                <InputField
                     type="text"
-                    placeholder="User ID / Email"
+                    placeholder="email"
                     innerRef={input => {
                         this.email = input;
                     }}
                 />
-                <Input
+                <InputField
                     type="password"
-                    placeholder="Access Code"
+                    placeholder="access code"
                     innerRef={input => {
                         this.accessCode = input;
                     }}
                 />
                 <LoginButton onClick={this.loginUser}>Login</LoginButton>
-                <RegisterText>
-                    Don't have an account? Click{" "}
-                    <HereLink onClick={this.swapToRegister}>here</HereLink> to
-                    sign up.
-                </RegisterText>
+                <ToRegisterLink onClick={this.swapToRegister}>
+                    Not in the system yet? Sign up here.
+                </ToRegisterLink>
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
                 )}
@@ -77,7 +74,11 @@ const transition = `
 
 const Container = styled.div`
     text-align: center;
-    color: black;
+    padding: 10%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     h1 {
         font-size: 35px;
@@ -86,79 +87,104 @@ const Container = styled.div`
     }
 `;
 
-const Input = styled.input`
-    ${transition} color: black;
-    height: 45px;
-    width: 300px;
-    margin: 10px 0 10px 0;
-    font-size: 20px;
+const LoginTitle = styled.p`
+    font-size: 25px;
+    line-height: 1.2;
+    padding: 0 0 15px 0;
+    text-align: left;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 45px;
+        width: 80%;
+        margin: 0 auto;
+
+        text-align: center;
+    }
+`;
+
+const InputField = styled.input`
+    ${transition} color: white;
+    height: 30px;
+    width: 100%;
+    margin: 0px 0 10px 0;
+    padding: 0;
+    font-size: 12px;
     background-color: inherit;
-    display: block;
     border: none;
-    border-bottom: 1px solid black;
+    display: block;
+    border-bottom: 1.3px solid white;
+
     :hover {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
         ::placeholder {
-            ${transition} color: white;
+            color: rgba(255, 255, 255, 0.5);
         }
     }
 
     :focus {
         outline: none;
-        border-bottom: 1px solid white;
-        color: white;
-        ::placeholder {
-            ${transition} color: white;
-        }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     ::placeholder {
-        ${transition} color: black;
+        ${transition} color: white;
+        font-size: 14px;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+        height: 100px;
+
+        font-size: 45px;
+        margin: 30px 0 0 10%;
+
+        ::placeholder {
+            font-size: 45px;
+        }
     }
 `;
 
 const LoginButton = styled.button`
-    ${transition} color: black;
-    height: 45px;
-    width: 305px;
+    ${transition} color: white;
+    height: 50px;
+    width: 100%;
     padding: 0 10px;
     margin: 10px 0 10px 0;
-    font-size: 20px;
+    font-size: 14px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1px solid black;
+    border: 1.3px solid white;
 
     :hover {
-        color: white;
-        border: 1px solid white;
+        color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
     :focus {
         outline: none;
     }
-`;
 
-const RegisterText = styled.p`
-    text-align: center;
-`;
-
-const HereLink = styled.span`
-    ${transition} cursor: pointer;
-    border-bottom: 1px solid black;
-    padding: 0 0 2px 0;
-
-    :hover {
-        color: white;
-        padding: 0 0 5px 0;
-        border-bottom: 1px solid white;
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+        height: 100px;
+        margin: 65px 0 0 10%;
+        font-size: 45px;
+        height: 140px;
     }
+`;
+
+const ToRegisterLink = styled.p`
+    ${transition} cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-align: left;
 `;
 
 const ErrorMessage = styled.p`
     margin: 0 auto;
-    text-align: center;
-    color: black;
-    width: 300px;
+    text-align: left;
+    color: white;
 `;

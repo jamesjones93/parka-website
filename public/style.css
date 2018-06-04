@@ -17,6 +17,6 @@
     transition: opacity 800ms ease-in;
 }
 
-#mail-link {
-    color: black;
+.header-link {
+    color: white;
 }

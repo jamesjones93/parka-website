@@ -10,24 +10,42 @@ import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 class Home extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            toggleParkaworldEntry: false
+        };
+
+        this.enterParkaWorldClick = this.enterParkaWorldClick.bind(this);
+    }
+
+    enterParkaWorldClick() {
+        this.setState({
+            toggleParkaworldEntry: true
+        });
     }
 
     render() {
         return (
-            <LeftContainer>
+            <Container>
+                <Logo src="/logo/parkalogowhite.png" />
                 <LoginSignUpContainer>
-                    <Logo src="/logo/parkalogoblack.png" />
                     <ReactCSSTransitionGroup
                         transitionName="loginsignup"
                         transitionEnterTimeout={1100}
                         transitionLeaveTimeout={1100}
                     >
-                        {(this.props.toggleLoginSignUp && (
-                            <Login id="login-component" key="1" />
-                        )) || <SignUp id="signup-component" key="2" />}
+                        {(this.state.toggleParkaworldEntry &&
+                            ((this.props.toggleLoginSignUp && (
+                                <Login id="login-component" key="1" />
+                            )) || (
+                                <SignUp id="signup-component" key="2" />
+                            ))) || <p />}
                     </ReactCSSTransitionGroup>
                 </LoginSignUpContainer>
-            </LeftContainer>
+                <EnterParkaworldLink onClick={this.enterParkaWorldClick}>
+                    ENTER PARKA.WORLD
+                </EnterParkaworldLink>
+            </Container>
         );
     }
 }
@@ -40,22 +58,28 @@ const mapStateToProps = function(state) {
 
 export default connect(mapStateToProps)(Home);
 
-const LeftContainer = styled.div`
+const transition = `
+    -moz-transition: all 0.15s ease-in;
+    -o-transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in;
+    transition: all 0.15s ease-in;
+`;
+
+const Container = styled.div`
     color: white;
-    width: 100%;
+    position: relative;
+    width: 50%;
+    padding: 20px 0 30px 0;
     height: 100vh;
     position: fixed;
-    background-color: rgb(227, 24, 55);
+    background-color: rgb(227, 25, 54);
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    overflow: hidden;
 `;
 
 const Logo = styled.img`
-    width: 215px;
-    margin: 0 0 30px 0;
+    width: 75px;
+    height: 20px;
 
     @media only screen and (max-device-width: 768px) {
         width: 70%;
@@ -64,8 +88,27 @@ const Logo = styled.img`
     }
 `;
 
-const LoginSignUpContainer = styled.div`
+const LoginSignUpContainer = styled.p`
+    height: 70%;
+    width: 100%;
+    position: absolute;
+    margin: 30px 0 0 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+`;
+
+const EnterParkaworldLink = styled.p`
+    ${transition} font-size: 35px;
+    align-self: flex-end;
+    position: absolute;
+    text-align: center;
+    width: 80%;
+    padding: 20px 0 0 0;
+    border-top: 3px solid white;
+    cursor: pointer;
+
+    :hover {
+        color: rgba(255, 255, 255, 0.5);
+    }
 `;

@@ -11,17 +11,13 @@ import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
 import LoginSignUp from "./LoginSignUp";
 import Release from "./Release";
+import Header from "./Header";
 import { checkLogin } from "./Actions";
 import { injectGlobal } from "styled-components";
 
 injectGlobal`
     body {
         margin: 0;
-
-    }
-    a {
-        text-decoration: none;
-        color: white;
     }
 `;
 
@@ -37,6 +33,7 @@ class App extends React.Component {
             <div>
                 <BrowserRouter>
                     <div>
+                        <Header />
                         <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
                     </div>

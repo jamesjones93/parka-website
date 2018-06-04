@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "./axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -22,8 +21,8 @@ class SignUp extends React.Component {
         let userData = {
             firstName: this.firstName.value,
             lastName: this.lastName.value,
-            email: this.email.value
-            // phoneNumber: this.phoneNumber.value
+            email: this.email.value,
+            phoneNumber: this.phoneNumber.value
         };
         this.props.dispatch(signUp(userData));
     }
@@ -31,12 +30,9 @@ class SignUp extends React.Component {
     render() {
         return (
             <Container>
-                <ComingSoon>PARKA.WORLD COMING SOON</ComingSoon>
-                <br />
                 <ReqAccessCode>
                     REQUEST ACCESS CODE FOR EXCLUSIVE CONTENT & FREE MERCH
                 </ReqAccessCode>
-
                 <InputField
                     placeholder="first name"
                     type="text"
@@ -49,7 +45,6 @@ class SignUp extends React.Component {
                         }
                     }}
                 />
-
                 <InputField
                     placeholder="last name"
                     type="text"
@@ -62,7 +57,6 @@ class SignUp extends React.Component {
                         }
                     }}
                 />
-
                 <InputField
                     placeholder="email"
                     type="text"
@@ -75,11 +69,20 @@ class SignUp extends React.Component {
                         }
                     }}
                 />
-
+                <InputField
+                    placeholder="number (optional)"
+                    type="text"
+                    innerRef={input => {
+                        this.phoneNumber = input;
+                    }}
+                />
                 <RegisterButton onClick={this.signUp}>
-                    request access code
+                    REQUEST ACCESS CODE
                 </RegisterButton>
 
+                <ToLoginLink onClick={this.swapToLogin}>
+                    Or Login, if already in the system
+                </ToLoginLink>
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
                 )}
@@ -87,20 +90,6 @@ class SignUp extends React.Component {
         );
     }
 }
-
-// <InputField
-//     placeholder="Number (optional)"
-//     type="text"
-//     innerRef={input => {
-//         this.phoneNumber = input;
-//     }}
-// />
-
-// <RegisterText className="left-register-link">
-//     Already registered? Click{" "}
-//     <HereLink onClick={this.swapToLogin}>here</HereLink> to
-//     login.
-// </RegisterText>
 
 const mapStateToProps = function(state) {
     return {
@@ -119,32 +108,15 @@ const transition = `
 
 const Container = styled.div`
     text-align: center;
-    color: black;
+    padding: 10%;
+    color: white;
     display: flex;
     flex-direction: column;
-
-    h1 {
-        font-size: 35px;
-        margin: 0 0 30px 0;
-        color: black;
-    }
-`;
-
-const ComingSoon = styled.p`
-    font-size: 20px;
-    margin: 0 0 10px 0;
-    text-align: left;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 50px;
-        padding: 50px 0 40px 0;
-        margin: 0 auto;
-    }
+    justify-content: center;
 `;
 
 const ReqAccessCode = styled.p`
-    font-size: 30px;
-    width: 370px;
+    font-size: 25px;
     line-height: 1.2;
     padding: 0 0 15px 0;
     text-align: left;
@@ -159,36 +131,33 @@ const ReqAccessCode = styled.p`
 `;
 
 const InputField = styled.input`
-    ${transition} color: black;
-    height: 55px;
-    width: 350px;
+    ${transition} color: white;
+    height: 30px;
+    width: 100%;
     margin: 0px 0 10px 0;
-    font-size: 28px;
+    padding: 0;
+    font-size: 12px;
     background-color: inherit;
     border: none;
     display: block;
-    border-bottom: 2px solid black;
+    border-bottom: 1.3px solid white;
+
     :hover {
-        border-bottom: 1px solid white;
-        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
         ::placeholder {
-            ${transition} color: white;
+            color: rgba(255, 255, 255, 0.5);
         }
     }
 
     :focus {
         outline: none;
-        border-bottom: 1px solid white;
-        color: white;
-        ::placeholder {
-            ${transition} color: white;
-        }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     ::placeholder {
-        ${transition} color: black;
-
-        font-size: 28px;
+        ${transition} color: white;
+        font-size: 14px;
     }
 
     @media only screen and (max-device-width: 768px) {
@@ -205,20 +174,20 @@ const InputField = styled.input`
 `;
 
 const RegisterButton = styled.button`
-    ${transition} color: black;
-    height: 70px;
-    width: 350px;
+    ${transition} color: white;
+    height: 50px;
+    width: 100%;
     padding: 0 10px;
-    margin: 40px 0 10px 0;
-    font-size: 28px;
+    margin: 10px 0 10px 0;
+    font-size: 14px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 2px solid black;
+    border: 1.3px solid white;
 
     :hover {
-        color: white;
-        border: 1px solid white;
+        color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
@@ -235,20 +204,11 @@ const RegisterButton = styled.button`
     }
 `;
 
-const RegisterText = styled.p`
-    text-align: center;
-`;
-
-const HereLink = styled.span`
+const ToLoginLink = styled.p`
     ${transition} cursor: pointer;
-    border-bottom: 1px solid black;
-    padding: 0 0 2px 0;
-
-    :hover {
-        color: white;
-        padding: 0 0 5px 0;
-        border-bottom: 1px solid white;
-    }
+    padding: 0;
+    text-decoration: underline;
+    text-align: left;
 `;
 
 const ErrorMessage = styled.p`

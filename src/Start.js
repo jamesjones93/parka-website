@@ -8,6 +8,8 @@ import { HashRouter, Route, Link, Switch } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
+import { Provider as PolarisProvider } from "@shopify/polaris";
+console.log(EmbeddedApp);
 
 export const store = createStore(
     reducer,
@@ -16,14 +18,12 @@ export const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <EmbeddedApp
+            apiKey="YOUR_APP_API_KEY"
+            shopOrigin="https://parka-records.myshopify.com/"
+        >
+            <App />
+        </EmbeddedApp>
     </Provider>,
     document.querySelector("main")
 );
-
-// <EmbeddedApp
-//     apiKey="YOUR_APP_API_KEY"
-//     shopOrigin="http://localhost:8080/"
-// >
-//     <App />
-// </EmbeddedApp>

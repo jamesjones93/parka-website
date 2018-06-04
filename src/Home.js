@@ -8,6 +8,7 @@ import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
 import LoginSignUp from "./LoginSignUp";
 import ThankYou from "./ThankYou";
+import EnterParkaSite from "./EnterParkaSite";
 import { checkLogin } from "./Actions";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
@@ -16,9 +17,7 @@ class Home extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        // this.props.dispatch(checkLogin());
-    }
+    componentDidMount() {}
 
     render() {
         return (
@@ -32,13 +31,13 @@ class Home extends React.Component {
                         <ThankYou key="2" />
                     )}
                 </ReactCSSTransitionGroup>
+                <EnterParkaSite />
             </Container>
         );
     }
 }
 
 const mapStateToProps = function(state) {
-    console.log(state.hideLeftWindow);
     return {
         user: state.user
     };
@@ -49,5 +48,4 @@ export default connect(mapStateToProps)(Home);
 const Container = styled.div`
     width: 100%;
     height: 100vh;
-    background-color: rgb(227, 24, 55);
 `;
