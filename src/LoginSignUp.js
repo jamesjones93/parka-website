@@ -27,7 +27,6 @@ class Home extends React.Component {
     render() {
         return (
             <Container>
-                <Logo src="/logo/parkalogowhite.png" />
                 <LoginSignUpContainer>
                     <ReactCSSTransitionGroup
                         transitionName="loginsignup"
@@ -67,7 +66,6 @@ const transition = `
 
 const Container = styled.div`
     color: white;
-    position: relative;
     width: 50%;
     padding: 20px 0 30px 0;
     height: 100vh;
@@ -77,18 +75,7 @@ const Container = styled.div`
     justify-content: center;
 `;
 
-const Logo = styled.img`
-    width: 75px;
-    height: 20px;
-
-    @media only screen and (max-device-width: 768px) {
-        width: 70%;
-        margin: 0 auto;
-        padding: 0 0 50px 0;
-    }
-`;
-
-const LoginSignUpContainer = styled.p`
+const LoginSignUpContainer = styled.div`
     height: 70%;
     width: 100%;
     position: absolute;
@@ -99,14 +86,14 @@ const LoginSignUpContainer = styled.p`
 `;
 
 const EnterParkaworldLink = styled.p`
-    ${transition} font-size: 35px;
+    ${transition} font-size: 40px;
     align-self: flex-end;
-    position: absolute;
     text-align: center;
     width: 80%;
-    padding: 20px 0 0 0;
+    padding: 20px 0 2% 0;
     border-top: 3px solid white;
     cursor: pointer;
+    color: white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);

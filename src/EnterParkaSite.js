@@ -2,12 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export default function EnterParkaSite() {
-    return (
-        <Container>
-            <EnterSiteLink to="/shop">ENTER PARKA SITE</EnterSiteLink>
-        </Container>
-    );
+export default class EnterParkaSite extends React.Component {
+    // static contextTypes = {
+    //     easdk: PropTypes.object
+    // };
+
+    render() {
+        return (
+            <Container>
+                <EnterSiteLink to="/shop">ENTER PARKA SITE</EnterSiteLink>
+            </Container>
+        );
+    }
 }
 
 const transition = `
@@ -18,25 +24,26 @@ const transition = `
 `;
 
 const Container = styled.div`
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 50%;
     width: 50%;
     display: flex;
     justify-content: center;
-    padding: 10px 0 30px 0;
     background-color: rgb(16, 16, 16);
-    margin: 0 0 0 50%;
     height: 100vh;
 `;
 
 const EnterSiteLink = styled(Link)`
-    ${transition} font-size: 35px;
+    ${transition} font-size: 40px;
     align-self: flex-end;
-    position: absolute;
     text-align: center;
     width: 80%;
-    padding: 20px 0 0 0;
+    padding: 20px 0 5% 0;
     border-top: 3px solid white;
-    color: rgb(20, 20, 20);
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);

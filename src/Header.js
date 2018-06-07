@@ -9,20 +9,27 @@ export default class Header extends React.Component {
 
     render() {
         return (
-            <HeaderLinksContainer>
-                <HeaderLink className="header-link" to="/">
-                    PARKA
-                </HeaderLink>
-                <HeaderLink className="header-link" to="/shop">
-                    SHOP
-                </HeaderLink>
-                <HeaderLink className="header-link" to="/dates">
-                    DATES
-                </HeaderLink>
-                <HeaderLink className="header-link" to="/info">
-                    INFO
-                </HeaderLink>
-            </HeaderLinksContainer>
+            <div>
+                <ParkaWorldHeader>
+                    <Link to="/world">
+                        <Logo src="/logo/parkalogowhite.png" />
+                    </Link>
+                </ParkaWorldHeader>
+                <HeaderLinksContainer>
+                    <HeaderLink className="header-link" to="/">
+                        PARKA
+                    </HeaderLink>
+                    <HeaderLink className="header-link" to="/shop">
+                        SHOP
+                    </HeaderLink>
+                    <HeaderLink className="header-link" to="/dates">
+                        DATES
+                    </HeaderLink>
+                    <HeaderLink className="header-link" to="/info">
+                        INFO
+                    </HeaderLink>
+                </HeaderLinksContainer>
+            </div>
         );
     }
 }
@@ -34,17 +41,40 @@ const transition = `
     transition: all 0.15s ease-in;
 `;
 
+const ParkaWorldHeader = styled.div`
+    width: 50%;
+    height: 10%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgb(227, 25, 54);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Logo = styled.img`
+    ${transition} width: 75px;
+    height: 20px;
+
+    :hover {
+        filter: brightness(0%);
+    }
+`;
+
 const HeaderLinksContainer = styled.div`
     width: 50%;
-    margin: 20px 0 0 50%;
-    position: absolute;
+    height: 10%;
+    position: fixed;
+    left: 50%;
+    top: 0;
     z-index: 2;
     background-color: rgb(16, 16, 16);
-    height: 25px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 0 5%;
+    justify-content: space-around;
+    align-items: center;
     color: white;
 `;
 

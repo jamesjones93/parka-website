@@ -1,5 +1,10 @@
 import axios from "./axios";
 import * as io from "socket.io-client";
+import Client from "shopify-buy";
+const client = Client.buildClient({
+    domain: "parka-records.myshopify.com",
+    storefrontAccessToken: "e3b25dce26eb25d4dd3595fd82ecb0ad"
+});
 
 export function checkLogin() {
     return axios.get("/check-login").then(function({ data }) {
@@ -57,4 +62,21 @@ export function userLogin(userData) {
             };
         }
     });
+}
+
+export function getRecords() {
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzUwMTczNzcxODMz";
+
+    return client.collection
+        .fetchWithProducts(collectionId)
+        .then(collection => {
+            console.log(collection);
+            return {
+                type: "GET_RECORDS",
+                records: collection
+            };
+        })
+        .catch(e => {
+            console.log(e);
+        });
 }

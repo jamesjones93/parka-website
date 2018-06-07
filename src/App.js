@@ -12,14 +12,20 @@ import { EmbeddedApp } from "@shopify/polaris/embedded";
 import LoginSignUp from "./LoginSignUp";
 import Release from "./Release";
 import Header from "./Header";
+import Shop from "./Shop";
 import { checkLogin } from "./Actions";
 import { injectGlobal } from "styled-components";
 
 injectGlobal`
     body {
         margin: 0;
+        font-family: Helvetica;
     }
 `;
+
+// black: rgb(16, 16, 16)
+// white: rgb(250, 250, 250)
+// red: rgb(227, 25, 54);
 
 class App extends React.Component {
     constructor(props) {
@@ -36,6 +42,7 @@ class App extends React.Component {
                         <Header />
                         <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
+                        <Route exact path="/shop" component={Shop} />
                     </div>
                 </BrowserRouter>
             </div>
