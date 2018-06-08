@@ -1,27 +1,39 @@
 import React from "react";
-import axios from "./axios";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import ThankYou from "./ThankYou";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import { checkForCookie } from "./Actions";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            toggleParkaworldEntry: false
+            toggleParkaworldEntry: false,
+            cookie: false,
+            signUpSuccess: false
         };
 
         this.enterParkaWorldClick = this.enterParkaWorldClick.bind(this);
     }
 
+    componentDidMount() {
+        this.props.dispatch(checkForCookie());
+    }
+
     enterParkaWorldClick() {
-        this.setState({
-            toggleParkaworldEntry: true
-        });
+        if (this.props.signUpSuccess || this.props.cookie) {
+            location.replace("/world");
+            // this.props.history.push("/world");
+        } else {
+            this.setState({
+                toggleParkaworldEntry: true
+            });
+        }
     }
 
     render() {
@@ -33,12 +45,14 @@ class Home extends React.Component {
                         transitionEnterTimeout={1100}
                         transitionLeaveTimeout={1100}
                     >
-                        {(this.state.toggleParkaworldEntry &&
-                            ((this.props.toggleLoginSignUp && (
-                                <Login id="login-component" key="1" />
-                            )) || (
-                                <SignUp id="signup-component" key="2" />
-                            ))) || <p />}
+                        {(this.props.cookie && <p />) ||
+                            ((!this.props.signUpSuccess &&
+                                ((this.state.toggleParkaworldEntry &&
+                                    ((this.props.toggleLoginSignUp && (
+                                        <Login id="login-component" key="1" />
+                                    )) || (
+                                        <SignUp id="signup-component" key="2" />
+                                    ))) || <p />)) || <ThankYou />)}
                     </ReactCSSTransitionGroup>
                 </LoginSignUpContainer>
                 <EnterParkaworldLink onClick={this.enterParkaWorldClick}>
@@ -51,7 +65,9 @@ class Home extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        toggleLoginSignUp: state.toggleLoginSignUp
+        toggleLoginSignUp: state.toggleLoginSignUp,
+        cookie: state.cookie,
+        signUpSuccess: state.signUpSuccess
     };
 };
 
@@ -96,6 +112,6 @@ const EnterParkaworldLink = styled.p`
     color: white;
 
     :hover {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgb(16, 16, 16);
     }
 `;

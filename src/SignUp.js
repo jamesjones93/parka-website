@@ -213,9 +213,7 @@ const ToLoginLink = styled.p`
 
 const ErrorMessage = styled.p`
     color: white;
-    text-align: center;
-    width: 320px;
-    margin: 0 auto;
+    text-align: left;
     padding: 0px;
 
     @media only screen and (max-device-width: 768px) {

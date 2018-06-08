@@ -15,6 +15,17 @@ export function checkLogin() {
     });
 }
 
+export function checkForCookie() {
+    return axios.get("/check-for-cookie").then(function({ data }) {
+        if (data.cookie) {
+            return {
+                type: "COOKIE_SUCCESS",
+                cookie: data.cookie
+            };
+        }
+    });
+}
+
 export function toRegister() {
     return {
         type: "TOGGLE_TO_SIGNUP",
@@ -31,11 +42,10 @@ export function toLogin() {
 
 export function signUp(userData) {
     return axios.post("/register-user", userData).then(function({ data }) {
-        console.log("DATA", data.user);
         if (data.user) {
             return {
                 type: "SIGNUP_SUCCESS",
-                user: data.user
+                signUpSuccess: true
             };
         } else {
             return {
@@ -47,9 +57,8 @@ export function signUp(userData) {
 }
 
 export function userLogin(userData) {
+    console.log(userData);
     return axios.post("/user-login", userData).then(function({ data }) {
-        console.log(data);
-
         if (data.error) {
             return {
                 type: "LOGIN_ERROR",
@@ -57,8 +66,8 @@ export function userLogin(userData) {
             };
         } else {
             return {
-                type: "LOGIN_SUCCESS",
-                user: data.user
+                type: "COOKIE_SUCCESS",
+                cookie: true
             };
         }
     });

@@ -9,12 +9,14 @@ import { render } from "react-dom";
 import * as PropTypes from "prop-types";
 import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
+import { injectGlobal } from "styled-components";
 import LoginSignUp from "./LoginSignUp";
 import Release from "./Release";
 import Header from "./Header";
 import Shop from "./Shop";
-import { checkLogin } from "./Actions";
-import { injectGlobal } from "styled-components";
+import World from "./World";
+import Dates from "./Dates";
+import Info from "./Info";
 
 injectGlobal`
     body {
@@ -43,6 +45,9 @@ class App extends React.Component {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
                         <Route exact path="/shop" component={Shop} />
+                        <Route exact path="/world" component={World} />
+                        <Route exact path="/dates" component={Dates} />
+                        <Route exact path="/info" component={Info} />
                     </div>
                 </BrowserRouter>
             </div>

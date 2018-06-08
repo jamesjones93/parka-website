@@ -1,8 +1,8 @@
 export default function(state = {}, action) {
-    if (action.type === "CHECK_LOGIN") {
+    if (action.type === "COOKIE_SUCCESS") {
         state = {
             ...state,
-            user: action.user
+            cookie: true
         };
     } else if (action.type === "TOGGLE_TO_SIGNUP") {
         state = {
@@ -20,10 +20,9 @@ export default function(state = {}, action) {
             releases: action.toggleLoginSignUp
         };
     } else if (action.type === "SIGNUP_SUCCESS") {
-        console.log("ACTION", action);
         state = {
             ...state,
-            user: action.user
+            signUpSuccess: true
         };
     } else if (action.type === "SIGNUP_ERROR") {
         state = {

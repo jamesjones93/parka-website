@@ -46,6 +46,6 @@ const EnterSiteLink = styled(Link)`
     text-decoration: none;
 
     :hover {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgb(227, 25, 54);
     }
 `;

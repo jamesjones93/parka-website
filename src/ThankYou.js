@@ -12,7 +12,6 @@ export default class Release extends React.Component {
         return (
             <Container>
                 <Div>
-                    <Logo src="/logo/parkalogoblack.png" />
                     <H2>
                         PLEASE CHECK YOUR EMAIL FOR YOUR PERSONAL ACCESS CODE
                     </H2>
@@ -38,17 +37,15 @@ const transition = `
 `;
 
 const Container = styled.div`
-    width: 100%;
-    height: 100vh;
+    text-align: left;
+    padding: 10%;
+    color: white;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
 `;
 
 const Div = styled.div`
-    color: black;
-
-    background-color: rgb(227, 24, 55);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,7 +71,7 @@ const Logo = styled.img`
 `;
 
 const ThankYou = styled.p`
-    font-size: 50px;
+    font-size: 20px;
     padding: 0 0 40px 0;
 
     @media only screen and (max-device-width: 768px) {
@@ -85,10 +82,9 @@ const ThankYou = styled.p`
     }
 `;
 
-const H2 = styled.h2`
-    border-top: 2px solid black;
+const H2 = styled.p`
     padding: 30px 0 0 0;
-    font-size: 28px;
+    font-size: 25px;
     width: 360px;
     line-height: 1.2;
 
@@ -101,8 +97,8 @@ const H2 = styled.h2`
     }
 `;
 
-const H3 = styled.h3`
-    font-size: 18px;
+const H3 = styled.p`
+    font-size: 17px;
     width: 370px;
 
     @media only screen and (max-device-width: 768px) {
@@ -115,12 +111,12 @@ const H3 = styled.h3`
 const EmailLink = styled.a`
     ${transition} cursor: pointer;
     padding: 0 0 0px 0;
-    color: black;
+    color: white;
     text-decoration: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid white;
 
     :hover {
-        color: white;
+        color: rgb(16, 16, 16);
         padding: 0 0 5px 0;
     }
 `;

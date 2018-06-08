@@ -86,10 +86,10 @@ let sendMail = function(userEmail, accessCode) {
 
 // ======================================================================== Login SignUp
 
-app.get("/check-login", (req, res) => {
+app.get("/check-for-cookie", (req, res) => {
     if (req.session.user) {
         res.json({
-            user: req.session.user
+            cookie: true
         });
     } else {
         res.json({
@@ -99,7 +99,6 @@ app.get("/check-login", (req, res) => {
 });
 
 app.post("/register-user", (req, res) => {
-    console.log(req.body.email);
     if (!req.body.firstName || !req.body.lastName || !req.body.email) {
         res.json({
             error: "Looks like you missed something. Please try again."
@@ -126,7 +125,6 @@ app.post("/register-user", (req, res) => {
                 };
             })
             .then(() => {
-                sendMail(req.body.email, accessCode);
                 res.json({
                     user: req.session.user
                 });
@@ -142,7 +140,7 @@ app.post("/register-user", (req, res) => {
 });
 
 app.post("/user-login", (req, res) => {
-    console.log("adfasfdsafsa", req.body.email);
+    console.log("adfasfdsafsa", req.body.email, req.body.accessCode);
 
     if (!req.body.email || !req.body.accessCode) {
         res.json({
@@ -152,9 +150,10 @@ app.post("/user-login", (req, res) => {
         db
             .checkLogin(req.body.email)
             .then(results => {
+                console.log(results.rows);
                 if (!results.rows[0]) {
                     res.json({
-                        error: "Incorrect email / password."
+                        error: "Incorrect email / access code."
                     });
                 } else {
                     if (
@@ -167,7 +166,7 @@ app.post("/user-login", (req, res) => {
                         };
 
                         res.json({
-                            user: req.session.user
+                            cookie: true
                         });
                     } else {
                         res.json({

@@ -7,27 +7,28 @@ export default class Header extends React.Component {
         super(props);
     }
 
+    componentDidMount() {}
+
     render() {
         return (
             <div>
                 <ParkaWorldHeader>
                     <Link to="/world">
-                        <Logo src="/logo/parkalogowhite.png" />
+                        <Logo src="/logo/Logotype.svg" />
                     </Link>
                 </ParkaWorldHeader>
                 <HeaderLinksContainer>
-                    <HeaderLink className="header-link" to="/">
+                    <HeaderLink
+                        innerRef={a => {
+                            this.parkaLink = a;
+                        }}
+                        to="/"
+                    >
                         PARKA
                     </HeaderLink>
-                    <HeaderLink className="header-link" to="/shop">
-                        SHOP
-                    </HeaderLink>
-                    <HeaderLink className="header-link" to="/dates">
-                        DATES
-                    </HeaderLink>
-                    <HeaderLink className="header-link" to="/info">
-                        INFO
-                    </HeaderLink>
+                    <HeaderLink to="/shop">SHOP</HeaderLink>
+                    <HeaderLink to="/dates">DATES</HeaderLink>
+                    <HeaderLink to="/info">INFO</HeaderLink>
                 </HeaderLinksContainer>
             </div>
         );
@@ -55,8 +56,7 @@ const ParkaWorldHeader = styled.div`
 `;
 
 const Logo = styled.img`
-    ${transition} width: 75px;
-    height: 20px;
+    ${transition} width: 180px;
 
     :hover {
         filter: brightness(0%);
@@ -75,15 +75,14 @@ const HeaderLinksContainer = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    color: white;
 `;
 
 const HeaderLink = styled(Link)`
     font-size: 25px;
-    color: white;
+    color: rgb(250, 250, 250);
     text-decoration: none;
 
     :hover {
-        ${transition} color: rgba(255, 255, 255, 0.5);
+        ${transition} color: rgb(227, 25, 54);
     }
 `;

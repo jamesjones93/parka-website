@@ -1,16 +1,23 @@
 import React from "react";
 import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getRecords } from "./Actions";
 
 class Shop extends React.Component {
     constructor(props) {
         super(props);
+
+        this.addToCart = this.addToCart.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(getRecords());
+    }
+
+    addToCart() {
+        console.log("in here");
     }
 
     render() {
@@ -24,14 +31,24 @@ class Shop extends React.Component {
             return (
                 <RecordContainer>
                     <RecordImage src={record.images[0].src} />
-                    <RecordTitle>{record.title}</RecordTitle>
+                    <RecordInfoDiv>
+                        <AddButton onClick={this.addToCart}>ADD</AddButton>
+                        <RecordTitle>{record.title}</RecordTitle>
+                    </RecordInfoDiv>
                 </RecordContainer>
             );
         });
 
         return (
             <Container>
-                <h1>Parka Shop</h1>
+                <ShopHeaderContainer>
+                    <ShopHeaderLink to="/shop/merchandise">
+                        MERCHANDISE
+                    </ShopHeaderLink>
+                    <ShopHeaderLink to="/shop/records">
+                        RECORDS XDIGITAL VIA BANDCAMP
+                    </ShopHeaderLink>
+                </ShopHeaderContainer>
                 <RecordsContainer>{recordsList}</RecordsContainer>
             </Container>
         );
@@ -59,10 +76,27 @@ const Container = styled.div`
     height: 90%;
     width: 100%;
     text-align: center;
+    background-color: rgb(250, 250, 250);
+`;
+
+const ShopHeaderContainer = styled.div`
+    width: 50%;
+    height: 8%;
+    margin: 0 0 0 45%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const ShopHeaderLink = styled(Link)`
+    text-decoration: none;
+    color: rgb(16, 16, 16);
+    font-size: 18px;
 `;
 
 const RecordsContainer = styled.div`
-    width: 95%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -71,13 +105,10 @@ const RecordsContainer = styled.div`
 `;
 
 const RecordContainer = styled.div`
-    ${transition} width: 260px;
-    height: 260px;
+    ${transition} width: 250px;
+    height: 330px;
     text-align: center;
-    padding: 30px 0 10px 0;
     margin: 7.5px;
-    border-radius: 4px;
-    color: rgb(120, 120, 120);
 
     :hover {
         background-color: rgba(227, 25, 54, 1);
@@ -87,12 +118,40 @@ const RecordContainer = styled.div`
 `;
 
 const RecordImage = styled.img`
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
+`;
+
+const RecordInfoDiv = styled.div`
+    width: 250px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 0 0 10px;
 `;
 
 const RecordTitle = styled.p`
     font-size: 20px;
+    padding: 0 0 0 10px;
+`;
+
+const AddButton = styled.button`
+    ${transition} width: 60px;
+    height: 40px;
+    color: rgb(16, 16, 16);
+    border: 5px solid rgb(16, 16, 16);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+
+    :hover {
+        border: 5px solid rgb(250, 250, 250);
+        background-color: rgb(227, 25, 54);
+        color: rgb(250, 250, 250);
+    }
 `;
 
 const Loader = styled.div`

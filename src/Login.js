@@ -39,7 +39,7 @@ class Login extends React.Component {
                     }}
                 />
                 <InputField
-                    type="password"
+                    type="number"
                     placeholder="access code"
                     innerRef={input => {
                         this.accessCode = input;
@@ -184,7 +184,6 @@ const ToRegisterLink = styled.p`
 `;
 
 const ErrorMessage = styled.p`
-    margin: 0 auto;
     text-align: left;
     color: white;
 `;

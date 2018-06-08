@@ -27,9 +27,7 @@ class Home extends React.Component {
                     transitionEnterTimeout={1100}
                     transitionLeaveTimeout={1100}
                 >
-                    {(!this.props.user && <LoginSignUp key="1" />) || (
-                        <ThankYou key="2" />
-                    )}
+                    <LoginSignUp key="1" />
                 </ReactCSSTransitionGroup>
                 <EnterParkaSite />
             </Container>
@@ -46,6 +44,7 @@ const mapStateToProps = function(state) {
 export default connect(mapStateToProps)(Home);
 
 const Container = styled.div`
-    width: 100%;
-    height: 100vh;
+    width: 50%;
+
+    background-color: rgb(227, 25, 54);
 `;
