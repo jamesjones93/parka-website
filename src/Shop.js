@@ -37,8 +37,14 @@ class Shop extends React.Component {
                     </ShopHeaderLink>
                 </ShopHeaderContainer>
 
-                <Route exact path="/shop/" component={AllProductsContainer} />
-                <Route exact path="/shop/:product" component={Product} />
+                <div>
+                    <Route
+                        exact
+                        path="/shop/"
+                        component={AllProductsContainer}
+                    />
+                    <Route exact path="/shop/:product" component={Product} />
+                </div>
             </Container>
         );
     }
@@ -79,9 +85,13 @@ const ShopHeaderContainer = styled.div`
 `;
 
 const ShopHeaderLink = styled(Link)`
-    text-decoration: none;
+    ${transition} text-decoration: none;
     color: rgb(16, 16, 16);
     font-size: 18px;
+
+    :hover {
+        color: rgb(227, 25, 54);
+    }
 `;
 
 const Loader = styled.div`

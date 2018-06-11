@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { HashRouter, Route, BrowserRouter } from "react-router-dom";
-import Home from "./Home";
 import { render } from "react-dom";
 import * as PropTypes from "prop-types";
 import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
 import { injectGlobal } from "styled-components";
 import styled from "styled-components";
+import Home from "./Home";
 import LoginSignUp from "./LoginSignUp";
 import Release from "./Release";
 import Header from "./Header";
@@ -23,7 +23,7 @@ import Info from "./Info";
 injectGlobal`
     body {
         margin: 0;
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Karla', sans-serif;
         background-color: rgb(250, 250, 250);
     }
 `;

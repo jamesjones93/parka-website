@@ -110,3 +110,11 @@ export function getProduct(params) {
         };
     });
 }
+
+export function showCart() {
+    console.log("hello");
+    return {
+        type: "SHOW_CART",
+        showCart: true
+    };
+}

@@ -1,13 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { showCart } from "./Actions";
+import Cart from "./Cart";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            showCart: false
+        };
+
+        this.showCartClick = this.showCartClick.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.setState({
+            showCart: false
+        });
+    }
+
+    showCartClick() {
+        this.props.dispatch(showCart());
+    }
 
     render() {
         return (
@@ -18,22 +35,27 @@ export default class Header extends React.Component {
                     </Link>
                 </ParkaWorldHeader>
                 <HeaderLinksContainer>
-                    <HeaderLink
-                        innerRef={a => {
-                            this.parkaLink = a;
-                        }}
-                        to="/"
-                    >
-                        PARKA
-                    </HeaderLink>
                     <HeaderLink to="/shop">SHOP</HeaderLink>
                     <HeaderLink to="/dates">DATES</HeaderLink>
                     <HeaderLink to="/info">INFO</HeaderLink>
+                    <CartImg
+                        src="/icons/cartempty.svg"
+                        onClick={this.showCartClick}
+                    />
                 </HeaderLinksContainer>
+                {this.state.showCart && <Cart />}
             </div>
         );
     }
 }
+
+const mapStateToProps = function(state) {
+    return {
+        showCart: state.showCart
+    };
+};
+
+export default connect(mapStateToProps)(Header);
 
 const transition = `
     -moz-transition: all 0.15s ease-in;
@@ -78,11 +100,16 @@ const HeaderLinksContainer = styled.div`
 `;
 
 const HeaderLink = styled(Link)`
-    font-size: 25px;
+    font-size: 30px;
     color: rgb(16, 16, 16);
     text-decoration: none;
 
     :hover {
         ${transition} color: rgb(227, 25, 54);
     }
+`;
+
+const CartImg = styled.img`
+    height: 30px;
+    cursor: pointer;
 `;

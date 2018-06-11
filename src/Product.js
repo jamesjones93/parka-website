@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProduct } from "./Actions";
+import DOMPurify from "dompurify";
 
 class Product extends React.Component {
     constructor(props) {
@@ -12,12 +13,18 @@ class Product extends React.Component {
         this.state = {
             mainImageSrc: ""
         };
+
+        this.addToCart = this.addToCart.bind(this);
     }
 
     componentDidMount() {
-        console.log("hello");
-        console.log(this.props);
         this.props.dispatch(getProduct(this.props.match.params.product));
+    }
+
+    addToCart() {
+        if (this.quantity.value === undefined) {
+            this.quantity.value = 1;
+        }
     }
 
     render() {
@@ -27,6 +34,7 @@ class Product extends React.Component {
 
         let product = this.props.product;
         let upperTitle = product.title.toUpperCase();
+        let description = product.descriptionHtml;
 
         return (
             <Container>
@@ -35,11 +43,38 @@ class Product extends React.Component {
                 </Leftcontainer>
                 <RightContainer>
                     <TopContainer>
-                        <Title>{upperTitle}</Title>
+                        <TitleAndPrice>
+                            <Title>{upperTitle}</Title>
+                            <Price>${product.variants[0].price}</Price>
+                        </TitleAndPrice>
+                        <Size>S</Size>
                         <Cross src="/icons/cross.png" />
                     </TopContainer>
-                    <Price>$10.00</Price>
-                    <p>{product.description}</p>
+                    <Description
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(description)
+                        }}
+                    />
+
+                    <QuantityAndAddContainer>
+                        <QuantityInput
+                            type="number"
+                            placeholder="1"
+                            ref={input => {
+                                this.quantity = input;
+                            }}
+                        />
+                        <AddButton onClick={this.addToCart}>ADD</AddButton>
+                    </QuantityAndAddContainer>
+
+                    <DeliveryText>
+                        Deliveries performed by CDEK company. Delivery will take
+                        2-4 days, depending on how remote your location is.
+                        Delivery price starts at 300 roubles, depending on the
+                        volume of your order and location of delivery
+                        destination. You can discuss the final price of delivery
+                        with call-centre operator.
+                    </DeliveryText>
                 </RightContainer>
             </Container>
         );
@@ -47,14 +82,19 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log("product", state.product);
-
     return {
         product: state.product
     };
 };
 
 export default connect(mapStateToProps)(Product);
+
+const transition = `
+    -moz-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+`;
 
 const Container = styled.div`
     width: 100%;
@@ -82,25 +122,98 @@ const TopContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 `;
 
-const Title = styled.p`
-    font-size: 30px;
-    padding: 0px;
-    margin: 0px;
+const TitleAndPrice = styled.div`
     width: 65%;
 `;
 
-const Cross = styled.img`
-    width: 5%;
+const Title = styled.p`
+    font-size: 35px;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
 `;
 
 const Price = styled.p`
     color: rgb(227, 25, 54);
-    font-weight: bold;
+    font-size: 27px;
+`;
+
+const Size = styled.div`
+    ${transition} width: 90px;
+    height: 70px;
+    margin: 10px 10% 0 30px;
+    border: 2px solid rgb(16, 16, 16);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 20px;
-    margin: 0;
+    cursor: pointer;
+
+    :hover {
+        color: rgb(227, 25, 54);
+        border: 2px solid rgb(227, 25, 54);
+    }
+`;
+
+const Cross = styled.img`
+    height: 30px;
+    margin: 10px 0 0 0;
+`;
+
+const Description = styled.p`
+    font-size: 18px;
+    margin: 40px 0 0 0;
+    padding: 0;
+`;
+
+const QuantityAndAddContainer = styled.div`
+    width: 80%;
+    margin: 20% 0 7% 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+const QuantityInput = styled.input`
+    width: 45%;
+    height: 66px;
+    border: 1px solid rgb(16, 16, 16);
+    font-size: 20px;
+    text-align: center;
+
+    ::placeholder {
+        color: rgb(16, 16, 16);
+    }
+
+    :focus {
+        outline: none;
+    }
+`;
+
+const AddButton = styled.button`
+    ${transition} width: 45%;
+    height: 70px;
+    color: rgb(16, 16, 16);
+    border: 6px solid rgb(16, 16, 16);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+
+    :hover {
+        border: 6px solid rgb(227, 25, 54);
+        color: rgb(227, 25, 54);
+    }
+`;
+
+const DeliveryText = styled.p`
+    font-weight: bold;
+    font-size: 14px;
+    width: 80%;
 `;
 
 const Loader = styled.div`

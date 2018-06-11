@@ -8,16 +8,10 @@ import { getAllProducts, getRecords } from "./Actions";
 class AllProductsContainer extends React.Component {
     constructor(props) {
         super(props);
-
-        this.addToCart = this.addToCart.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(getAllProducts());
-    }
-
-    addToCart() {
-        console.log("add to cart");
     }
 
     render() {
@@ -31,6 +25,8 @@ class AllProductsContainer extends React.Component {
         let productsList = products.map(product => {
             let productUrl = "/shop/" + product.handle;
 
+            let price = Math.round(product.variants[0].price);
+
             return (
                 <ProductContainerLink
                     to={productUrl}
@@ -40,7 +36,9 @@ class AllProductsContainer extends React.Component {
                     <ProductContainer>
                         <ProductImage src={product.images[0].src} />
                         <ProductInfoDiv>
-                            <AddButton onClick={this.addToCart}>ADD</AddButton>
+                            <ProductPrice className="price">
+                                ${price}
+                            </ProductPrice>
                             <ProductTitle>{product.title}</ProductTitle>
                         </ProductInfoDiv>
                     </ProductContainer>
@@ -53,7 +51,6 @@ class AllProductsContainer extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log(state.products);
     return {
         products: state.products
     };
@@ -92,6 +89,11 @@ const ProductContainer = styled.div`
         background-color: rgba(227, 25, 54, 1);
         color: white;
         cursor: pointer;
+
+        .price {
+            ${transition} border: 5px solid rgb(250, 250, 250);
+            color: rgb(250, 250, 250);
+        }
     }
 `;
 
@@ -115,22 +117,17 @@ const ProductTitle = styled.p`
     text-align: left;
 `;
 
-const AddButton = styled.button`
-    ${transition} width: 60px;
+const ProductPrice = styled.p`
+    width: 60px;
     height: 40px;
-    color: rgb(16, 16, 16);
     border: 5px solid rgb(16, 16, 16);
     font-size: 18px;
     font-weight: bold;
-    text-align: center;
     padding: 0;
     cursor: pointer;
-
-    :hover {
-        border: 5px solid rgb(250, 250, 250);
-        background-color: rgb(227, 25, 54);
-        color: rgb(250, 250, 250);
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Loader = styled.div`

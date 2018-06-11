@@ -54,6 +54,11 @@ export default function(state = {}, action) {
             ...state,
             product: action.product
         };
+    } else if (action.type === "SHOW_CART") {
+        state = {
+            ...state,
+            showCart: 0
+        };
     }
 
     return state;
