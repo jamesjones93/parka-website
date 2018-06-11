@@ -39,11 +39,20 @@ export default function(state = {}, action) {
             ...state,
             user: action.user
         };
+    } else if (action.type === "GET_PRODUCTS") {
+        state = {
+            ...state,
+            products: action.products
+        };
     } else if (action.type === "GET_RECORDS") {
-        console.log("action:", action);
         state = {
             ...state,
             records: action.records
+        };
+    } else if (action.type === "GET_PRODUCT") {
+        state = {
+            ...state,
+            product: action.product
         };
     }
 

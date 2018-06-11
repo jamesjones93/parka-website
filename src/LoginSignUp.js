@@ -28,7 +28,6 @@ class Home extends React.Component {
     enterParkaWorldClick() {
         if (this.props.signUpSuccess || this.props.cookie) {
             location.replace("/world");
-            // this.props.history.push("/world");
         } else {
             this.setState({
                 toggleParkaworldEntry: true
@@ -40,24 +39,25 @@ class Home extends React.Component {
         return (
             <Container>
                 <LoginSignUpContainer>
-                    <ReactCSSTransitionGroup
-                        transitionName="loginsignup"
-                        transitionEnterTimeout={1100}
-                        transitionLeaveTimeout={1100}
-                    >
-                        {(this.props.cookie && <p />) ||
-                            ((!this.props.signUpSuccess &&
-                                ((this.state.toggleParkaworldEntry &&
-                                    ((this.props.toggleLoginSignUp && (
-                                        <Login id="login-component" key="1" />
-                                    )) || (
-                                        <SignUp id="signup-component" key="2" />
-                                    ))) || <p />)) || <ThankYou />)}
-                    </ReactCSSTransitionGroup>
+                    <ExclusiveContentTitle>
+                        Exclusive music, mixes, <br />
+                        merch, video & other goods
+                    </ExclusiveContentTitle>
+                    {(this.props.cookie && <p />) ||
+                        ((!this.props.signUpSuccess &&
+                            ((this.state.toggleParkaworldEntry &&
+                                ((this.props.toggleLoginSignUp && (
+                                    <Login id="login-component" key="1" />
+                                )) || (
+                                    <SignUp id="signup-component" key="2" />
+                                ))) || (
+                                <EnterParkaworldLink
+                                    onClick={this.enterParkaWorldClick}
+                                >
+                                    REQUEST ACCESS CODE
+                                </EnterParkaworldLink>
+                            ))) || <ThankYou />)}
                 </LoginSignUpContainer>
-                <EnterParkaworldLink onClick={this.enterParkaWorldClick}>
-                    ENTER PARKA.WORLD
-                </EnterParkaworldLink>
             </Container>
         );
     }
@@ -82,32 +82,35 @@ const transition = `
 
 const Container = styled.div`
     color: white;
-    width: 50%;
-    padding: 20px 0 30px 0;
-    height: 100vh;
+    width: 40%;
+    padding: 10% 5%;
+    height: 90%;
     position: fixed;
-    background-color: rgb(227, 25, 54);
+    background-color: rgb(16, 16, 16);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+const ExclusiveContentTitle = styled.p`
+    font-size: 25px;
+    position: relative;
 `;
 
 const LoginSignUpContainer = styled.div`
-    height: 70%;
     width: 100%;
-    position: absolute;
-    margin: 30px 0 0 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    margin: 0 0 10% 0;
+    position: relative;
 `;
 
 const EnterParkaworldLink = styled.p`
-    ${transition} font-size: 40px;
-    align-self: flex-end;
+    ${transition} font-size: 20px;
+
     text-align: center;
-    width: 80%;
-    padding: 20px 0 2% 0;
-    border-top: 3px solid white;
+    width: 60%;
+    padding: 10px;
+    border: 3px solid white;
     cursor: pointer;
     color: white;
 

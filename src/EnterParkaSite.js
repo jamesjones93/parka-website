@@ -30,7 +30,7 @@ const Container = styled.div`
     width: 50%;
     display: flex;
     justify-content: center;
-    background-color: rgb(16, 16, 16);
+    background-color: rgb(227, 25, 54);
     height: 100vh;
 `;
 

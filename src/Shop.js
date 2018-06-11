@@ -2,18 +2,19 @@ import React from "react";
 import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { getRecords } from "./Actions";
+import { getAllProducts, getRecords } from "./Actions";
+import AllProductsContainer from "./AllProductsContainer";
+import Product from "./Product";
 
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-
-        this.addToCart = this.addToCart.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(getRecords());
+        this.props.dispatch(getAllProducts());
     }
 
     addToCart() {
@@ -21,23 +22,9 @@ class Shop extends React.Component {
     }
 
     render() {
-        if (!this.props.records) {
+        if (!this.props.products) {
             return <Loader />;
         }
-
-        let records = this.props.records.products;
-
-        let recordsList = records.map(record => {
-            return (
-                <RecordContainer>
-                    <RecordImage src={record.images[0].src} />
-                    <RecordInfoDiv>
-                        <AddButton onClick={this.addToCart}>ADD</AddButton>
-                        <RecordTitle>{record.title}</RecordTitle>
-                    </RecordInfoDiv>
-                </RecordContainer>
-            );
-        });
 
         return (
             <Container>
@@ -49,7 +36,9 @@ class Shop extends React.Component {
                         RECORDS XDIGITAL VIA BANDCAMP
                     </ShopHeaderLink>
                 </ShopHeaderContainer>
-                <RecordsContainer>{recordsList}</RecordsContainer>
+
+                <Route exact path="/shop/" component={AllProductsContainer} />
+                <Route exact path="/shop/:product" component={Product} />
             </Container>
         );
     }
@@ -57,7 +46,7 @@ class Shop extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        records: state.records
+        products: state.products
     };
 };
 
@@ -73,7 +62,7 @@ const transition = `
 const Container = styled.div`
     position: absolute;
     top: 10%;
-    height: 90%;
+    height: 100%;
     width: 100%;
     text-align: center;
     background-color: rgb(250, 250, 250);
@@ -93,65 +82,6 @@ const ShopHeaderLink = styled(Link)`
     text-decoration: none;
     color: rgb(16, 16, 16);
     font-size: 18px;
-`;
-
-const RecordsContainer = styled.div`
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-`;
-
-const RecordContainer = styled.div`
-    ${transition} width: 250px;
-    height: 330px;
-    text-align: center;
-    margin: 7.5px;
-
-    :hover {
-        background-color: rgba(227, 25, 54, 1);
-        color: white;
-        cursor: pointer;
-    }
-`;
-
-const RecordImage = styled.img`
-    width: 250px;
-    height: 250px;
-`;
-
-const RecordInfoDiv = styled.div`
-    width: 250px;
-    height: 70px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 0 0 10px;
-`;
-
-const RecordTitle = styled.p`
-    font-size: 20px;
-    padding: 0 0 0 10px;
-`;
-
-const AddButton = styled.button`
-    ${transition} width: 60px;
-    height: 40px;
-    color: rgb(16, 16, 16);
-    border: 5px solid rgb(16, 16, 16);
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    padding: 0;
-    cursor: pointer;
-
-    :hover {
-        border: 5px solid rgb(250, 250, 250);
-        background-color: rgb(227, 25, 54);
-        color: rgb(250, 250, 250);
-    }
 `;
 
 const Loader = styled.div`

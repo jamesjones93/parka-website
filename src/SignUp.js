@@ -30,9 +30,6 @@ class SignUp extends React.Component {
     render() {
         return (
             <Container>
-                <ReqAccessCode>
-                    REQUEST ACCESS CODE FOR EXCLUSIVE CONTENT & FREE MERCH
-                </ReqAccessCode>
                 <InputField
                     placeholder="first name"
                     type="text"
@@ -80,9 +77,7 @@ class SignUp extends React.Component {
                     REQUEST ACCESS CODE
                 </RegisterButton>
 
-                <ToLoginLink onClick={this.swapToLogin}>
-                    Or Login, if already in the system
-                </ToLoginLink>
+                <ToLoginLink onClick={this.swapToLogin}>Or Sign In</ToLoginLink>
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
                 )}
@@ -108,27 +103,27 @@ const transition = `
 
 const Container = styled.div`
     text-align: center;
-    padding: 10%;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 `;
 
-const ReqAccessCode = styled.p`
-    font-size: 25px;
-    line-height: 1.2;
-    padding: 0 0 15px 0;
-    text-align: left;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 45px;
-        width: 80%;
-        margin: 0 auto;
-
-        text-align: center;
-    }
-`;
+// const ReqAccessCode = styled.p`
+//     font-size: 25px;
+//     line-height: 1.2;
+//     padding: 0 0 15px 0;
+//     text-align: left;
+//
+//     @media only screen and (max-device-width: 768px) {
+//         font-size: 45px;
+//         width: 80%;
+//         margin: 0 auto;
+//
+//         text-align: center;
+//     }
+// `;
 
 const InputField = styled.input`
     ${transition} color: white;
@@ -143,7 +138,7 @@ const InputField = styled.input`
     border-bottom: 1.3px solid white;
 
     :hover {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 1.3px solid rgba(255, 255, 255, 0.5);
 
         ::placeholder {
             color: rgba(255, 255, 255, 0.5);
@@ -178,16 +173,16 @@ const RegisterButton = styled.button`
     height: 50px;
     width: 100%;
     padding: 0 10px;
-    margin: 10px 0 10px 0;
-    font-size: 14px;
+    margin: 40px 0 10px 0;
+    font-size: 20px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1.3px solid white;
+    border: 3px solid white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 3px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
@@ -212,9 +207,8 @@ const ToLoginLink = styled.p`
 `;
 
 const ErrorMessage = styled.p`
-    color: white;
+    color: rgb(227, 25, 54);
     text-align: left;
-    padding: 0px;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 27px;

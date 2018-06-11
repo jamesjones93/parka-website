@@ -30,7 +30,6 @@ class Login extends React.Component {
     render() {
         return (
             <Container>
-                <LoginTitle>LOGIN</LoginTitle>
                 <InputField
                     type="text"
                     placeholder="email"
@@ -39,13 +38,13 @@ class Login extends React.Component {
                     }}
                 />
                 <InputField
-                    type="number"
+                    type="text"
                     placeholder="access code"
                     innerRef={input => {
                         this.accessCode = input;
                     }}
                 />
-                <LoginButton onClick={this.loginUser}>Login</LoginButton>
+                <LoginButton onClick={this.loginUser}>LOGIN</LoginButton>
                 <ToRegisterLink onClick={this.swapToRegister}>
                     Not in the system yet? Sign up here.
                 </ToRegisterLink>
@@ -74,17 +73,11 @@ const transition = `
 
 const Container = styled.div`
     text-align: center;
-    padding: 10%;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    h1 {
-        font-size: 35px;
-        margin: 0 0 30px 0;
-        color: black;
-    }
+    position: relative;
 `;
 
 const LoginTitle = styled.p`
@@ -150,16 +143,16 @@ const LoginButton = styled.button`
     height: 50px;
     width: 100%;
     padding: 0 10px;
-    margin: 10px 0 10px 0;
-    font-size: 14px;
+    margin: 40px 0 10px 0;
+    font-size: 20px;
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 1.3px solid white;
+    border: 3px solid white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 3px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
@@ -185,5 +178,6 @@ const ToRegisterLink = styled.p`
 
 const ErrorMessage = styled.p`
     text-align: left;
-    color: white;
+    color: rgb(227, 25, 54);
+    padding: 0px;
 `;

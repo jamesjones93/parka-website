@@ -10,10 +10,12 @@ import * as PropTypes from "prop-types";
 import { Page, Card, Button } from "@shopify/polaris";
 import { EmbeddedApp } from "@shopify/polaris/embedded";
 import { injectGlobal } from "styled-components";
+import styled from "styled-components";
 import LoginSignUp from "./LoginSignUp";
 import Release from "./Release";
 import Header from "./Header";
 import Shop from "./Shop";
+import Product from "./Product";
 import World from "./World";
 import Dates from "./Dates";
 import Info from "./Info";
@@ -21,7 +23,8 @@ import Info from "./Info";
 injectGlobal`
     body {
         margin: 0;
-        font-family: Helvetica;
+        font-family: 'Open Sans', sans-serif;
+        background-color: rgb(250, 250, 250);
     }
 `;
 
@@ -38,19 +41,24 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <MainContainer>
                 <BrowserRouter>
                     <div>
                         <Header />
                         <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
                         <Route exact path="/shop" component={Shop} />
+                        <Route
+                            exact
+                            path="/shop/:product"
+                            component={Product}
+                        />
                         <Route exact path="/world" component={World} />
                         <Route exact path="/dates" component={Dates} />
                         <Route exact path="/info" component={Info} />
                     </div>
                 </BrowserRouter>
-            </div>
+            </MainContainer>
         );
     }
 }
@@ -62,3 +70,7 @@ const mapStateToProps = function(state) {
 };
 
 export default connect(mapStateToProps)(App);
+
+const MainContainer = styled.div`
+    background-color: rgb(250, 250, 250);
+`;

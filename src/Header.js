@@ -49,7 +49,7 @@ const ParkaWorldHeader = styled.div`
     left: 0;
     top: 0;
     z-index: 2;
-    background-color: rgb(227, 25, 54);
+    background-color: rgb(16, 16, 16);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +59,7 @@ const Logo = styled.img`
     ${transition} width: 180px;
 
     :hover {
-        filter: brightness(0%);
+        filter: brightness(50%);
     }
 `;
 
@@ -70,7 +70,7 @@ const HeaderLinksContainer = styled.div`
     left: 50%;
     top: 0;
     z-index: 2;
-    background-color: rgb(16, 16, 16);
+    background-color: rgb(250, 250, 250);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -79,7 +79,7 @@ const HeaderLinksContainer = styled.div`
 
 const HeaderLink = styled(Link)`
     font-size: 25px;
-    color: rgb(250, 250, 250);
+    color: rgb(16, 16, 16);
     text-decoration: none;
 
     :hover {
