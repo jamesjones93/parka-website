@@ -159,9 +159,11 @@ export function getCart() {
     return axios
         .get("/check-for-existing-checkout")
         .then(function({ data }) {
+            const checkoutId = data.checkoutId;
+
             if (data.checkoutId) {
-                client.checkout
-                    .fetch(data.checkoutId)
+                return client.checkout
+                    .fetch(checkoutId)
                     .then(checkout => {
                         return {
                             type: "GET_CHECKOUT",

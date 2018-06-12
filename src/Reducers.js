@@ -60,11 +60,14 @@ export default function(state = {}, action) {
             showCart: action.showCart
         };
     } else if (action.type === "GET_CHECKOUT") {
-        console.log("in here");
-        console.log(action.checkout);
         state = {
             ...state,
-            showCart: action.showCart
+            checkout: action.checkout
+        };
+    } else if (action.type === "NO_CART") {
+        state = {
+            ...state,
+            noCheckout: action.noCheckout
         };
     }
 

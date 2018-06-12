@@ -23,15 +23,44 @@ class Cart extends React.Component {
     }
 
     render() {
+        if (!this.props.checkout) {
+            return <p />;
+        }
+
+        let checkout = this.props.checkout;
+
+        let checkoutItemList = checkout.lineItems.map(product => {
+            // let productPrice = product.variant.price.parseInt();
+
+            return (
+                <ProductContainer key={product.id}>
+                    <CartImage src={product.variant.image.src} />
+                    <InfoContainer>
+                        <ProductTitle>{product.title}</ProductTitle>
+                        <ProductQuantity>
+                            QTY: {product.quantity}
+                        </ProductQuantity>
+                        <ProductQuantity>
+                            SIZE: {product.variant.title}
+                        </ProductQuantity>
+                        <ProductPrice>
+                            ${product.variant.price * product.quantity}
+                        </ProductPrice>
+                    </InfoContainer>
+                </ProductContainer>
+            );
+        });
+
         return (
             <Overlay ref={div => (this.overlay = div)} onClick={this.closeCart}>
                 <CartContainer>
-                    <ProductsContainer>
-                        <p>testing</p>
-                    </ProductsContainer>
+                    <Cross src="/icons/cross.png" onClick={this.closeCart} />
+                    <ProductsContainer>{checkoutItemList}</ProductsContainer>
                     <SubtotalContainer>
                         <SubtotalLabel>Subtotal:</SubtotalLabel>
-                        <SubtotalValue>$20</SubtotalValue>
+                        <SubtotalValue>
+                            ${this.props.checkout.subtotalPrice}
+                        </SubtotalValue>
                     </SubtotalContainer>
                     <CheckoutButton>Checkout</CheckoutButton>
                 </CartContainer>
@@ -41,8 +70,9 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = function(state) {
+    console.log("in state", state.checkout);
     return {
-        showCart: state.showCart,
+        checkout: state.checkout,
         cart: state.cart
     };
 };
@@ -78,10 +108,56 @@ const CartContainer = styled.div`
     z-index: 15;
 `;
 
+const Cross = styled.img`
+    height: 30px;
+    margin: -7% 0 0 -7%;
+    position: absolute;
+    cursor: pointer;
+`;
+
 const ProductsContainer = styled.div`
     height: 65%;
     width: 100%;
     margin: 0;
+    overflow: scroll;
+`;
+
+const ProductContainer = styled.div`
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+`;
+
+const CartImage = styled.img`
+    height: 80%;
+`;
+
+const InfoContainer = styled.div`
+    width: 50%;
+    margin: 0 0 0 4%;
+    padding: 0;
+    font-size: 15px;
+`;
+
+const ProductTitle = styled.p`
+    color: rgb(16, 16, 16);
+    line-height: 15px;
+    width: 100%;
+    vertical-align: top;
+    margin: 0;
+`;
+
+const ProductQuantity = styled.p`
+    color: rgb(150, 150, 150);
+    line-height: 15px;
+    margin: 0;
+`;
+
+const ProductPrice = styled.p`
+    color: rgb(227, 25, 54);
+    margin: 0;
+    line-height: 15px;
 `;
 
 const SubtotalContainer = styled.div`
