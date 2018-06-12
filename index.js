@@ -41,7 +41,7 @@ if (process.env.NODE_ENV != "production") {
 
 const cookieSessionMiddleware = cookieSession({
     secret: process.env.SECRET || require("./secrets").secret,
-    maxAge: 1000 * 60 * 60 * 24 * 90
+    maxAge: 1000 * 60 * 60 * 24 * 7
 });
 
 app.use(cookieSessionMiddleware);
@@ -140,8 +140,6 @@ app.post("/register-user", (req, res) => {
 });
 
 app.post("/user-login", (req, res) => {
-    console.log("adfasfdsafsa", req.body.email, req.body.accessCode);
-
     if (!req.body.email || !req.body.accessCode) {
         res.json({
             error: "Incorrect email / password."
@@ -150,7 +148,6 @@ app.post("/user-login", (req, res) => {
         db
             .checkLogin(req.body.email)
             .then(results => {
-                console.log(results.rows);
                 if (!results.rows[0]) {
                     res.json({
                         error: "Incorrect email / access code."
@@ -183,6 +180,28 @@ app.post("/user-login", (req, res) => {
                 });
             });
     }
+});
+
+// ========================================================================
+
+app.get("/check-for-existing-checkout", (req, res) => {
+    if (req.session.checkoutId) {
+        res.json({
+            checkoutId: req.session.checkoutId
+        });
+    } else {
+        res.json({
+            cart: false
+        });
+    }
+});
+
+app.post("/save-checkout-to-cookie", (req, res) => {
+    req.session.checkoutId = req.body.checkoutId;
+
+    res.json({
+        checkoutId: req.session.checkoutId
+    });
 });
 
 // ========================================================================

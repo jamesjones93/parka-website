@@ -1,20 +1,20 @@
-.loginsignup-enter {
+.fade-enter {
     opacity: 0.01;
 }
 
-.loginsignup-enter.loginsignup-enter-active {
+.fade-enter.fade-enter-active {
     opacity: 1;
     position: absolute;
-    transition: opacity 800ms ease-in;
+    transition: opacity 500ms ease-in;
 }
 
-.loginsignup-leave {
+.fade-leave {
     opacity: 1;
 }
 
-.loginsignup-leave.loginsignup-leave-active {
+.fade-leave.fade-leave-active {
     opacity: 0.01;
-    transition: opacity 800ms ease-in;
+    transition: opacity 500ms ease-in;
 }
 
 .header-link {

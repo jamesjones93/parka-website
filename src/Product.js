@@ -3,7 +3,7 @@ import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProduct } from "./Actions";
+import { getProduct, addToCart } from "./Actions";
 import DOMPurify from "dompurify";
 
 class Product extends React.Component {
@@ -11,26 +11,60 @@ class Product extends React.Component {
         super(props);
 
         this.state = {
-            mainImageSrc: ""
+            mainImageSrc: "",
+            productQuantity: 1
         };
 
+        this.changeSize = this.changeSize.bind(this);
+        this.quantityChange = this.quantityChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(getProduct(this.props.match.params.product));
+
+        this.setState({
+            variantIndex: 0
+        });
+    }
+
+    changeSize() {
+        let variantIndex;
+
+        if (
+            this.state.variantIndex ===
+            this.props.product.variants.length - 1
+        ) {
+            variantIndex = 0;
+        } else {
+            variantIndex = this.state.variantIndex += 1;
+        }
+
+        this.setState({
+            variantIndex: variantIndex
+        });
+    }
+
+    quantityChange(e) {
+        this.setState({
+            productQuantity: e.currentTarget.value
+        });
     }
 
     addToCart() {
-        if (this.quantity.value === undefined) {
-            this.quantity.value = 1;
-        }
+        let productInfo = {
+            id: this.props.product.variants[this.state.variantIndex].id,
+            quantity: this.state.productQuantity
+        };
+
+        this.props.dispatch(addToCart(productInfo));
     }
 
     render() {
         if (!this.props.product) {
             return <Loader />;
         }
+        console.log("heeeere", this.props.product);
 
         let product = this.props.product;
         let upperTitle = product.title.toUpperCase();
@@ -47,7 +81,11 @@ class Product extends React.Component {
                             <Title>{upperTitle}</Title>
                             <Price>${product.variants[0].price}</Price>
                         </TitleAndPrice>
-                        <Size>S</Size>
+                        <Size onClick={this.changeSize}>
+                            {(product.variants[this.state.variantIndex] &&
+                                product.variants[this.state.variantIndex]
+                                    .selectedOptions[0].value) || <p />}
+                        </Size>
                         <Cross src="/icons/cross.png" />
                     </TopContainer>
                     <Description
@@ -63,6 +101,7 @@ class Product extends React.Component {
                             ref={input => {
                                 this.quantity = input;
                             }}
+                            onChange={this.quantityChange}
                         />
                         <AddButton onClick={this.addToCart}>ADD</AddButton>
                     </QuantityAndAddContainer>
@@ -207,6 +246,10 @@ const AddButton = styled.button`
     :hover {
         border: 6px solid rgb(227, 25, 54);
         color: rgb(227, 25, 54);
+    }
+
+    :focus {
+        outline: none;
     }
 `;
 

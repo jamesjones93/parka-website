@@ -17,10 +17,6 @@ class Shop extends React.Component {
         this.props.dispatch(getAllProducts());
     }
 
-    addToCart() {
-        console.log("in here");
-    }
-
     render() {
         if (!this.props.products) {
             return <Loader />;

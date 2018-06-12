@@ -74,6 +74,8 @@ export function userLogin(userData) {
     });
 }
 
+// ===================================================================================== get products and collections
+
 export function getAllProducts() {
     return client.product.fetchAll().then(products => {
         return {
@@ -111,10 +113,82 @@ export function getProduct(params) {
     });
 }
 
+// ===================================================================================== shopping cart
+
+export function addToCart(productInfo) {
+    console.log(productInfo);
+    return axios
+        .get("/check-for-existing-checkout")
+        .then(function({ data }) {
+            if (data.cart === false) {
+                client.checkout.create().then(checkout => {
+                    productInfo.checkoutId = checkout.id;
+                    axios
+                        .post("/save-checkout-to-cookie", {
+                            checkoutId: checkoutId
+                        })
+                        .catch(console.log);
+                });
+            } else {
+                productInfo.checkoutId = data.checkoutId;
+            }
+
+            return productInfo;
+        })
+        .then(productInfo => {
+            const lineItemsToAdd = [
+                { variantId: productInfo.id, quantity: productInfo.quantity }
+            ];
+
+            client.checkout
+                .addLineItems(productInfo.checkoutId, lineItemsToAdd)
+                .then(checkout => {
+                    // Do something with the updated checkout
+                    return {
+                        type: "GET_CART",
+                        cart: checkout
+                    };
+                })
+                .catch(console.log);
+        })
+        .catch(console.log);
+}
+
+export function getCart() {
+    console.log("in get cart");
+    return axios
+        .get("/check-for-existing-checkout")
+        .then(function({ data }) {
+            if (data.checkoutId) {
+                client.checkout
+                    .fetch(data.checkoutId)
+                    .then(checkout => {
+                        return {
+                            type: "GET_CHECKOUT",
+                            checkout: checkout
+                        };
+                    })
+                    .catch(console.log);
+            } else {
+                return {
+                    type: "NO_CART",
+                    noCheckout: "Nothing has been added to the cart yet."
+                };
+            }
+        })
+        .catch(console.log);
+}
+
 export function showCart() {
-    console.log("hello");
     return {
-        type: "SHOW_CART",
+        type: "TOGGLE_CART",
         showCart: true
+    };
+}
+
+export function hideCart() {
+    return {
+        type: "TOGGLE_CART",
+        showCart: false
     };
 }

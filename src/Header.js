@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { showCart } from "./Actions";
 import Cart from "./Cart";
 
@@ -16,11 +17,7 @@ class Header extends React.Component {
         this.showCartClick = this.showCartClick.bind(this);
     }
 
-    componentDidMount() {
-        this.setState({
-            showCart: false
-        });
-    }
+    componentDidMount() {}
 
     showCartClick() {
         this.props.dispatch(showCart());
@@ -43,7 +40,13 @@ class Header extends React.Component {
                         onClick={this.showCartClick}
                     />
                 </HeaderLinksContainer>
-                {this.state.showCart && <Cart />}
+                <ReactCSSTransitionGroup
+                    transitionName="fade"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}
+                >
+                    {(this.props.showCart && <Cart key="1" />) || <p key="2" />}
+                </ReactCSSTransitionGroup>
             </div>
         );
     }

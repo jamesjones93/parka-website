@@ -54,10 +54,17 @@ export default function(state = {}, action) {
             ...state,
             product: action.product
         };
-    } else if (action.type === "SHOW_CART") {
+    } else if (action.type === "TOGGLE_CART") {
         state = {
             ...state,
-            showCart: 0
+            showCart: action.showCart
+        };
+    } else if (action.type === "GET_CHECKOUT") {
+        console.log("in here");
+        console.log(action.checkout);
+        state = {
+            ...state,
+            showCart: action.showCart
         };
     }
 
