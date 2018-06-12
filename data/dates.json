@@ -1,0 +1,35 @@
+{
+    "dates": [
+        {
+            "date": "JUNE 30",
+            "description": "Le Bain - Lawrence Lee & Juan Ramos & Peter Fonda",
+            "club": "Le Bain",
+            "clubAddress":
+                "The Standard\nHigh Line\n848 Washington St\nNew York\nNY 10014\nUSA",
+            "artwork": "june30-lebain.jpg"
+        },
+        {
+            "date": "JUNE 22",
+            "description":
+                "Halcyon - Lawrence Lee 'BioDome EP' Record Release In-Store",
+            "club": "Halycon",
+            "clubAddress": "74 Wythe Ave\nBrooklyn\nNY 11249\nUSA",
+            "artwork": "june22-halycon.jpg"
+        },
+        {
+            "date": "JUNE 22",
+            "description":
+                "Halcyon - Lawrence Lee 'BioDome EP' Record Release In-Store",
+            "club": "Halycon",
+            "clubAddress": "74 Wythe Ave\nBrooklyn\nNY 11249\nUSA",
+            "artwork": "june22-halycon.jpg"
+        },
+        {
+            "date": "JUNE 19",
+            "description": "Bossa Nova Civic Club - Peter Fonda, Lawrence Lee",
+            "club": "Bossa Nova",
+            "clubAddress": "1271 Myrtle Ave\nBrooklyn\nNY 11221\nUSA",
+            "artwork": "june30-lebain.jpg"
+        }
+    ]
+}

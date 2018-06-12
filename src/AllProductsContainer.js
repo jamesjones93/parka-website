@@ -15,15 +15,27 @@ class AllProductsContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.params);
         if (!this.props.products) {
             return <Loader />;
         }
 
-        let products = this.props.products;
-        products.reverse();
+        let products;
+
+        if (this.props.params.filter === "all") {
+            products = this.props.products;
+        } else if (this.props.params.filter === "merchandise") {
+            products = this.props.products.filter(
+                product => product.productType === "Merchandise"
+            );
+        } else if (this.props.params.filter === "records") {
+            products = this.props.products.filter(
+                product => product.productType === "Record"
+            );
+        }
 
         let productsList = products.map(product => {
-            let productUrl = "/shop/" + product.handle;
+            let productUrl = "/shop/product/" + product.handle;
 
             let price = Math.round(product.variants[0].price);
 

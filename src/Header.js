@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { showCart } from "./Actions";
+import { showCart, getCart } from "./Actions";
 import Cart from "./Cart";
 
 class Header extends React.Component {
@@ -17,7 +17,9 @@ class Header extends React.Component {
         this.showCartClick = this.showCartClick.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.props.dispatch(getCart());
+    }
 
     showCartClick() {
         this.props.dispatch(showCart());
@@ -32,13 +34,20 @@ class Header extends React.Component {
                     </Link>
                 </ParkaWorldHeader>
                 <HeaderLinksContainer>
-                    <HeaderLink to="/shop">SHOP</HeaderLink>
+                    <HeaderLink to="/shop/all">SHOP</HeaderLink>
                     <HeaderLink to="/dates">DATES</HeaderLink>
                     <HeaderLink to="/info">INFO</HeaderLink>
-                    <CartImg
-                        src="/icons/cartempty.svg"
-                        onClick={this.showCartClick}
-                    />
+                    {(this.props.checkout && (
+                        <CartImg
+                            src="/icons/cartfull.svg"
+                            onClick={this.showCartClick}
+                        />
+                    )) || (
+                        <CartImg
+                            src="/icons/cartempty.svg"
+                            onClick={this.showCartClick}
+                        />
+                    )}
                 </HeaderLinksContainer>
                 <ReactCSSTransitionGroup
                     transitionName="fade"
@@ -54,7 +63,8 @@ class Header extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        showCart: state.showCart
+        showCart: state.showCart,
+        checkout: state.checkout
     };
 };
 
@@ -103,7 +113,7 @@ const HeaderLinksContainer = styled.div`
 `;
 
 const HeaderLink = styled(Link)`
-    font-size: 30px;
+    font-size: 25px;
     color: rgb(16, 16, 16);
     text-decoration: none;
 

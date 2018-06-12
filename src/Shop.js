@@ -2,7 +2,7 @@ import React from "react";
 import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllProducts, getRecords } from "./Actions";
 import AllProductsContainer from "./AllProductsContainer";
@@ -14,6 +14,7 @@ class Shop extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.match.params);
         this.props.dispatch(getAllProducts());
     }
 
@@ -25,21 +26,14 @@ class Shop extends React.Component {
         return (
             <Container>
                 <ShopHeaderContainer>
+                    <ShopHeaderLink to="/shop/records">RECORDS</ShopHeaderLink>
                     <ShopHeaderLink to="/shop/merchandise">
                         MERCHANDISE
-                    </ShopHeaderLink>
-                    <ShopHeaderLink to="/shop/records">
-                        RECORDS XDIGITAL VIA BANDCAMP
                     </ShopHeaderLink>
                 </ShopHeaderContainer>
 
                 <div>
-                    <Route
-                        exact
-                        path="/shop/"
-                        component={AllProductsContainer}
-                    />
-                    <Route exact path="/shop/:product" component={Product} />
+                    <AllProductsContainer params={this.props.match.params} />
                 </div>
             </Container>
         );

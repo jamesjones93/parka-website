@@ -69,6 +69,11 @@ export default function(state = {}, action) {
             ...state,
             noCheckout: action.noCheckout
         };
+    } else if (action.type === "GET_DATES") {
+        state = {
+            ...state,
+            dates: action.dates
+        };
     }
 
     return state;

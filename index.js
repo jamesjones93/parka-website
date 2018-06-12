@@ -12,9 +12,9 @@ const fs = require("fs");
 const server = require("http").Server(app);
 const db = require("./db");
 const hash = require("./hash");
-const releases = require("./data/releases");
 var nodemailer = require("nodemailer");
 var mysql = require("mysql");
+const { dates } = require("./data/dates.json");
 
 app.use(
     bodyParser.urlencoded({
@@ -182,7 +182,7 @@ app.post("/user-login", (req, res) => {
     }
 });
 
-// ========================================================================
+// ======================================================================== checkout x cookie
 
 app.get("/check-for-existing-checkout", (req, res) => {
     if (req.session.checkoutId) {
@@ -201,6 +201,14 @@ app.post("/save-checkout-to-cookie", (req, res) => {
 
     res.json({
         checkoutId: req.session.checkoutId
+    });
+});
+
+// ======================================================================== dates
+
+app.get("/get-dates", (req, res) => {
+    res.json({
+        dates: dates
     });
 });
 

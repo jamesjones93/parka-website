@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { hideCart, getCart } from "./Actions";
+import { hideCart, getCart, removeProduct } from "./Actions";
 
 class Cart extends React.Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class Cart extends React.Component {
             overlayLeft: "100%"
         };
         this.closeCart = this.closeCart.bind(this);
+        this.removeItem = this.removeItem.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +21,11 @@ class Cart extends React.Component {
 
     closeCart() {
         this.props.dispatch(hideCart());
+    }
+
+    removeItem(productId, e) {
+        console.log(productId);
+        this.props.dispatch(removeProduct(productId));
     }
 
     render() {
@@ -47,12 +53,16 @@ class Cart extends React.Component {
                             ${product.variant.price * product.quantity}
                         </ProductPrice>
                     </InfoContainer>
+                    <SmallCross
+                        src="/icons/cross.png"
+                        onClick={e => this.removeItem(product.id, e)}
+                    />
                 </ProductContainer>
             );
         });
 
         return (
-            <Overlay ref={div => (this.overlay = div)} onClick={this.closeCart}>
+            <Overlay ref={div => (this.overlay = div)}>
                 <CartContainer>
                     <Cross src="/icons/cross.png" onClick={this.closeCart} />
                     <ProductsContainer>{checkoutItemList}</ProductsContainer>
@@ -92,7 +102,7 @@ const Overlay = styled.div`
     position: fixed;
     left: 0;
     top: 0;
-    background-color: rgba(16, 16, 16, 0.7);
+    background-color: rgba(16, 16, 16, 0.5);
     z-index: 10;
 `;
 
@@ -146,18 +156,25 @@ const ProductTitle = styled.p`
     width: 100%;
     vertical-align: top;
     margin: 0;
+    font-weight: bold;
 `;
 
 const ProductQuantity = styled.p`
     color: rgb(150, 150, 150);
-    line-height: 15px;
+    line-height: 17px;
     margin: 0;
 `;
 
 const ProductPrice = styled.p`
     color: rgb(227, 25, 54);
     margin: 0;
-    line-height: 15px;
+    line-height: 17px;
+`;
+
+const SmallCross = styled.img`
+    ${transition} height: 20%;
+    opacity: 0.55;
+    cursor: pointer;
 `;
 
 const SubtotalContainer = styled.div`

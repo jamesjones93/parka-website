@@ -21,6 +21,11 @@ import Dates from "./Dates";
 import Info from "./Info";
 
 injectGlobal`
+    @font-face {
+        font-family: Graphik;
+        src: url('/font/graphik-font.otf') format('opentype');
+    }
+
     body {
         margin: 0;
         font-family: 'Karla', sans-serif;
@@ -47,10 +52,10 @@ class App extends React.Component {
                         <Header />
                         <Route exact path="/" component={Home} />
                         <Route exact path="/release" component={Release} />
-                        <Route exact path="/shop" component={Shop} />
+                        <Route exact path="/shop/:filter" component={Shop} />
                         <Route
                             exact
-                            path="/shop/:product"
+                            path="/shop/product/:product"
                             component={Product}
                         />
                         <Route exact path="/world" component={World} />
