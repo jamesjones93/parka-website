@@ -77,7 +77,7 @@ const ShopHeaderContainer = styled.div`
 const ShopHeaderLink = styled(Link)`
     ${transition} text-decoration: none;
     color: rgb(16, 16, 16);
-    font-size: 18px;
+    font-size: 14px;
 
     :hover {
         color: rgb(227, 25, 54);

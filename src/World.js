@@ -105,9 +105,9 @@ const VideosContainer = styled.div`
 `;
 
 const Title = styled.p`
-    font-size: 20px;
+    font-size: 18px;
     margin: 0 0 0 5%;
-    line-height: 2;
+    padding: 10px 0 0px 0;
     width: 100%;
     cursor: pointer;
 `;

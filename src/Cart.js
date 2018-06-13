@@ -153,12 +153,12 @@ const ProductTitle = styled.p`
     width: 100%;
     vertical-align: top;
     margin: 0;
-    font-weight: bold;
 `;
 
 const ProductQuantity = styled.p`
     color: rgb(150, 150, 150);
     line-height: 17px;
+    font-size: 13px;
     margin: 0;
 `;
 
@@ -166,6 +166,7 @@ const ProductPrice = styled.p`
     color: rgb(227, 25, 54);
     margin: 0;
     line-height: 17px;
+    font-size: 14px;
 `;
 
 const SmallCross = styled.img`

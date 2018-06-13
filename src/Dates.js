@@ -57,8 +57,12 @@ class Dates extends React.Component {
                     key={index}
                     onClick={e => this.openClickedContainer(index, e)}
                 >
-                    <DateDate>{date.date}</DateDate>
-                    <DateDescription>{date.description}</DateDescription>
+                    <DateInfo>
+                        {date.date}
+                        <DateDescription>
+                            {date.club} - {date.description}
+                        </DateDescription>
+                    </DateInfo>
                 </DateContainer>
             );
         });
@@ -143,7 +147,7 @@ const ClickedContainer = styled.div`
 
 const EventTextContainer = styled.div`
     width: 42%;
-    object-fit: contain;
+    object-fit: fill;
     background-color: rgb(16, 16, 16);
     color: rgb(250, 250, 250);
     padding: 4%;
@@ -169,8 +173,8 @@ const ClickedImgContainer = styled.div`
 `;
 
 const ClickedImg = styled.img`
-    height: 100%;
     width: 100%;
+    height: 100%;
 `;
 
 const ClickedCross = styled.img`
@@ -198,21 +202,19 @@ const DateContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 20px;
+    font-size: 16px;
     color: rgb(250, 250, 250);
     cursor: pointer;
 `;
 
-const DateDate = styled.p`
-    height: 100%;
-    width: 15%;
+const DateInfo = styled.p`
     padding: 0 0 0 5%;
+    width: 80%;
     line-height: 2;
 `;
 
-const DateDescription = styled.p`
-    height: 100%;
-    line-height: 2;
+const DateDescription = styled.span`
+    margin: 0 0 0 10%;
     overflow: hidden;
 `;
 

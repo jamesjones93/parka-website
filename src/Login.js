@@ -46,7 +46,7 @@ class Login extends React.Component {
                 />
                 <LoginButton onClick={this.loginUser}>LOGIN</LoginButton>
                 <ToRegisterLink onClick={this.swapToRegister}>
-                    Not in the system yet? Sign up here.
+                    Request access code
                 </ToRegisterLink>
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
@@ -148,11 +148,11 @@ const LoginButton = styled.button`
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 3px solid white;
+    border: 1px solid white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);
-        border: 3px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
@@ -174,10 +174,12 @@ const ToRegisterLink = styled.p`
     padding: 0;
     text-decoration: underline;
     text-align: left;
+    font-size: 13px;
 `;
 
 const ErrorMessage = styled.p`
     text-align: left;
     color: rgb(227, 25, 54);
     padding: 0px;
+    font-size: 12px;
 `;

@@ -41,7 +41,7 @@ if (process.env.NODE_ENV != "production") {
 
 const cookieSessionMiddleware = cookieSession({
     secret: process.env.SECRET || require("./secrets").secret,
-    maxAge: 1000 * 60 * 60 * 24 * 7
+    maxAge: 1000 * 60 * 60 * 12
 });
 
 app.use(cookieSessionMiddleware);
@@ -85,6 +85,14 @@ let sendMail = function(userEmail, accessCode) {
 };
 
 // ======================================================================== Login SignUp
+
+// app.get("/", (req, res) => {
+//     if (req.session.user) {
+//         res.redirect("/world");
+//     } else {
+//         res.sendFile(__dirname + "/index.html");
+//     }
+// });
 
 app.get("/check-for-cookie", (req, res) => {
     if (req.session.user) {

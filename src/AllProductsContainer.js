@@ -107,7 +107,7 @@ const ProductContainer = styled.div`
         cursor: pointer;
 
         .price {
-            ${transition} border: 5px solid rgb(250, 250, 250);
+            ${transition} border: 3px solid rgb(250, 250, 250);
             color: rgb(250, 250, 250);
         }
     }
@@ -128,17 +128,16 @@ const ProductInfoDiv = styled.div`
 `;
 
 const ProductTitle = styled.p`
-    font-size: 20px;
+    font-size: 14px;
     padding: 0 15px 0 10px;
     text-align: left;
 `;
 
 const ProductPrice = styled.p`
-    width: 60px;
-    height: 40px;
-    border: 5px solid rgb(16, 16, 16);
-    font-size: 18px;
-    font-weight: bold;
+    width: 40px;
+    height: 30px;
+    border: 3px solid rgb(16, 16, 16);
+    font-size: 16px;
     padding: 0;
     cursor: pointer;
     display: flex;

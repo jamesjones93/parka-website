@@ -178,11 +178,11 @@ const RegisterButton = styled.button`
     background-color: inherit;
     text-align: center;
     border: none;
-    border: 3px solid white;
+    border: 1px solid white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);
-        border: 3px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
     cursor: pointer;
 
@@ -204,6 +204,7 @@ const ToLoginLink = styled.p`
     padding: 0;
     text-decoration: underline;
     text-align: left;
+    font-size: 13px;
 `;
 
 const ErrorMessage = styled.p`

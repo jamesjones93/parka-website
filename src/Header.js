@@ -113,7 +113,7 @@ const HeaderLinksContainer = styled.div`
 `;
 
 const HeaderLink = styled(Link)`
-    font-size: 25px;
+    font-size: 18px;
     color: rgb(16, 16, 16);
     text-decoration: none;
 
@@ -123,6 +123,6 @@ const HeaderLink = styled(Link)`
 `;
 
 const CartImg = styled.img`
-    height: 30px;
+    height: 16px;
     cursor: pointer;
 `;

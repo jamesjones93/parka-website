@@ -16,13 +16,19 @@ class WorldVinyl extends React.Component {
         this.props.dispatch(getWorldVinyl());
     }
 
-    vinylMouseOver(e) {
+    vinylMouseOver(sku, e) {
+        if (sku == 0) {
+            e.currentTarget.children[0].style.filter = "blur(5px)";
+        }
+
+        e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
         this.track.play();
     }
 
     vinylMouseOut(e) {
         e.currentTarget.children[0].style.opacity = 0;
+        e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         this.track.pause();
         this.track.currentTime = 0;
     }
@@ -33,13 +39,24 @@ class WorldVinyl extends React.Component {
         }
 
         let vinylsList = this.props.vinyls.map(vinyl => {
+            let blur;
+            let noSkuHover;
+            if (vinyl.variants[0].sku == 0) {
+                blur = {
+                    filter: "blur(3px)"
+                };
+                noSkuHover = this.noSkuHover;
+            }
+            console.log(vinyl.variants[0].sku);
             return (
                 <VinylContainer
                     key={vinyl.id}
-                    onMouseOver={this.vinylMouseOver}
+                    onMouseOver={e =>
+                        this.vinylMouseOver(vinyl.variants[0].sku, e)
+                    }
                     onMouseOut={this.vinylMouseOut}
                 >
-                    <VinylImg src={vinyl.images[0].src} />
+                    <VinylImg src={vinyl.images[0].src} style={blur} />
                     <audio ref={audio => (this.track = audio)}>
                         <source src={"tracks/" + vinyl.title + ".mp3"} />
                     </audio>
@@ -66,10 +83,10 @@ const mapStateToProps = function(state) {
 export default connect(mapStateToProps)(WorldVinyl);
 
 const transition = `
-    -moz-transition: all 0.15s ease-in;
-    -o-transition: all 0.15s ease-in;
-    -webkit-transition: all 0.15s ease-in;
-    transition: all 0.15s ease-in;
+    -moz-transition: all 0.10s ease-in;
+    -o-transition: all 0.10s ease-in;
+    -webkit-transition: all 0.10s ease-in;
+    transition: all 0.10s ease-in;
 `;
 
 const Container = styled.div`
@@ -83,7 +100,6 @@ const Container = styled.div`
 
 const ReleasesContainer = styled.div`
     width: 90%;
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -98,6 +114,9 @@ const VinylContainer = styled.div`
     background-color: rgb(227, 25, 54);
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const VinylImg = styled.img`

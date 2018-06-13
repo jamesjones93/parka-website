@@ -169,7 +169,7 @@ const TitleAndPrice = styled.div`
 `;
 
 const Title = styled.p`
-    font-size: 35px;
+    font-size: 25px;
     padding: 0px;
     margin: 0px;
     width: 100%;
@@ -177,12 +177,12 @@ const Title = styled.p`
 
 const Price = styled.p`
     color: rgb(227, 25, 54);
-    font-size: 27px;
+    font-size: 20px;
 `;
 
 const Size = styled.div`
-    ${transition} width: 90px;
-    height: 70px;
+    ${transition} width: 70px;
+    height: 50px;
     margin: 10px 10% 0 30px;
     border: 2px solid rgb(16, 16, 16);
     display: flex;
@@ -203,7 +203,7 @@ const Cross = styled.img`
 `;
 
 const Description = styled.p`
-    font-size: 18px;
+    font-size: 16px;
     margin: 40px 0 0 0;
     padding: 0;
 `;
@@ -236,7 +236,7 @@ const AddButton = styled.button`
     ${transition} width: 45%;
     height: 70px;
     color: rgb(16, 16, 16);
-    border: 6px solid rgb(16, 16, 16);
+    border: 3px solid rgb(16, 16, 16);
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -244,7 +244,7 @@ const AddButton = styled.button`
     cursor: pointer;
 
     :hover {
-        border: 6px solid rgb(227, 25, 54);
+        border: 3px solid rgb(227, 25, 54);
         color: rgb(227, 25, 54);
     }
 
@@ -254,8 +254,7 @@ const AddButton = styled.button`
 `;
 
 const DeliveryText = styled.p`
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 10px;
     width: 80%;
 `;
 

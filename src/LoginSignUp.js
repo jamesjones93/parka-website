@@ -6,7 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import ThankYou from "./ThankYou";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { checkForCookie } from "./Actions";
+import { checkForCookie, toLogin } from "./Actions";
 
 class Home extends React.Component {
     constructor(props) {
@@ -18,11 +18,17 @@ class Home extends React.Component {
             signUpSuccess: false
         };
 
+        this.swapToLogin = this.swapToLogin.bind(this);
         this.enterParkaWorldClick = this.enterParkaWorldClick.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(checkForCookie());
+    }
+
+    swapToLogin() {
+        this.enterParkaWorldClick();
+        this.props.dispatch(toLogin());
     }
 
     enterParkaWorldClick() {
@@ -40,19 +46,23 @@ class Home extends React.Component {
             <Container>
                 <LoginSignUpContainer>
                     {(this.props.cookie && <p />) ||
-                        ((!this.props.signUpSuccess &&
-                            ((this.state.toggleParkaworldEntry &&
-                                ((this.props.toggleLoginSignUp && (
-                                    <Login id="login-component" key="1" />
-                                )) || (
-                                    <SignUp id="signup-component" key="2" />
-                                ))) || (
+                        ((this.state.toggleParkaworldEntry &&
+                            ((this.props.toggleLoginSignUp && (
+                                <Login id="login-component" key="1" />
+                            )) || (
+                                <SignUp id="signup-component" key="2" />
+                            ))) || (
+                            <div>
                                 <EnterParkaworldLink
                                     onClick={this.enterParkaWorldClick}
                                 >
                                     REQUEST ACCESS CODE
                                 </EnterParkaworldLink>
-                            ))) || <ThankYou />)}
+                                <ToLoginLink onClick={this.swapToLogin}>
+                                    Or Sign In
+                                </ToLoginLink>
+                            </div>
+                        ))}
                 </LoginSignUpContainer>
             </Container>
         );
@@ -60,6 +70,10 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = function(state) {
+    if (state.cookie) {
+        location.pathname = "/world";
+    }
+
     return {
         toggleLoginSignUp: state.toggleLoginSignUp,
         cookie: state.cookie,
@@ -94,17 +108,41 @@ const LoginSignUpContainer = styled.div`
     margin: 0 0 10% 0;
 `;
 
-const EnterParkaworldLink = styled.p`
-    ${transition} font-size: 20px;
-
+const EnterParkaworldLink = styled.button`
+    ${transition} color: white;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px;
+    margin: 40px 0 10px 0;
+    font-size: 20px;
+    background-color: inherit;
     text-align: center;
-    padding: 10px;
-    border: 3px solid white;
-    cursor: pointer;
-    color: white;
+    border: none;
+    border: 1px solid white;
 
     :hover {
         color: rgba(255, 255, 255, 0.5);
-        border: 3px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
+    cursor: pointer;
+
+    :focus {
+        outline: none;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+        height: 100px;
+        margin: 65px 0 0 10%;
+        font-size: 45px;
+        height: 140px;
+    }
+`;
+
+const ToLoginLink = styled.p`
+    ${transition} cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-align: left;
+    font-size: 13px;
 `;
