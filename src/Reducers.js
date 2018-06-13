@@ -74,6 +74,11 @@ export default function(state = {}, action) {
             ...state,
             dates: action.dates
         };
+    } else if (action.type === "GET_WORLD_VINYL") {
+        state = {
+            ...state,
+            vinyls: action.vinyls
+        };
     }
 
     return state;

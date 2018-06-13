@@ -36,8 +36,6 @@ class Cart extends React.Component {
         let checkout = this.props.checkout;
 
         let checkoutItemList = checkout.lineItems.map(product => {
-            // let productPrice = product.variant.price.parseInt();
-
             return (
                 <ProductContainer key={product.id}>
                     <CartImage src={product.variant.image.src} />
@@ -80,7 +78,6 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log("in state", state.checkout);
     return {
         checkout: state.checkout,
         cart: state.cart

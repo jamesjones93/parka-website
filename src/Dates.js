@@ -3,14 +3,33 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getDates } from "./Actions";
+import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
 class Dates extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {};
+
+        this.openClickedContainer = this.openClickedContainer.bind(this);
+        this.closeClickedContainer = this.closeClickedContainer.bind(this);
     }
 
     componentDidMount() {
         this.props.dispatch(getDates());
+    }
+
+    openClickedContainer(index, e) {
+        this.setState({
+            clicked: true,
+            clickedIndex: index
+        });
+    }
+
+    closeClickedContainer() {
+        this.setState({
+            clicked: false
+        });
     }
 
     render() {
@@ -18,7 +37,9 @@ class Dates extends React.Component {
             return <Loader />;
         }
 
-        let datesList = this.props.dates.map((date, index) => {
+        let dates = this.props.dates;
+
+        let datesList = dates.map((date, index) => {
             var divStyle = {};
 
             if (index % 3 === 0) {
@@ -30,10 +51,12 @@ class Dates extends React.Component {
                 divStyle.color = "rgb(16, 16, 16)";
             }
 
-            console.log(divStyle);
-
             return (
-                <DateContainer style={divStyle}>
+                <DateContainer
+                    style={divStyle}
+                    key={index}
+                    onClick={e => this.openClickedContainer(index, e)}
+                >
                     <DateDate>{date.date}</DateDate>
                     <DateDescription>{date.description}</DateDescription>
                 </DateContainer>
@@ -42,23 +65,40 @@ class Dates extends React.Component {
 
         return (
             <Container>
-                <ClickedContainer>
-                    <EventTextContainer>
-                        <EventDate>JUNE 1</EventDate>
-                        <EventDescription>
-                            Conduit at h0l0 - P. Leone, Analog Soul, Peter
-                            Fonda, Naang Tani
-                        </EventDescription>
-                        <EventAddress>
-                            Ohm Club<br /> Koepenikerstr,<br /> 20 10999,<br />{" "}
-                            Berlin<br />
-                            +49 159 042895<br /> contact@ohmclub.de
-                        </EventAddress>
-                    </EventTextContainer>
-                    <ClickedImgContainer>
-                        <ClickedImg src="/eventphotos/june19-bossanova.jpg" />
-                    </ClickedImgContainer>
-                </ClickedContainer>
+                <OuterContainer>
+                    {this.state.clicked && (
+                        <ClickedContainer>
+                            <EventTextContainer>
+                                <EventDate>
+                                    {dates[this.state.clickedIndex].date}
+                                </EventDate>
+                                <EventDescription>
+                                    {dates[this.state.clickedIndex].description}
+                                </EventDescription>
+
+                                <EventAddress>
+                                    {dates[this.state.clickedIndex].club}
+                                </EventAddress>
+                                <EventAddress>
+                                    {dates[this.state.clickedIndex].clubAddress}
+                                </EventAddress>
+                            </EventTextContainer>
+                            <ClickedImgContainer>
+                                <ClickedImg
+                                    src={
+                                        "/eventphotos/" +
+                                        dates[this.state.clickedIndex].img
+                                    }
+                                />
+                            </ClickedImgContainer>
+                            <ClickedCross
+                                src="/icons/crosswhite.png"
+                                onClick={this.closeClickedContainer}
+                            />
+                        </ClickedContainer>
+                    )}
+                </OuterContainer>
+
                 <DatesListContainer>{datesList}</DatesListContainer>
             </Container>
         );
@@ -86,20 +126,28 @@ const Container = styled.div`
     justify-content: flex-end;
 `;
 
+const OuterContainer = styled.div`
+    width: 100%;
+    height: 66%;
+    overflow: hidden;
+`;
+
 const ClickedContainer = styled.div`
     width: 100%;
     height: 100%;
-    background-color: red;
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+    z-index: -1;
 `;
 
 const EventTextContainer = styled.div`
     width: 42%;
-    height: 100%;
+    object-fit: contain;
     background-color: rgb(16, 16, 16);
     color: rgb(250, 250, 250);
     padding: 4%;
+    z-index: -1;
 `;
 
 const EventDate = styled.p`
@@ -118,18 +166,24 @@ const EventAddress = styled.p`
 const ClickedImgContainer = styled.div`
     width: 50%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 `;
 
 const ClickedImg = styled.img`
     height: 100%;
+    width: 100%;
+`;
+
+const ClickedCross = styled.img`
+    width: 2.5%;
+    position: absolute;
+    margin: 2% 0 0 95.5%;
+    cursor: pointer;
+    z-index: 5;
 `;
 
 const DatesListContainer = styled.div`
     width: 100%;
+    height: 40%;
     overflow: scroll;
 
     ::-webkit-scrollbar {

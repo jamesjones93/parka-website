@@ -23,7 +23,11 @@ class AllProductsContainer extends React.Component {
         let products;
 
         if (this.props.params.filter === "all") {
-            products = this.props.products;
+            products = this.props.products.filter(
+                product =>
+                    product.productType === "Merchandise" ||
+                    product.productType === "Record"
+            );
         } else if (this.props.params.filter === "merchandise") {
             products = this.props.products.filter(
                 product => product.productType === "Merchandise"

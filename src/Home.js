@@ -44,7 +44,8 @@ const mapStateToProps = function(state) {
 export default connect(mapStateToProps)(Home);
 
 const Container = styled.div`
-    width: 50%;
-
+    width: 100%;
+    padding: 0;
+    margin: 0;
     background-color: rgb(227, 25, 54);
 `;

@@ -234,3 +234,19 @@ export function getDates() {
         };
     });
 }
+
+// ===================================================================================== World
+
+export function getWorldVinyl() {
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzUyNjk3MDcxNjcz";
+
+    return client.collection
+        .fetchWithProducts(collectionId)
+        .then(collection => {
+            return {
+                type: "GET_WORLD_VINYL",
+                vinyls: collection.products
+            };
+        })
+        .catch(console.log);
+}

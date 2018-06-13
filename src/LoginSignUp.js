@@ -39,10 +39,6 @@ class Home extends React.Component {
         return (
             <Container>
                 <LoginSignUpContainer>
-                    <ExclusiveContentTitle>
-                        Exclusive music, mixes, <br />
-                        merch, video & other goods
-                    </ExclusiveContentTitle>
                     {(this.props.cookie && <p />) ||
                         ((!this.props.signUpSuccess &&
                             ((this.state.toggleParkaworldEntry &&
@@ -82,39 +78,33 @@ const transition = `
 
 const Container = styled.div`
     color: white;
-    width: 40%;
-    padding: 10% 5%;
-    height: 90%;
+    width: 35%;
+    height: 100%;
+    padding: 0 7.501%;
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-`;
-
-const ExclusiveContentTitle = styled.p`
-    font-size: 25px;
-    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
 `;
 
 const LoginSignUpContainer = styled.div`
     width: 100%;
     margin: 0 0 10% 0;
-    position: relative;
 `;
 
 const EnterParkaworldLink = styled.p`
     ${transition} font-size: 20px;
 
     text-align: center;
-    width: 60%;
     padding: 10px;
     border: 3px solid white;
     cursor: pointer;
     color: white;
 
     :hover {
-        color: rgb(16, 16, 16);
+        color: rgba(255, 255, 255, 0.5);
+        border: 3px solid rgba(255, 255, 255, 0.5);
     }
 `;
