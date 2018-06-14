@@ -70,7 +70,11 @@ class Cart extends React.Component {
                             ${this.props.checkout.subtotalPrice}
                         </SubtotalValue>
                     </SubtotalContainer>
-                    <CheckoutButton>Checkout</CheckoutButton>
+                    <Link to="/checkout">
+                        <CheckoutButton onClick={this.closeCart}>
+                            Checkout
+                        </CheckoutButton>
+                    </Link>
                 </CartContainer>
             </Overlay>
         );

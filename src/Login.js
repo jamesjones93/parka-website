@@ -36,12 +36,22 @@ class Login extends React.Component {
                     innerRef={input => {
                         this.email = input;
                     }}
+                    onKeyPress={e => {
+                        if (e.key == "Enter") {
+                            this.loginUser();
+                        }
+                    }}
                 />
                 <InputField
                     type="text"
                     placeholder="access code"
                     innerRef={input => {
                         this.accessCode = input;
+                    }}
+                    onKeyPress={e => {
+                        if (e.key == "Enter") {
+                            this.loginUser();
+                        }
                     }}
                 />
                 <LoginButton onClick={this.loginUser}>LOGIN</LoginButton>

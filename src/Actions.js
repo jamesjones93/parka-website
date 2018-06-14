@@ -224,6 +224,12 @@ export function hideCart() {
     };
 }
 
+// ===================================================================================== checkout
+
+export function getShop() {
+    return client.shop.fetchInfo().then(shop => {});
+}
+
 // ===================================================================================== dates
 
 export function getDates() {

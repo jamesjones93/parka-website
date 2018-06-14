@@ -19,6 +19,7 @@ import Product from "./Product";
 import World from "./World";
 import Dates from "./Dates";
 import Info from "./Info";
+import Checkout from "./Checkout";
 
 injectGlobal`
     @font-face {
@@ -61,6 +62,7 @@ class App extends React.Component {
                         <Route exact path="/world" component={World} />
                         <Route exact path="/dates" component={Dates} />
                         <Route exact path="/info" component={Info} />
+                        <Route exact path="/checkout" component={Checkout} />
                     </div>
                 </BrowserRouter>
             </MainContainer>
