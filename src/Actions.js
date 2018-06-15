@@ -230,6 +230,13 @@ export function getShop() {
     return client.shop.fetchInfo().then(shop => {});
 }
 
+export function hideThankYou() {
+    return {
+        type: "TOGGLE_CART",
+        showThankYou: false
+    };
+}
+
 // ===================================================================================== dates
 
 export function getDates() {

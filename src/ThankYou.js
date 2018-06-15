@@ -1,122 +1,106 @@
 import React from "react";
-import axios from "./axios";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import axios from "./axios";
+import { hideThankYou } from "./Actions";
 
-export default class Release extends React.Component {
+class ThankYou extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        console.log("hello");
+    }
+
+    closeThankYou() {
+        this.props.dispatch(hideThankYou());
+    }
+
     render() {
         return (
-            <Container>
-                <Div>
-                    <H2>
-                        PLEASE CHECK YOUR EMAIL FOR YOUR PERSONAL ACCESS CODE
-                    </H2>
-                    <br />
-                    <H3>
+            <Overlay>
+                <Cross
+                    src="/icons/crosswhite.png"
+                    onClick={this.closeThankYou}
+                />
+                <Container>
+                    <Title>THANK YOU!</Title>
+                    <OrderPlacedText>
+                        Your order was placed. <br />
+                        You will recieve a confirmation E-Mail in few minutes.
+                    </OrderPlacedText>
+                    <SmallText>
                         Didn't receive one or have any questions? Please send us
-                        an email at{" "}
-                        <EmailLink id="mail-link" href="mailto:ops@par-ka.com">
-                            ops@par-ka.com
-                        </EmailLink>.
-                    </H3>
-                </Div>
-            </Container>
+                        an email at ops@par-ka.com.
+                    </SmallText>
+                </Container>
+                <RedRectangle />
+            </Overlay>
         );
     }
 }
 
-const transition = `
-    -moz-transition: all 0.15s ease-in;
-    -o-transition: all 0.15s ease-in;
-    -webkit-transition: all 0.15s ease-in;
-    transition: all 0.15s ease-in;
+const mapStateToProps = function(state) {
+    return {};
+};
+
+export default connect(mapStateToProps)(ThankYou);
+
+const Overlay = styled.div`
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(16, 16, 16, 0.92);
+    display: flex;
+    flex-direction: column;
+    z-index: 15;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Cross = styled.img`
+    width: 2%;
+    min-width: 20px;
+    position: absolute;
+    top: 2.5%;
+    left: 95%;
+    cursor: pointer;
 `;
 
 const Container = styled.div`
-    text-align: left;
-    padding: 10%;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background-color: rgb(250, 250, 250);
+    padding: 2%;
+    height: 35%;
+    width: 40%;
 `;
 
-const Div = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 70px;
-        width: 80%;
-        padding: 0 0 60px 0;
-        margin: 0 0 0 10%;
-        text-align: center;
-    }
+const RedRectangle = styled.div`
+    width: 40%;
+    padding: 2%;
+    height: 15%;
+    background-color: rgb(227, 25, 54);
 `;
 
-const Logo = styled.img`
-    width: 215px;
-    margin: 0 0 30px 0;
-
-    @media only screen and (max-device-width: 768px) {
-        width: 70%;
-        margin: 0 auto;
-        padding: 0 0 50px 0;
-    }
+const Title = styled.p`
+    font-size: 35px;
+    margin: 0;
+    font-weight: bold;
 `;
 
-const ThankYou = styled.p`
-    font-size: 20px;
-    padding: 0 0 40px 0;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 70px;
-        width: 80%;
-        padding: 0 0 60px 0;
-        height: 120px;
-    }
+const OrderPlacedText = styled.p`
+    width: 70%;
+    margin: 8% 0 0 0;
+    font-weight: bold;
+    font-size: 18px;
 `;
 
-const H2 = styled.p`
-    padding: 30px 0 0 0;
-    font-size: 25px;
-    width: 360px;
-    line-height: 1.2;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 50px;
-        width: 90%;
-        line-height: 1.4;
-        padding: 0 0 30px 0;
-        text-align: center;
-    }
-`;
-
-const H3 = styled.p`
-    font-size: 17px;
-    width: 370px;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 47px;
-        line-height: 1.4;
-        width: 90%;
-    }
-`;
-
-const EmailLink = styled.a`
-    ${transition} cursor: pointer;
-    padding: 0 0 0px 0;
-    color: white;
-    text-decoration: none;
-    border-bottom: 2px solid white;
-
-    :hover {
-        color: rgb(16, 16, 16);
-        padding: 0 0 5px 0;
-    }
+const SmallText = styled.p`
+    width: 70%;
+    margin: 8% 0 0 0;
+    font-weight: bold;
+    font-size: 12px;
 `;

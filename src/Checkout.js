@@ -3,10 +3,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCart, getShop } from "./Actions";
+import ThankYou from "./ThankYou";
 
 class Checkout extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            showThankYou: false
+        };
 
         this.quantityChange = this.quantityChange.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -88,6 +93,9 @@ class Checkout extends React.Component {
                         <PaymentMethodTitle>PAYMENT METHOD:</PaymentMethodTitle>
                     </PaymentContainer>
                 </BottomContainer>
+                {(!this.props.showThankYou && <ThankYou key="1" />) || (
+                    <p key="2" />
+                )}
             </Container>
         );
     }
@@ -264,7 +272,6 @@ const LargerInput = styled.input`
 const PaymentContainer = styled.div`
     width: 44%;
     height: 100%;
-    background-color: red;
 `;
 
 const PaymentMethodTitle = styled.p`
