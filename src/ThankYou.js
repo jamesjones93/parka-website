@@ -8,6 +8,8 @@ import { hideThankYou } from "./Actions";
 class ThankYou extends React.Component {
     constructor(props) {
         super(props);
+
+        this.closeThankYou = this.closeThankYou.bind(this);
     }
 
     componentDidMount() {
@@ -16,6 +18,7 @@ class ThankYou extends React.Component {
 
     closeThankYou() {
         this.props.dispatch(hideThankYou());
+        location.pathname = "/";
     }
 
     render() {

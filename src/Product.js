@@ -1,7 +1,7 @@
 import React from "react";
 import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProduct, addToCart } from "./Actions";
 import DOMPurify from "dompurify";
@@ -18,6 +18,7 @@ class Product extends React.Component {
         this.changeSize = this.changeSize.bind(this);
         this.quantityChange = this.quantityChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
 
     componentDidMount() {
@@ -26,6 +27,10 @@ class Product extends React.Component {
         this.setState({
             variantIndex: 0
         });
+    }
+
+    goBack() {
+        this.props.history.goBack();
     }
 
     changeSize() {
@@ -40,9 +45,13 @@ class Product extends React.Component {
             variantIndex = this.state.variantIndex += 1;
         }
 
-        this.setState({
-            variantIndex: variantIndex
-        });
+        if (this.props.product.variants[variantIndex].available) {
+            this.setState({
+                variantIndex: variantIndex
+            });
+        } else {
+            this.changeSize();
+        }
     }
 
     quantityChange(e) {
@@ -64,14 +73,27 @@ class Product extends React.Component {
         if (!this.props.product) {
             return <Loader />;
         }
-        console.log("heeeere", this.props.product);
 
         let product = this.props.product;
         let upperTitle = product.title.toUpperCase();
         let description = product.descriptionHtml;
 
+        let availableVariants = [];
+
+        product.variants.map(variant => {
+            if (variant.available == true) {
+                availableVariants.push(variant);
+            }
+        });
+
         return (
             <Container>
+                <ShopHeaderContainer>
+                    <ShopHeaderLink to="/shop/records">RECORDS</ShopHeaderLink>
+                    <ShopHeaderLink to="/shop/merchandise">
+                        MERCHANDISE
+                    </ShopHeaderLink>
+                </ShopHeaderContainer>
                 <Leftcontainer>
                     <MainImage src={product.images[0].src} />
                 </Leftcontainer>
@@ -82,11 +104,17 @@ class Product extends React.Component {
                             <Price>${product.variants[0].price}</Price>
                         </TitleAndPrice>
                         <Size onClick={this.changeSize}>
-                            {(product.variants[this.state.variantIndex] &&
-                                product.variants[this.state.variantIndex]
-                                    .selectedOptions[0].value) || <p />}
+                            {(availableVariants.length &&
+                                (product.variants[this.state.variantIndex] &&
+                                    product.variants[this.state.variantIndex]
+                                        .selectedOptions[0].value)) || (
+                                <p>Sold Out</p>
+                            )}
                         </Size>
-                        <Cross src="/icons/cross.png" />
+                        <Cross
+                            src="/icons/cross.png"
+                            onClick={this.goBack.bind(this)}
+                        />
                     </TopContainer>
                     <Description
                         dangerouslySetInnerHTML={{
@@ -95,15 +123,19 @@ class Product extends React.Component {
                     />
 
                     <QuantityAndAddContainer>
-                        <QuantityInput
-                            type="number"
-                            placeholder="1"
-                            ref={input => {
-                                this.quantity = input;
-                            }}
-                            onChange={this.quantityChange}
-                        />
-                        <AddButton onClick={this.addToCart}>ADD</AddButton>
+                        {(availableVariants.length && (
+                            <QuantityInput
+                                type="number"
+                                placeholder="1"
+                                ref={input => {
+                                    this.quantity = input;
+                                }}
+                                onChange={this.quantityChange}
+                            />
+                        )) || <p />}
+                        {(availableVariants.length && (
+                            <AddButton onClick={this.addToCart}>ADD</AddButton>
+                        )) || <p />}
                     </QuantityAndAddContainer>
 
                     <DeliveryText>
@@ -137,23 +169,52 @@ const transition = `
 
 const Container = styled.div`
     width: 100%;
-    margin: 10% 0 0 0;
-    display: flex;
-    flex-direction: row;
+    height: 100vh
+    top: 10%
+
 `;
 
 const Leftcontainer = styled.div`
     width: 50%;
+    position: absolute;
+    left: 0;
+    top: 15%;
 `;
 
 const MainImage = styled.img`
     width: 100%;
-    padding: 8px 0 0 0;
+    margin: 8px 0 0 0;
+`;
+
+const ShopHeaderContainer = styled.div`
+    width: 40%;
+    height: 5%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    background-color: rgb(250, 250, 250);
+`;
+
+const ShopHeaderLink = styled(Link)`
+    ${transition} text-decoration: none;
+    color: rgb(16, 16, 16);
+    font-size: 14px;
+
+    :hover {
+        color: rgb(227, 25, 54);
+    }
 `;
 
 const RightContainer = styled.div`
     width: 45%;
-    padding: 0 2.5%;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    padding: 2px 2.5%;
 `;
 
 const TopContainer = styled.div`
@@ -181,15 +242,16 @@ const Price = styled.p`
 `;
 
 const Size = styled.div`
-    ${transition} width: 70px;
-    height: 50px;
+    ${transition} width: 90px;
+    height: 60px;
     margin: 10px 10% 0 30px;
     border: 2px solid rgb(16, 16, 16);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
+    text-align: center;
 
     :hover {
         color: rgb(227, 25, 54);
@@ -200,6 +262,7 @@ const Size = styled.div`
 const Cross = styled.img`
     height: 30px;
     margin: 10px 0 0 0;
+    cursor: pointer;
 `;
 
 const Description = styled.p`
@@ -213,14 +276,13 @@ const QuantityAndAddContainer = styled.div`
     margin: 20% 0 7% 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 `;
 
 const QuantityInput = styled.input`
-    width: 45%;
-    height: 66px;
+    width: 20%;
+    height: 26px;
     border: 1px solid rgb(16, 16, 16);
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
 
     ::placeholder {
@@ -233,18 +295,18 @@ const QuantityInput = styled.input`
 `;
 
 const AddButton = styled.button`
-    ${transition} width: 45%;
-    height: 70px;
+    ${transition} width: 20%;
+    height: 30px;
     color: rgb(16, 16, 16);
-    border: 3px solid rgb(16, 16, 16);
-    font-size: 20px;
-    font-weight: bold;
+    border: 1px solid rgb(16, 16, 16);
+    font-size: 16px;
     text-align: center;
     padding: 0;
     cursor: pointer;
+    margin: 0 0 0 3%;
 
     :hover {
-        border: 3px solid rgb(227, 25, 54);
+        border: 1px solid rgb(227, 25, 54);
         color: rgb(227, 25, 54);
     }
 

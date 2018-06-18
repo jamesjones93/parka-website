@@ -93,7 +93,7 @@ class Checkout extends React.Component {
                         <PaymentMethodTitle>PAYMENT METHOD:</PaymentMethodTitle>
                     </PaymentContainer>
                 </BottomContainer>
-                {(!this.props.showThankYou && <ThankYou key="1" />) || (
+                {(this.props.showThankYou && <ThankYou key="1" />) || (
                     <p key="2" />
                 )}
             </Container>
@@ -102,9 +102,9 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log("checkout", state.checkout);
     return {
-        checkout: state.checkout
+        checkout: state.checkout,
+        showThankYou: state.showThankYou
     };
 };
 

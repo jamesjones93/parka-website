@@ -20,29 +20,39 @@ class World extends React.Component {
     }
 
     toggleSection(e) {
-        if (e.currentTarget.parentElement.style.height === "80%") {
-            e.currentTarget.parentElement.style.height = "7%";
-        } else {
-            e.currentTarget.parentElement.style.height = "80%";
-        }
+        e.currentTarget.parentElement.parentElement.children[0].style.height =
+            "7%";
+
+        e.currentTarget.parentElement.parentElement.children[1].style.height =
+            "7%";
+
+        e.currentTarget.parentElement.parentElement.children[2].style.height =
+            "7%";
+
+        e.currentTarget.parentElement.parentElement.children[3].style.height =
+            "7%";
+
+        e.currentTarget.parentElement.style.height = "80%";
     }
 
     render() {
+        this.sectionContainerHeight = { height: "7%" };
+
         return (
             <Container>
-                <VinylContainer>
+                <VinylContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>VINYL</Title>
                     <WorldVinyl />
                 </VinylContainer>
-                <DigitalContainer>
+                <DigitalContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>DIGITAL</Title>
                     <WorldDigital />
                 </DigitalContainer>
-                <MixtapesContainer>
+                <MixtapesContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>MIXTAPES</Title>
                     <WorldMixtapes />
                 </MixtapesContainer>
-                <VideosContainer>
+                <VideosContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>VIDEOS</Title>
                     <WorldVideos />
                 </VideosContainer>
@@ -77,11 +87,16 @@ const Container = styled.div`
 
 const sectionContainer = `
     ${transition} width: 100%;
-    height: 7%;
     margin: 0;
     background-color: inherit;
-    overflow: hidden;
+    overflow: scroll;
     z-index: -1;
+    display: flex;
+    flex-direction: column;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const VinylContainer = styled.div`
@@ -106,8 +121,12 @@ const VideosContainer = styled.div`
 
 const Title = styled.p`
     font-size: 18px;
-    margin: 0 0 0 5%;
-    padding: 10px 0 0px 0;
+    margin: 0;
     width: 100%;
+    padding: 4px 0 30px 5%;
+    z-index: 5;
     cursor: pointer;
+    align-self: flex-start;
+    position: fixed;
+    background-color: inherit;
 `;

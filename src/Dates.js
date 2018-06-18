@@ -57,12 +57,10 @@ class Dates extends React.Component {
                     key={index}
                     onClick={e => this.openClickedContainer(index, e)}
                 >
-                    <DateInfo>
-                        {date.date}
-                        <DateDescription>
-                            {date.club} - {date.description}
-                        </DateDescription>
-                    </DateInfo>
+                    <DateInfo>{date.date}</DateInfo>
+                    <DateDescription>
+                        {date.club} - {date.description}
+                    </DateDescription>
                 </DateContainer>
             );
         });
@@ -156,25 +154,50 @@ const EventTextContainer = styled.div`
 
 const EventDate = styled.p`
     font-size: 35px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 50px;
+        padding: 0 0 5% 0;
+    }
 `;
 
 const EventDescription = styled.p`
     font-size: 17px;
     width: 85%;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+    }
 `;
 
 const EventAddress = styled.p`
     font-size: 17px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        margin: 10% 0 0 0;
+    }
 `;
 
 const ClickedImgContainer = styled.div`
     width: 50%;
     height: 100%;
+
+    @media only screen and (max-device-width: 768px) {
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+    }
 `;
 
 const ClickedImg = styled.img`
     width: 100%;
     height: 100%;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 100%;
+        width: auto;
+    }
 `;
 
 const ClickedCross = styled.img`
@@ -197,7 +220,7 @@ const DatesListContainer = styled.div`
 
 const DateContainer = styled.div`
     width: 100%;
-    height: 25%;
+    height: 32.4%;
     padding: 0.2% 0 0 0;
     display: flex;
     flex-direction: row;
@@ -205,6 +228,10 @@ const DateContainer = styled.div`
     font-size: 16px;
     color: rgb(250, 250, 250);
     cursor: pointer;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+    }
 `;
 
 const DateInfo = styled.p`
@@ -214,8 +241,9 @@ const DateInfo = styled.p`
 `;
 
 const DateDescription = styled.span`
-    margin: 0 0 0 10%;
+    margin: 0 0 0 20%;
     overflow: hidden;
+    position: absolute;
 `;
 
 const Loader = styled.div`

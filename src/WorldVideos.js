@@ -13,7 +13,17 @@ class WorldVideos extends React.Component {
     render() {
         return (
             <Container>
-                <ReleasesContainer />
+                <VideoContainer>
+                    <iframe
+                        src="https://player.vimeo.com/video/275644006"
+                        width="640"
+                        height="360"
+                        frameBorder="0"
+                        webkitallowfullscreen="true"
+                        mozallowfullscreen="true"
+                        allowFullScreen="true"
+                    />
+                </VideoContainer>
             </Container>
         );
     }
@@ -34,11 +44,10 @@ const Container = styled.div`
     color: rgb(250, 250, 250);
 `;
 
-const ReleasesContainer = styled.div`
+const VideoContainer = styled.div`
     width: 80%;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 `;

@@ -131,6 +131,7 @@ export function addToCart(productInfo) {
             return client.checkout
                 .addLineItems(productInfo.checkoutId, lineItemsToAdd)
                 .then(checkout => {
+                    console.log(checkout);
                     // Do something with the updated checkout
                     return {
                         type: "GET_CART",
@@ -230,10 +231,17 @@ export function getShop() {
     return client.shop.fetchInfo().then(shop => {});
 }
 
-export function hideThankYou() {
+export function showThankYou() {
     return {
         type: "TOGGLE_CART",
-        showThankYou: false
+        showThankYou: true
+    };
+}
+
+export function hideThankYou() {
+    return {
+        type: "TOGGLE_THANK_YOU",
+        showThankYou: true
     };
 }
 
@@ -259,6 +267,34 @@ export function getWorldVinyl() {
             return {
                 type: "GET_WORLD_VINYL",
                 vinyls: collection.products
+            };
+        })
+        .catch(console.log);
+}
+
+export function getWorldDigital() {
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU0NDIwMzQwNzkz";
+
+    return client.collection
+        .fetchWithProducts(collectionId)
+        .then(collection => {
+            return {
+                type: "GET_WORLD_DIGITAL",
+                digital: collection.products
+            };
+        })
+        .catch(console.log);
+}
+
+export function getWorldMixtapes() {
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU0NDIwNDM5MDk3"; //mixtapes
+
+    return client.collection
+        .fetchWithProducts(collectionId)
+        .then(collection => {
+            return {
+                type: "GET_WORLD_MIXTAPES",
+                mixtapes: collection.products
             };
         })
         .catch(console.log);

@@ -83,7 +83,7 @@ const ParkaWorldHeader = styled.div`
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 2;
+    z-index: 20;
     background-color: rgb(16, 16, 16);
     display: flex;
     justify-content: center;
@@ -95,6 +95,10 @@ const Logo = styled.img`
 
     :hover {
         filter: brightness(50%);
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 250px;
     }
 `;
 
@@ -120,9 +124,17 @@ const HeaderLink = styled(Link)`
     :hover {
         ${transition} color: rgb(227, 25, 54);
     }
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 26px;
+    }
 `;
 
 const CartImg = styled.img`
     height: 16px;
     cursor: pointer;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 26px;
+    }
 `;

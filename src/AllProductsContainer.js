@@ -15,7 +15,6 @@ class AllProductsContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.params);
         if (!this.props.products) {
             return <Loader />;
         }
@@ -43,6 +42,22 @@ class AllProductsContainer extends React.Component {
 
             let price = Math.round(product.variants[0].price);
 
+            let availability = false;
+
+            product.variants.forEach(item => {
+                if (item.available === true) {
+                    availability = true;
+                }
+            });
+
+            let greyText = {};
+
+            if (!availability) {
+                greyText = {
+                    opacity: 0.3
+                };
+            }
+
             return (
                 <ProductContainerLink
                     to={productUrl}
@@ -50,12 +65,17 @@ class AllProductsContainer extends React.Component {
                     key={product.id}
                 >
                     <ProductContainer>
-                        <ProductImage src={product.images[0].src} />
+                        <ProductImageContainer>
+                            {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
+                            <ProductImage src={product.images[0].src} />
+                        </ProductImageContainer>
                         <ProductInfoDiv>
-                            <ProductPrice className="price">
+                            <ProductPrice className="price" style={greyText}>
                                 ${price}
                             </ProductPrice>
-                            <ProductTitle>{product.title}</ProductTitle>
+                            <ProductTitle style={greyText}>
+                                {product.title}
+                            </ProductTitle>
                         </ProductInfoDiv>
                     </ProductContainer>
                 </ProductContainerLink>
@@ -82,12 +102,16 @@ const transition = `
 `;
 
 const ProductsContainer = styled.div`
-    width: 80%;
+    width: 1060px;
     margin: 0 auto;
+    padding: 5%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+
+    @media (max-width: 1300px) {
+        width: 795px;
+    }
 `;
 
 const ProductContainerLink = styled(Link)`
@@ -111,6 +135,14 @@ const ProductContainer = styled.div`
             color: rgb(250, 250, 250);
         }
     }
+`;
+
+const ProductImageContainer = styled.div`
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const ProductImage = styled.img`
@@ -143,6 +175,19 @@ const ProductPrice = styled.p`
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const SoldOut = styled.div`
+    z-index: 1;
+    width: 180px;
+    height: 180px;
+    padding: 15px;
+    position: absolute;
+    border: 2px solid rgb(227, 25, 54);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: rgb(227, 25, 54);
 `;
 
 const Loader = styled.div`

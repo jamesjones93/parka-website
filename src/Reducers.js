@@ -79,6 +79,22 @@ export default function(state = {}, action) {
             ...state,
             vinyls: action.vinyls
         };
+    } else if (action.type === "GET_WORLD_DIGITAL") {
+        state = {
+            ...state,
+            digital: action.digital
+        };
+    } else if (action.type === "GET_WORLD_MIXTAPES") {
+        state = {
+            ...state,
+            mixtapes: action.mixtapes
+        };
+    } else if (action.type === "TOGGLE_THANK_YOU") {
+        console.log(action);
+        state = {
+            ...state,
+            showThankYou: action.showThankYou
+        };
     }
 
     return state;

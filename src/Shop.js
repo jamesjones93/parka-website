@@ -14,7 +14,6 @@ class Shop extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match.params);
         this.props.dispatch(getAllProducts());
     }
 
@@ -65,13 +64,14 @@ const Container = styled.div`
 `;
 
 const ShopHeaderContainer = styled.div`
-    width: 50%;
-    height: 8%;
-    margin: 0 0 0 45%;
+    width: 40%;
+    height: 5%;
     padding: 0 5%;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: absolute;
+    left: 50%;
 `;
 
 const ShopHeaderLink = styled(Link)`
