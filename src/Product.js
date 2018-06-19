@@ -153,6 +153,7 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = function(state) {
+    console.log(state.product);
     return {
         product: state.product
     };
@@ -169,9 +170,12 @@ const transition = `
 
 const Container = styled.div`
     width: 100%;
-    height: 100vh
-    top: 10%
+    height: 100vh;
+    top: 10%;
 
+    @media only screen and (max-device-width: 768px) {
+        height: auto;
+    }
 `;
 
 const Leftcontainer = styled.div`
@@ -179,11 +183,22 @@ const Leftcontainer = styled.div`
     position: absolute;
     left: 0;
     top: 15%;
+
+    @media only screen and (max-device-width: 768px) {
+        position: absolute;
+        width: 100%;
+        top: 65%;
+    }
 `;
 
 const MainImage = styled.img`
     width: 100%;
-    margin: 8px 0 0 0;
+    margin: 12px 0 0 0;
+
+    @media only screen and (max-device-width: 768px) {
+        margin: 0;
+        width: 110%;
+    }
 `;
 
 const ShopHeaderContainer = styled.div`
@@ -215,6 +230,12 @@ const RightContainer = styled.div`
     left: 50%;
     top: 15%;
     padding: 2px 2.5%;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 100%;
+        left: 0;
+        top: 15%;
+    }
 `;
 
 const TopContainer = styled.div`
@@ -232,13 +253,21 @@ const TitleAndPrice = styled.div`
 const Title = styled.p`
     font-size: 25px;
     padding: 0px;
-    margin: 0px;
+    margin: 3px 0 0 0;
     width: 100%;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 50px;
+    }
 `;
 
 const Price = styled.p`
     color: rgb(227, 25, 54);
     font-size: 20px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+    }
 `;
 
 const Size = styled.div`
@@ -257,18 +286,32 @@ const Size = styled.div`
         color: rgb(227, 25, 54);
         border: 2px solid rgb(227, 25, 54);
     }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 120px;
+        height: 80px;
+        font-size: 40px;
+    }
 `;
 
 const Cross = styled.img`
     height: 30px;
     margin: 10px 0 0 0;
     cursor: pointer;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 50px;
+    }
 `;
 
 const Description = styled.p`
     font-size: 16px;
     margin: 40px 0 0 0;
     padding: 0;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+    }
 `;
 
 const QuantityAndAddContainer = styled.div`
@@ -292,6 +335,11 @@ const QuantityInput = styled.input`
     :focus {
         outline: none;
     }
+
+    @media only screen and (max-device-width: 768px) {
+        height: 80px;
+        font-size: 30px;
+    }
 `;
 
 const AddButton = styled.button`
@@ -313,11 +361,22 @@ const AddButton = styled.button`
     :focus {
         outline: none;
     }
+
+    @media only screen and (max-device-width: 768px) {
+        height: 80px;
+        font-size: 30px;
+    }
 `;
 
 const DeliveryText = styled.p`
     font-size: 10px;
     width: 80%;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 25px;
+        width: 100%;
+        text-align: justify;
+    }
 `;
 
 const Loader = styled.div`

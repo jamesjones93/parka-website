@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCart, getShop } from "./Actions";
+import { getCart, getShop, updateProduct, removeProduct } from "./Actions";
 import ThankYou from "./ThankYou";
 
 class Checkout extends React.Component {
@@ -14,6 +14,7 @@ class Checkout extends React.Component {
         };
 
         this.quantityChange = this.quantityChange.bind(this);
+        this.updateItem = this.updateItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
     }
 
@@ -26,6 +27,15 @@ class Checkout extends React.Component {
         this.setState({
             productQuantity: e.currentTarget.value
         });
+    }
+
+    updateItem(productId, e) {
+        let productInfo = {
+            id: productId,
+            quantity: this.state.productQuantity
+        };
+
+        this.props.dispatch(updateProduct(productInfo));
     }
 
     removeItem(productId, e) {
@@ -47,7 +57,7 @@ class Checkout extends React.Component {
                     <ProductTitle>{product.title}</ProductTitle>
                     <QuantityInput
                         type="number"
-                        placeholder="1"
+                        placeholder={product.quantity}
                         ref={input => {
                             this.quantity = input;
                         }}
@@ -56,6 +66,9 @@ class Checkout extends React.Component {
                     <ProductPrice>
                         ${product.variant.price * product.quantity}
                     </ProductPrice>
+                    <UpdateLink onClick={e => this.updateItem(product.id, e)}>
+                        Update
+                    </UpdateLink>
                     <DeleteLink onClick={e => this.removeItem(product.id, e)}>
                         Delete
                     </DeleteLink>
@@ -67,35 +80,14 @@ class Checkout extends React.Component {
             <Container>
                 <ProductsContainer>{checkoutItemList}</ProductsContainer>
                 <TotalText>
-                    TOTAL:<TotalValue>$40</TotalValue>
+                    TOTAL:<TotalValue>
+                        ${this.props.checkout.subtotalPrice}
+                    </TotalValue>
                 </TotalText>
-                <BottomContainer>
-                    <InfoContainer>
-                        <HalfRowContainer>
-                            <Input type="text" placeholder="Full name" />
-                        </HalfRowContainer>
-                        <HalfRowContainer>
-                            <HalfInput type="text" placeholder="Email" />
-                            <HalfInput type="text" placeholder="Phone" />
-                        </HalfRowContainer>
-                        <HalfRowContainer>
-                            <HalfInput type="text" placeholder="Country" />
-                            <HalfInput type="text" placeholder="City" />
-                        </HalfRowContainer>
-                        <HalfRowContainer>
-                            <LargerInput type="text" placeholder="Address" />
-                        </HalfRowContainer>
-                        <HalfRowContainer>
-                            <LargerInput type="text" placeholder="Comments" />
-                        </HalfRowContainer>
-                    </InfoContainer>
-                    <PaymentContainer>
-                        <PaymentMethodTitle>PAYMENT METHOD:</PaymentMethodTitle>
-                    </PaymentContainer>
-                </BottomContainer>
-                {(this.props.showThankYou && <ThankYou key="1" />) || (
-                    <p key="2" />
-                )}
+
+                <ProceedToCheckout href={checkout.webUrl}>
+                    Confirm and proceed to payment
+                </ProceedToCheckout>
             </Container>
         );
     }
@@ -119,7 +111,6 @@ const transition = `
 
 const Container = styled.div`
     width: 85%;
-    height: 85%;
     position: absolute;
     top: 10%;
     overflow: scroll;
@@ -131,6 +122,10 @@ const ProductsContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin: 2% 0;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const ProductContainer = styled.div`
@@ -145,12 +140,20 @@ const ProductContainer = styled.div`
 
 const ProductImg = styled.img`
     width: 15%;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 30%;
+    }
 `;
 
 const ProductTitle = styled.p`
     width: 30%;
     padding: 0 0 0 2%;
     font-size: 14px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+    }
 `;
 
 const QuantityInput = styled.input`
@@ -167,15 +170,29 @@ const QuantityInput = styled.input`
     :focus {
         outline: none;
     }
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        height: 60px;
+    }
 `;
 
 const ProductPrice = styled.p`
     font-size: 14px;
     margin: 0 0 0 5%;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        margin: 0 0 0 3%;
+    }
 `;
 
 const TotalContainer = styled.div`
     width: 70%;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80%;
+    }
 `;
 
 const TotalText = styled.p`
@@ -183,9 +200,30 @@ const TotalText = styled.p`
     text-align: left;
     font-size: 22px;
     font-weight: bold;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+        width: 80%;
+        margin: 10% 0;
+    }
 `;
+
 const TotalValue = styled.span`
     float: right;
+`;
+
+const UpdateLink = styled.p`
+    ${transition} font-size: 13px;
+    margin: 0 0 0 5%;
+    cursor: pointer;
+
+    :hover {
+        color: rgb(227, 25, 54);
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 24px;
+    }
 `;
 
 const DeleteLink = styled.p`
@@ -197,86 +235,136 @@ const DeleteLink = styled.p`
     :hover {
         color: rgb(227, 25, 54);
     }
-`;
 
-const BottomContainer = styled.div`
-    width: 100%;
-    height: 55%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-const InfoContainer = styled.div`
-    width: 52%;
-    height: 100%;
-    display: flex;
-    flex-direction: column
-    justify-content: center;
-    align-items: center;
-`;
-
-const Input = styled.input`
-    width: 98%;
-    height: 3%;
-    padding: 12px 12px 12px 12px;
-    border: 1px solid rgb(16, 16, 16);
-    margin: 1.5% 0;
-
-    ::placeholder {
-        color: rgb(16, 16, 16);
-    }
-
-    :focus {
-        outline: none;
+    @media only screen and (max-device-width: 768px) {
+        font-size: 24px;
     }
 `;
 
-const HalfRowContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-const HalfInput = styled.input`
-    width: 44%;
-    height: 3%;
+const ProceedToCheckout = styled.a`
+    ${transition} text-decoration: none;
+    background-color: rgb(16, 16, 16);
+    color: rgb(250, 250, 250);
     padding: 12px;
-    border: 1px solid rgb(16, 16, 16);
-    margin: 1.5% 0;
 
-    ::placeholder {
+    :hover {
+        background-color: rgb(180, 180, 180);
         color: rgb(16, 16, 16);
     }
-    :focus {
-        outline: none;
-    }
 `;
 
-const LargerInput = styled.input`
-    width: 98%;
-    height: 6%;
-    padding: 12px 12px 12px 12px;
-    border: 1px solid rgb(16, 16, 16);
-    margin: 1.5% 0;
-
-    ::placeholder {
-        color: rgb(16, 16, 16);
-    }
-    :focus {
-        outline: none;
-    }
-`;
-
-const PaymentContainer = styled.div`
-    width: 44%;
-    height: 100%;
-`;
-
-const PaymentMethodTitle = styled.p`
-    font-size: 16px;
-`;
+// const BottomContainer = styled.div`
+//     width: 100%;
+//     height: 55%;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//
+//     @media only screen and (max-device-width: 768px) {
+//         flex-direction: column;
+//         height: auto;
+//     }
+// `;
+//
+// const InfoContainer = styled.div`
+//     width: 52%;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column
+//     justify-content: center;
+//     align-items: center;
+//
+//     @media only screen and (max-device-width: 768px) {
+//         width: 100%;
+//     }
+//
+// `;
+//
+// const Input = styled.input`
+//     width: 98%;
+//     height: 3%;
+//     padding: 12px 12px 12px 12px;
+//     border: 1px solid rgb(16, 16, 16);
+//     margin: 1.5% 0;
+//
+//     ::placeholder {
+//         color: rgb(16, 16, 16);
+//     }
+//
+//     :focus {
+//         outline: none;
+//     }
+//
+//     @media only screen and (max-device-width: 768px) {
+//         height: 80px;
+//         font-size: 28px;
+//     }
+// `;
+//
+// const HalfRowContainer = styled.div`
+//     width: 100%;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+// `;
+//
+// const HalfInput = styled.input`
+//     width: 44%;
+//     height: 3%;
+//     padding: 12px;
+//     border: 1px solid rgb(16, 16, 16);
+//     margin: 1.5% 0;
+//
+//     ::placeholder {
+//         color: rgb(16, 16, 16);
+//     }
+//     :focus {
+//         outline: none;
+//     }
+//
+//     @media only screen and (max-device-width: 768px) {
+//         height: 80px;
+//         font-size: 28px;
+//     }
+// `;
+//
+// const LargerInput = styled.input`
+//     width: 98%;
+//     height: 6%;
+//     padding: 12px 12px 12px 12px;
+//     border: 1px solid rgb(16, 16, 16);
+//     margin: 1.5% 0;
+//
+//     ::placeholder {
+//         color: rgb(16, 16, 16);
+//     }
+//     :focus {
+//         outline: none;
+//     }
+//
+//     @media only screen and (max-device-width: 768px) {
+//         height: 160px;
+//         font-size: 28px;
+//     }
+// `;
+//
+// const PaymentContainer = styled.div`
+//     width: 44%;
+//     height: 100%;
+//
+//     @media only screen and (max-device-width: 768px) {
+//         width: 100%;
+//     }
+// `;
+//
+// const PaymentMethodTitle = styled.p`
+//     font-size: 16px;
+//
+//     @media only screen and (max-device-width: 768px) {
+//         font-size: 40px;
+//         margin: 10% 0;
+//     }
+// `;
 
 const Loader = styled.div`
     position: absolute;
@@ -299,3 +387,31 @@ const Loader = styled.div`
         }
     }
 `;
+
+// <BottomContainer>
+//     <InfoContainer>
+//         <HalfRowContainer>
+//             <Input type="text" placeholder="Full name" />
+//         </HalfRowContainer>
+//         <HalfRowContainer>
+//             <HalfInput type="text" placeholder="Email" />
+//             <HalfInput type="text" placeholder="Phone" />
+//         </HalfRowContainer>
+//         <HalfRowContainer>
+//             <HalfInput type="text" placeholder="Country" />
+//             <HalfInput type="text" placeholder="City" />
+//         </HalfRowContainer>
+//         <HalfRowContainer>
+//             <LargerInput type="text" placeholder="Address" />
+//         </HalfRowContainer>
+//         <HalfRowContainer>
+//             <LargerInput type="text" placeholder="Comments" />
+//         </HalfRowContainer>
+//     </InfoContainer>
+//     <PaymentContainer>
+//         <PaymentMethodTitle>PAYMENT METHOD:</PaymentMethodTitle>
+//     </PaymentContainer>
+// </BottomContainer>
+// {(this.props.showThankYou && <ThankYou key="1" />) || (
+//     <p key="2" />
+// )}

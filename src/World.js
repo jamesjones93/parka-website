@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { checkForCookie } from "./Actions";
 import WorldVinyl from "./WorldVinyl";
 import WorldDigital from "./WorldDigital";
 import WorldVideos from "./WorldVideos";
@@ -13,10 +12,6 @@ class World extends React.Component {
         super(props);
 
         this.toggleSection = this.toggleSection.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.dispatch(checkForCookie());
     }
 
     toggleSection(e) {
@@ -62,9 +57,7 @@ class World extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    return {
-        cookie: state.cookie
-    };
+    return {};
 };
 
 export default connect(mapStateToProps)(World);
@@ -123,10 +116,9 @@ const Title = styled.p`
     font-size: 18px;
     margin: 0;
     width: 100%;
-    padding: 4px 0 30px 5%;
+    padding: 4px 0 35px 5%;
     z-index: 5;
     cursor: pointer;
-    align-self: flex-start;
+    align-self: center;
     position: fixed;
-    background-color: inherit;
 `;

@@ -16,7 +16,7 @@ class WorldVideos extends React.Component {
                 <VideoContainer>
                     <iframe
                         src="https://player.vimeo.com/video/275644006"
-                        width="640"
+                        width="60%"
                         height="360"
                         frameBorder="0"
                         webkitallowfullscreen="true"
@@ -45,9 +45,18 @@ const Container = styled.div`
 `;
 
 const VideoContainer = styled.div`
-    width: 80%;
-    margin: 0 auto;
+    width: 100%
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin: 80px 0 0 0;
+
+    @media (max-width: 1000) {
+        padding: 9% 0 0 0;
+    }
+
+    @media (max-width: 250) {
+        padding: 7%;
+    }
 `;

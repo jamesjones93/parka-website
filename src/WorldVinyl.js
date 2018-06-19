@@ -36,21 +36,26 @@ class WorldVinyl extends React.Component {
         this.track.currentTime = 0;
     }
 
-    addToCart(trackId, e) {
-        let productInfo = {
-            id: trackId,
-            quantity: 1
-        };
-
-        this.props.dispatch(addToCart(productInfo));
+    addToCart(vinyl, e) {
+        if (vinyl.tags.length > 0) {
+            return;
+        } else {
+            let productInfo = {
+                id: vinyl.variants[0].id,
+                quantity: 1
+            };
+            console.log(productInfo);
+            this.props.dispatch(addToCart(productInfo));
+        }
     }
 
     render() {
         if (!this.props.vinyls) {
-            return <p />;
+            return <Loader />;
         }
 
         let vinylsList = this.props.vinyls.map(vinyl => {
+            console.log(vinyl);
             return (
                 <VinylContainer
                     key={vinyl.id}
@@ -58,7 +63,7 @@ class WorldVinyl extends React.Component {
                         this.vinylMouseOver(vinyl.variants[0].sku, e)
                     }
                     onMouseOut={this.vinylMouseOut}
-                    onClick={e => this.addToCart(vinyl.variants[0].id, e)}
+                    onClick={e => this.addToCart(vinyl, e)}
                 >
                     <VinylImg src={vinyl.images[0].src} />
                     {vinyl.variants[0].sku == 0 && (
@@ -100,17 +105,22 @@ const Container = styled.div`
     background-color: rgb(16, 16, 16);
     color: rgb(250, 250, 250);
     width: 90%;
-    height: 100%;
-    padding: 4% 5% 10% 5%;
-    margin: 20px 0 0 0;
+    margin: 30px 0 0 0;
+    padding: 2% 5% 10% 5%;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    overlflow: hidden;
+
+    @media (max-width: 550px) {
+        margin: 40px 0 0 0;
+    }
+
+    @media (max-width: 250) {
+        margin: 45px 0 0 0;
+    }
 `;
 
 const ReleasesContainer = styled.div`
+    margin: 0 auto;
     width: 90%;
     height: 100%;
     display: flex;
@@ -121,11 +131,11 @@ const ReleasesContainer = styled.div`
 `;
 
 const VinylContainer = styled.div`
-    width: 20%;
-    margin: 0 2%;
+    background-color: rgb(227, 25, 54);
+    width: 200px;
+    margin: 1.5%
     height: auto;
     border-radius: 50%;
-    background-color: rgb(227, 25, 54);
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -146,10 +156,8 @@ const OverlayText = styled.p`
 `;
 
 const Loader = styled.div`
-    position: absolute;
     margin: 0 auto;
-    top: 35%;
-    left: 49%;
+    margin: 20%;
     border: 16px solid #f3f3f3;
     border-top: 16px solid rgb(227, 25, 54);
     border-radius: 50%;

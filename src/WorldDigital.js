@@ -37,12 +37,12 @@ class WorldDigital extends React.Component {
         this.track.currentTime = 0;
     }
 
-    addToCart(trackId, tag, e) {
-        if (tag === "ComingSoon") {
+    addToCart(track, e) {
+        if (track.tags.length > 0) {
             return;
         } else {
             let productInfo = {
-                id: trackId,
+                id: track.variants[0].id,
                 quantity: 1
             };
 
@@ -52,7 +52,7 @@ class WorldDigital extends React.Component {
 
     render() {
         if (!this.props.digital) {
-            return <p />;
+            return <Loader />;
         }
 
         let digitalList = this.props.digital.map(track => {
@@ -68,13 +68,7 @@ class WorldDigital extends React.Component {
                     key={track.id}
                     onMouseOver={e => this.digitalMouseOver(tag, e)}
                     onMouseOut={this.digitalMouseOut}
-                    onClick={e =>
-                        this.addToCart(
-                            track.variants[0].id,
-                            track.tags[0].value,
-                            e
-                        )
-                    }
+                    onClick={e => this.addToCart(track, e)}
                 >
                     <DigitalImg src={track.images[0].src} />
                     <audio ref={audio => (this.track = audio)}>
@@ -113,17 +107,22 @@ const Container = styled.div`
     background-color: rgb(250, 250, 250);
     color: rgb(16, 16, 16);
     width: 90%;
-    height: 100%;
-    margin: 20px 0 0 0;
-    padding: 4% 5% 10% 5%;
+    margin: 30px 0 0 0;
+    padding: 2% 5% 10% 5%;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    overlflow: hidden;
+
+    @media (max-width: 550px) {
+        margin: 40px 0 0 0;
+    }
+
+    @media (max-width: 250) {
+        margin: 45px 0 0 0;
+    }
 `;
 
 const ReleasesContainer = styled.div`
+    margin: 0 auto;
     width: 90%;
     height: 100%;
     display: flex;
@@ -134,11 +133,11 @@ const ReleasesContainer = styled.div`
 `;
 
 const DigitalContainer = styled.div`
-    width: 20%;
-    margin: 0 2% 2% 2%;
+    background-color: rgb(227, 25, 54);
+    width: 200px;
+    margin: 1.5%
     height: auto;
     border-radius: 50%;
-    background-color: rgb(227, 25, 54);
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -159,10 +158,8 @@ const OverlayText = styled.p`
 `;
 
 const Loader = styled.div`
-    position: absolute;
     margin: 0 auto;
-    top: 35%;
-    left: 49%;
+    margin: 20%;
     border: 16px solid #f3f3f3;
     border-top: 16px solid rgb(227, 25, 54);
     border-radius: 50%;

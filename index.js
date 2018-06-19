@@ -100,9 +100,7 @@ app.get("/check-for-cookie", (req, res) => {
             cookie: true
         });
     } else {
-        res.json({
-            user: null
-        });
+        res.redirect("/");
     }
 });
 
@@ -192,7 +190,7 @@ app.post("/user-login", (req, res) => {
 
 // ======================================================================== checkout x cookie
 
-app.get("/check-for-existing-checkout", (req, res) => {
+app.get("/get-checkout", (req, res) => {
     if (req.session.checkoutId) {
         res.json({
             checkoutId: req.session.checkoutId
@@ -218,6 +216,24 @@ app.get("/get-dates", (req, res) => {
     res.json({
         dates: dates
     });
+});
+
+// ======================================================================== world
+
+app.get("/world", (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+
+app.get("/", (req, res) => {
+    if (req.session.user) {
+        res.redirect("/world");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 // ========================================================================

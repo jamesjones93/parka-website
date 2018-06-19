@@ -61,7 +61,7 @@ class AllProductsContainer extends React.Component {
             return (
                 <ProductContainerLink
                     to={productUrl}
-                    params={{ productId: product.id }}
+                    params={{ product: product }}
                     key={product.id}
                 >
                     <ProductContainer>
@@ -69,13 +69,11 @@ class AllProductsContainer extends React.Component {
                             {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
                             <ProductImage src={product.images[0].src} />
                         </ProductImageContainer>
-                        <ProductInfoDiv>
-                            <ProductPrice className="price" style={greyText}>
+                        <ProductInfoDiv style={greyText}>
+                            <ProductPrice className="price">
                                 ${price}
                             </ProductPrice>
-                            <ProductTitle style={greyText}>
-                                {product.title}
-                            </ProductTitle>
+                            <ProductTitle>{product.title}</ProductTitle>
                         </ProductInfoDiv>
                     </ProductContainer>
                 </ProductContainerLink>
@@ -109,8 +107,18 @@ const ProductsContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1250px) {
         width: 795px;
+    }
+
+    @media (max-width: 1000px) {
+        width: 530px;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        padding: 7% 5%;
+        width: 750px;
+        justify-content: center;
     }
 `;
 
@@ -121,7 +129,7 @@ const ProductContainerLink = styled(Link)`
 
 const ProductContainer = styled.div`
     ${transition} width: 250px;
-    height: 330px;
+    height: 320px;
     text-align: center;
     margin: 7.5px;
 
@@ -135,6 +143,11 @@ const ProductContainer = styled.div`
             color: rgb(250, 250, 250);
         }
     }
+
+    @media only screen and (max-device-width: 768px) {
+        width: 360px;
+        height: 475px;
+    }
 `;
 
 const ProductImageContainer = styled.div`
@@ -143,11 +156,21 @@ const ProductImageContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 360px;
+        height: 360px;
+    }
 `;
 
 const ProductImage = styled.img`
     width: 250px;
     height: 250px;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 360px;
+        height: 360px;
+    }
 `;
 
 const ProductInfoDiv = styled.div`
@@ -157,12 +180,21 @@ const ProductInfoDiv = styled.div`
     flex-direction: row;
     align-items: center;
     padding: 0 0 0 10px;
+
+    @media only screen and (max-device-width: 768px) {
+        padding: 20px 0 0 10px;
+    }
 `;
 
 const ProductTitle = styled.p`
     font-size: 14px;
     padding: 0 15px 0 10px;
     text-align: left;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        width: 100%;
+    }
 `;
 
 const ProductPrice = styled.p`
@@ -175,6 +207,12 @@ const ProductPrice = styled.p`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80px;
+        height: 60px;
+        font-size: 28px;
+    }
 `;
 
 const SoldOut = styled.div`
@@ -188,6 +226,12 @@ const SoldOut = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
     color: rgb(227, 25, 54);
+
+    @media only screen and (max-device-width: 768px) {
+        width: 80px;
+        height: 60px;
+        font-size: 16px;
+    }
 `;
 
 const Loader = styled.div`

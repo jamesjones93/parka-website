@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { showCart, getCart } from "./Actions";
+import { showCart, getCart, checkForCookie } from "./Actions";
 import Cart from "./Cart";
 
 class Header extends React.Component {
@@ -19,6 +19,7 @@ class Header extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(getCart());
+        this.props.dispatch(checkForCookie());
     }
 
     showCartClick() {
@@ -29,9 +30,15 @@ class Header extends React.Component {
         return (
             <div>
                 <ParkaWorldHeader>
-                    <Link to="/world">
-                        <Logo src="/logo/Logotype.svg" />
-                    </Link>
+                    {(this.props.cookie && (
+                        <Link to="/world">
+                            <Logo src="/logo/Logotype.svg" />
+                        </Link>
+                    )) || (
+                        <Link to="/">
+                            <Logo src="/logo/Logotype.svg" />
+                        </Link>
+                    )}
                 </ParkaWorldHeader>
                 <HeaderLinksContainer>
                     <HeaderLink to="/shop/all">SHOP</HeaderLink>
@@ -64,7 +71,8 @@ class Header extends React.Component {
 const mapStateToProps = function(state) {
     return {
         showCart: state.showCart,
-        checkout: state.checkout
+        checkout: state.checkout,
+        cookie: state.cookie
     };
 };
 

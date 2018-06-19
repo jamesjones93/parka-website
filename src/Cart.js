@@ -105,6 +105,10 @@ const Overlay = styled.div`
     top: 0;
     background-color: rgba(16, 16, 16, 0.5);
     z-index: 10;
+
+    @media only screen and (max-device-width: 768px) {
+        z-index: 25;
+    }
 `;
 
 const CartContainer = styled.div`
@@ -113,10 +117,22 @@ const CartContainer = styled.div`
     left: 50%;
     top: 0;
     padding: 5%;
-    height 100vh;
+    height 100%;
     background-color: rgb(250, 250, 250);
     margin: 0;
     z-index: 15;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 85%;
+        height: 90%;
+        left: 0;
+        font-size: 30px;
+        position: absolute;
+        top: 1.25%;
+        left: 2.5%;
+        z-index: 100;
+    }
+
 `;
 
 const Cross = styled.img`
@@ -124,6 +140,12 @@ const Cross = styled.img`
     margin: -7% 0 0 -7%;
     position: absolute;
     cursor: pointer;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 60px;
+        padding: 10px;
+        margin: -5% 0 0 -5%;
+    }
 `;
 
 const ProductsContainer = styled.div`
@@ -131,6 +153,10 @@ const ProductsContainer = styled.div`
     width: 100%;
     margin: 0;
     overflow: scroll;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 85%;
+    }
 `;
 
 const ProductContainer = styled.div`
@@ -157,6 +183,11 @@ const ProductTitle = styled.p`
     width: 100%;
     vertical-align: top;
     margin: 0;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+        line-height: 42px;
+    }
 `;
 
 const ProductQuantity = styled.p`
@@ -164,6 +195,11 @@ const ProductQuantity = styled.p`
     line-height: 17px;
     font-size: 13px;
     margin: 0;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        line-height: 37px;
+    }
 `;
 
 const ProductPrice = styled.p`
@@ -171,6 +207,11 @@ const ProductPrice = styled.p`
     margin: 0;
     line-height: 17px;
     font-size: 14px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        line-height: 37px;
+    }
 `;
 
 const SmallCross = styled.img`
@@ -190,11 +231,19 @@ const SubtotalContainer = styled.div`
 const SubtotalLabel = styled.p`
     font-size: 18px;
     font-weight: bold;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 40px;
+    }
 `;
 
 const SubtotalValue = styled.p`
     font-size: 25px;
     font-weight: bold;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 45px;
+    }
 `;
 
 const CheckoutButton = styled.button`
@@ -213,5 +262,9 @@ const CheckoutButton = styled.button`
 
     :focus {
         outline: none;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 45px;
     }
 `;

@@ -36,12 +36,12 @@ class Worldmixtape extends React.Component {
         this.track.currentTime = 0;
     }
 
-    addToCart(mixtapeId, tag, e) {
-        if (tag === "ComingSoon") {
+    addToCart(mixtape, tag, e) {
+        if (mixtape.tags.length > 0) {
             return;
         } else {
             let productInfo = {
-                id: mixtapeId,
+                id: mixtape.variants[0].id,
                 quantity: 1
             };
 
@@ -66,13 +66,7 @@ class Worldmixtape extends React.Component {
                     key={mixtape.id}
                     onMouseOver={e => this.mixtapeMouseOver(tag, e)}
                     onMouseOut={this.mixtapeMouseOut}
-                    onClick={e =>
-                        this.addToCart(
-                            mixtape.variants[0].id,
-                            mixtape.tags[0].value,
-                            e
-                        )
-                    }
+                    onClick={e => this.addToCart(mixtape, e)}
                 >
                     <MixtapeImg src={mixtape.images[0].src} />
 
@@ -109,20 +103,25 @@ const transition = `
 `;
 
 const Container = styled.div`
-    width: 90%;
-    height: 100%;
     background-color: rgb(227, 25, 54);
     color: rgb(250, 250, 250);
-    padding: 4% 5% 10% 5%;
-    margin: 20px 0 0 0;
+    width: 90%;
+    margin: 30px 0 0 0;
+    padding: 2% 5% 10% 5%;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    overlflow: hidden;
+
+    @media (max-width: 550px) {
+        margin: 40px 0 0 0;
+    }
+
+    @media (max-width: 250) {
+        margin: 45px 0 0 0;
+    }
 `;
 
 const ReleasesContainer = styled.div`
+    margin: 0 auto;
     width: 90%;
     height: 100%;
     display: flex;
@@ -133,11 +132,11 @@ const ReleasesContainer = styled.div`
 `;
 
 const MixtapeContainer = styled.div`
-    width: 20%;
-    margin: 0 2%;
+    background-color: rgb(16, 16, 16);
+    width: 200px;
+    margin: 1.5%
     height: auto;
     border-radius: 50%;
-    background-color: rgb(16, 16, 16);
     overflow: hidden;
     cursor: pointer;
     display: flex;
