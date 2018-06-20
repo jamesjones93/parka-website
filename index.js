@@ -86,14 +86,6 @@ let sendMail = function(userEmail, accessCode) {
 
 // ======================================================================== Login SignUp
 
-// app.get("/", (req, res) => {
-//     if (req.session.user) {
-//         res.redirect("/world");
-//     } else {
-//         res.sendFile(__dirname + "/index.html");
-//     }
-// });
-
 app.get("/check-for-cookie", (req, res) => {
     if (req.session.user) {
         res.json({

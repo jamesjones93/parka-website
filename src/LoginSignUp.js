@@ -94,13 +94,18 @@ const Container = styled.div`
     color: white;
     width: 35%;
     height: 100%;
-    padding: 0 7.501%;
+    padding: 0 7.5%;
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+
+    @media only screen and (max-device-width: 768px) {
+        width: 40%;
+        padding: 0 5%;
+    }
 `;
 
 const LoginSignUpContainer = styled.div`
@@ -131,10 +136,10 @@ const EnterParkaworldLink = styled.button`
     }
 
     @media only screen and (max-device-width: 768px) {
-        width: 80%;
+        width: 100%;
         height: 100px;
-        margin: 65px 0 0 10%;
-        font-size: 45px;
+
+        font-size: 35px;
         height: 140px;
     }
 `;
@@ -145,4 +150,8 @@ const ToLoginLink = styled.p`
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+    }
 `;

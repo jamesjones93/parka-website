@@ -1,13 +1,13 @@
 {
     "dates": [
         {
-            "date": "JUNE 30",
-            "description": "Lawrence Lee & Juan Ramos & Peter Fonda",
-            "club": "Le Bain",
-            "clubAddress":
-                "The Standard,\nHigh Line,\n848 Washington St,\nNew York,\nNY 10014,\nUSA",
-            "img": "june30-lebain.jpg"
+            "date": "JUNE 19",
+            "description": "Peter Fonda, Lawrence Lee",
+            "club": "Bossa Nova Civic Club",
+            "clubAddress": "1271 Myrtle Ave,\nBrooklyn,\nNY 1122,\nUSA",
+            "img": "june19-bossanova.jpg"
         },
+
         {
             "date": "JUNE 22",
             "description": "Lawrence Lee 'BioDome EP' Record Release In-Store",
@@ -16,11 +16,12 @@
             "img": "june22-halycon.jpg"
         },
         {
-            "date": "JUNE 19",
-            "description": "Peter Fonda, Lawrence Lee",
-            "club": "Bossa Nova Civic Club",
-            "clubAddress": "1271 Myrtle Ave,\nBrooklyn,\nNY 1122,\nUSA",
-            "img": "june19-bossanova.jpg"
+            "date": "JUNE 30",
+            "description": "Lawrence Lee & Juan Ramos & Peter Fonda",
+            "club": "Le Bain",
+            "clubAddress":
+                "The Standard,\nHigh Line,\n848 Washington St,\nNew York,\nNY 10014,\nUSA",
+            "img": "june30-lebain.jpg"
         }
     ]
 }

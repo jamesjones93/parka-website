@@ -97,6 +97,12 @@ export function getProduct(params) {
     });
 }
 
+export function clearProduct() {
+    return {
+        type: "CLEAR_PRODUCT"
+    };
+}
+
 // ===================================================================================== shopping cart
 
 export function addToCart(productInfo) {

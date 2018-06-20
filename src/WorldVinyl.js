@@ -44,7 +44,6 @@ class WorldVinyl extends React.Component {
                 id: vinyl.variants[0].id,
                 quantity: 1
             };
-            console.log(productInfo);
             this.props.dispatch(addToCart(productInfo));
         }
     }
@@ -116,6 +115,13 @@ const Container = styled.div`
 
     @media (max-width: 250) {
         margin: 45px 0 0 0;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        margin: 10% 0 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 `;
 

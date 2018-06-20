@@ -136,14 +136,13 @@ const InputField = styled.input`
     }
 
     @media only screen and (max-device-width: 768px) {
-        width: 80%;
+        width: 100%;
         height: 100px;
 
-        font-size: 45px;
-        margin: 30px 0 0 10%;
+        font-size: 35px;
 
         ::placeholder {
-            font-size: 45px;
+            font-size: 35px;
         }
     }
 `;
@@ -171,10 +170,9 @@ const LoginButton = styled.button`
     }
 
     @media only screen and (max-device-width: 768px) {
-        width: 80%;
+        width: 100%;
         height: 100px;
-        margin: 65px 0 0 10%;
-        font-size: 45px;
+        font-size: 35px;
         height: 140px;
     }
 `;
@@ -185,6 +183,11 @@ const ToRegisterLink = styled.p`
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+        width: 80%;
+    }
 `;
 
 const ErrorMessage = styled.p`

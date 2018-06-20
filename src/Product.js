@@ -3,7 +3,7 @@ import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProduct, addToCart } from "./Actions";
+import { getProduct, addToCart, clearProduct } from "./Actions";
 import DOMPurify from "dompurify";
 
 class Product extends React.Component {
@@ -27,6 +27,15 @@ class Product extends React.Component {
         this.setState({
             variantIndex: 0
         });
+    }
+
+    // static getDerivedStateFromProps(props) {
+    //     console.log("running get derived state from props", props);
+    //     // this.props.dispatch(getProduct(this.props.match.params.product));
+    // }
+
+    componentWillUnmount() {
+        this.props.dispatch(clearProduct());
     }
 
     goBack() {
@@ -65,6 +74,7 @@ class Product extends React.Component {
             id: this.props.product.variants[this.state.variantIndex].id,
             quantity: this.state.productQuantity
         };
+        console.log(productInfo);
 
         this.props.dispatch(addToCart(productInfo));
     }
@@ -153,7 +163,6 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log(state.product);
     return {
         product: state.product
     };

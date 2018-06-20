@@ -51,6 +51,7 @@ class Checkout extends React.Component {
         let checkout = this.props.checkout;
 
         let checkoutItemList = checkout.lineItems.map(product => {
+            console.log(product);
             return (
                 <ProductContainer key={product.id}>
                     <ProductImg src={product.variant.image.src} />
