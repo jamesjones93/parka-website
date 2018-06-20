@@ -40,11 +40,11 @@ class World extends React.Component {
                     <WorldVinyl />
                 </VinylContainer>
                 <DigitalContainer style={this.sectionContainerHeight}>
-                    <Title onClick={this.toggleSection}>DIGITAL</Title>
+                    <Title onClick={this.toggleSection}>DOWNLOADS</Title>
                     <WorldDigital />
                 </DigitalContainer>
                 <MixtapesContainer style={this.sectionContainerHeight}>
-                    <Title onClick={this.toggleSection}>MIXTAPES</Title>
+                    <Title onClick={this.toggleSection}>PODCASTS</Title>
                     <WorldMixtapes />
                 </MixtapesContainer>
                 <VideosContainer style={this.sectionContainerHeight}>
