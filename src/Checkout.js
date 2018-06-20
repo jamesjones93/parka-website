@@ -122,7 +122,7 @@ const ProductsContainer = styled.div`
     width: 70%;
     display: flex;
     flex-direction: column;
-    margin: 2% 0;
+    margin: 2% 0 40px 0;
 
     @media only screen and (max-device-width: 768px) {
         width: 100%;
@@ -201,6 +201,7 @@ const TotalText = styled.p`
     text-align: left;
     font-size: 22px;
     font-weight: bold;
+    margin: 0 0 40px 0;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 35px;
