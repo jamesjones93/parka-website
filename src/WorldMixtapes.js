@@ -79,9 +79,9 @@ class Worldmixtape extends React.Component {
 
         return (
             <Container>
-                <ReleasesContainer>
+                <MixtapesContainer>
                     {(this.props.mixtapes && mixtapesList) || <Loader />}
-                </ReleasesContainer>
+                </MixtapesContainer>
             </Container>
         );
     }
@@ -120,14 +120,14 @@ const Container = styled.div`
     }
 
     @media only screen and (max-device-width: 768px) {
-        margin: 10% 0 0 0;
+        margin: 20% 0 0 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 `;
 
-const ReleasesContainer = styled.div`
+const MixtapesContainer = styled.div`
     margin: 0 auto;
     width: 90%;
     height: 100%;

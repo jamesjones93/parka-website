@@ -231,6 +231,9 @@ const ShopHeaderLink = styled(Link)`
     :hover {
         color: rgb(227, 25, 54);
     }
+    @media only screen and (max-device-width: 768px) {
+        font-size: 25px;
+    }
 `;
 
 const RightContainer = styled.div`

@@ -59,4 +59,10 @@ const VideoContainer = styled.div`
     @media (max-width: 250) {
         padding: 7%;
     }
+    @media only screen and (max-device-width: 768px) {
+        margin: 20% 0 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 `;

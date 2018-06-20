@@ -121,7 +121,7 @@ const Container = styled.div`
     }
 
     @media only screen and (max-device-width: 768px) {
-        margin: 10% 0 0 0;
+        margin: 20% 0 0 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
