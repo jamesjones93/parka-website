@@ -37,6 +37,7 @@ injectGlobal`
 // black: rgb(16, 16, 16)
 // white: rgb(250, 250, 250)
 // red: rgb(227, 25, 54);
+// green: rgb(2, 105, 55)
 
 class App extends React.Component {
     constructor(props) {

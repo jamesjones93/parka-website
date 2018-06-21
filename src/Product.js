@@ -12,7 +12,10 @@ class Product extends React.Component {
 
         this.state = {
             mainImageSrc: "",
-            productQuantity: 1
+            productQuantity: 1,
+            addButtonText: "ADD",
+            buttonColor: "",
+            buttonTextColor: ""
         };
 
         this.changeSize = this.changeSize.bind(this);
@@ -25,17 +28,45 @@ class Product extends React.Component {
         this.props.dispatch(getProduct(this.props.match.params.product));
 
         this.setState({
-            variantIndex: 0
+            variantIndex: 0,
+            addButtonText: "ADD"
         });
     }
 
-    // static getDerivedStateFromProps(props) {
-    //     console.log("running get derived state from props", props);
-    //     // this.props.dispatch(getProduct(this.props.match.params.product));
-    // }
-
     componentWillUnmount() {
         this.props.dispatch(clearProduct());
+    }
+
+    // static getDerivedStateFromProps(props, state) {
+    //     console.log(state.addButtonText);
+    //     if (state.addButtonText === "ADDING...") {
+    //         return {
+    //             addButtonText: "ADDED",
+    //             buttonColor: "green",
+    //             buttonTextColor: "white"
+    //         };
+    //     } else {
+    //         return;
+    //     }
+    //     // this.setState({ addButtonText: "ADDED" });
+    //     // setTimeout(this.setState({ addButtonText: "ADD" }), 2000);
+    // }
+
+    componentDidUpdate() {
+        if (this.state.addButtonText === "ADDING...") {
+            this.setState({
+                addButtonText: "ADDED",
+                buttonColor: "green",
+                buttonTextColor: "white"
+            });
+            setTimeout(() => {
+                this.setState({
+                    addButtonText: "ADD",
+                    buttonColor: "",
+                    buttonTextColor: ""
+                });
+            }, 2000);
+        }
     }
 
     goBack() {
@@ -70,6 +101,8 @@ class Product extends React.Component {
     }
 
     addToCart() {
+        this.setState({ addButtonText: "ADDING..." });
+
         let productInfo = {
             id: this.props.product.variants[this.state.variantIndex].id,
             quantity: this.state.productQuantity
@@ -144,7 +177,16 @@ class Product extends React.Component {
                             />
                         )) || <p />}
                         {(availableVariants.length && (
-                            <AddButton onClick={this.addToCart}>ADD</AddButton>
+                            <AddButton
+                                onClick={this.addToCart}
+                                style={{
+                                    color: this.state.buttonTextColor,
+                                    backgroundColor: this.state.buttonColor,
+                                    border: "1px solid" + this.state.buttonColor
+                                }}
+                            >
+                                {this.state.addButtonText}
+                            </AddButton>
                         )) || <p />}
                     </QuantityAndAddContainer>
 
@@ -164,7 +206,8 @@ class Product extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        product: state.product
+        product: state.product,
+        addedSuccess: state.addedSuccess
     };
 };
 

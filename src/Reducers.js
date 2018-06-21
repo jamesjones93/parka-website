@@ -65,6 +65,11 @@ export default function(state = {}, action) {
             ...state,
             showCart: action.showCart
         };
+    } else if (action.type === "ADDED_PRODUCT_SUCCESS") {
+        state = {
+            ...state,
+            addedSuccess: action.addedSuccess
+        };
     } else if (action.type === "GET_CHECKOUT") {
         state = {
             ...state,

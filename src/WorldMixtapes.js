@@ -36,7 +36,15 @@ class Worldmixtape extends React.Component {
         this.track.currentTime = 0;
     }
 
-    addToCart(mixtape, tag, e) {
+    addToCart(mixtape, e) {
+        let addedOverlayOpacity = e.currentTarget.children[2];
+
+        addedOverlayOpacity.style.opacity = 1;
+
+        setTimeout(() => {
+            addedOverlayOpacity.style.opacity = 0;
+        }, 2000);
+
         if (mixtape.tags.length > 0) {
             return;
         } else {
@@ -73,6 +81,9 @@ class Worldmixtape extends React.Component {
                     <audio ref={audio => (this.track = audio)}>
                         <source src={"tracks/" + mixtape.title + ".mp3"} />
                     </audio>
+                    <AddedBackgroundOverlay>
+                        <AddedText>ADDED</AddedText>
+                    </AddedBackgroundOverlay>
                 </MixtapeContainer>
             );
         });
@@ -149,6 +160,7 @@ const MixtapeContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 `;
 
 const MixtapeImg = styled.img`
@@ -161,6 +173,24 @@ const OverlayText = styled.p`
     ${transition} position: absolute;
     margin: 0;
     opacity: 0;
+`;
+
+const AddedBackgroundOverlay = styled.div`
+    ${transition} width: 200px;
+    height: 220px;
+    z-index: 3;
+    font-size: 30px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    background-color: rgba(2, 105, 55, 0.9);
+    color: rgb(250, 250, 250);
+    opacity: 0;
+`;
+
+const AddedText = styled.p`
+    width: 100%;
+    text-align: center;
 `;
 
 const Loader = styled.div`

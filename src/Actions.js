@@ -124,8 +124,8 @@ export function addToCart(productInfo) {
                     console.log(checkout);
                     // Do something with the updated checkout
                     return {
-                        type: "GET_CART",
-                        cart: checkout
+                        type: "ADDED_PRODUCT_SUCCESS",
+                        addedSuccess: true
                     };
                 })
                 .catch(console.log);
