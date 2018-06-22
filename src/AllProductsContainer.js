@@ -40,8 +40,6 @@ class AllProductsContainer extends React.Component {
         let productsList = products.map(product => {
             let productUrl = "/shop/product/" + product.handle;
 
-            let price = Math.round(product.variants[0].price);
-
             let availability = false;
 
             product.variants.forEach(item => {
@@ -71,7 +69,7 @@ class AllProductsContainer extends React.Component {
                         </ProductImageContainer>
                         <ProductInfoDiv style={greyText}>
                             <ProductPrice className="price">
-                                ${price}
+                                ${product.variants[0].price}
                             </ProductPrice>
                             <ProductTitle>{product.title}</ProductTitle>
                         </ProductInfoDiv>
