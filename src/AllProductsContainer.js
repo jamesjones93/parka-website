@@ -196,7 +196,7 @@ const ProductTitle = styled.p`
 `;
 
 const ProductPrice = styled.p`
-    width: 40px;
+    width: 55px;
     height: 30px;
     border: 3px solid rgb(16, 16, 16);
     font-size: 16px;
