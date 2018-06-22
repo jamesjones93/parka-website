@@ -188,7 +188,7 @@ const TitleOverlay = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(16, 16, 16, 0.2);
+    background-color: rgba(16, 16, 16, 0);
     color: rgb(250, 250, 250);
     opacity: 0;
 `;
