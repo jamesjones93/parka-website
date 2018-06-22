@@ -32,6 +32,7 @@ class WorldVinyl extends React.Component {
     vinylMouseOut(e) {
         e.currentTarget.children[0].style.opacity = 0;
         e.currentTarget.children[1].style.opacity = 0;
+        e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         this.track.pause();
         this.track.currentTime = 0;
@@ -85,10 +86,7 @@ class WorldVinyl extends React.Component {
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
                     <TitleOverlay>
-                        <Title>
-                            {(vinyl.tags.length && vinyl.description) ||
-                                vinyl.title}
-                        </Title>
+                        <Title />
                     </TitleOverlay>
                 </VinylContainer>
             );
