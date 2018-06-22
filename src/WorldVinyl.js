@@ -16,15 +16,16 @@ class WorldVinyl extends React.Component {
         this.props.dispatch(getWorldVinyl());
     }
 
-    vinylMouseOver(sku, e) {
-        if (sku == 0) {
+    vinylMouseOver(tag, e) {
+        if (tag === "ComingSoon" || tag === "N/A") {
             e.currentTarget.children[0].style.filter = "blur(5px)";
             e.currentTarget.children[1].style.opacity = 1;
             e.currentTarget.style.cursor = "default";
         }
-
+        e.currentTarget.children[3].style.opacity = 1;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
+
         this.track.play();
     }
 
@@ -43,7 +44,7 @@ class WorldVinyl extends React.Component {
 
         setTimeout(() => {
             addedOverlayOpacity.style.opacity = 0;
-        }, 2000);
+        }, 800);
 
         if (vinyl.tags.length > 0) {
             return;
@@ -62,26 +63,33 @@ class WorldVinyl extends React.Component {
         }
 
         let vinylsList = this.props.vinyls.map(vinyl => {
-            console.log(vinyl);
+            let tag;
+            if (vinyl.tags.length > 0) {
+                tag = vinyl.tags[0].value;
+            } else {
+                tag = null;
+            }
+
             return (
                 <VinylContainer
                     key={vinyl.id}
-                    onMouseOver={e =>
-                        this.vinylMouseOver(vinyl.variants[0].sku, e)
-                    }
+                    onMouseOver={e => this.vinylMouseOver(tag, e)}
                     onMouseOut={this.vinylMouseOut}
                     onClick={e => this.addToCart(vinyl, e)}
                 >
                     <VinylImg src={vinyl.images[0].src} />
-                    {vinyl.variants[0].sku == 0 && (
-                        <OverlayText>{vinyl.variants[0].title}</OverlayText>
-                    )}
                     <audio ref={audio => (this.track = audio)}>
                         <source src={"tracks/" + vinyl.title + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
+                    <TitleOverlay>
+                        <Title>
+                            {(vinyl.tags.length && vinyl.description) ||
+                                vinyl.title}
+                        </Title>
+                    </TitleOverlay>
                 </VinylContainer>
             );
         });
@@ -173,6 +181,25 @@ const OverlayText = styled.p`
     opacity: 0;
 `;
 
+const TitleOverlay = styled.div`
+    ${transition} width: 200px;
+    height: 220px;
+    z-index: 3;
+    font-size: 12px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(16, 16, 16, 0.2);
+    color: rgb(250, 250, 250);
+    opacity: 0;
+`;
+
+const Title = styled.p`
+    width: 80%;
+    text-align: center;
+`;
+
 const AddedBackgroundOverlay = styled.div`
     ${transition} width: 200px;
     height: 220px;
@@ -192,8 +219,9 @@ const AddedText = styled.p`
 `;
 
 const Loader = styled.div`
+    position: relative;
     margin: 0 auto;
-    margin: 20%;
+    top: 120px;
     border: 16px solid #f3f3f3;
     border-top: 16px solid rgb(227, 25, 54);
     border-radius: 50%;

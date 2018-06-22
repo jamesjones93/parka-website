@@ -100,8 +100,17 @@ export default function(state = {}, action) {
             ...state,
             mixtapes: action.mixtapes
         };
+    } else if (action.type === "GET_WORLD_MIXES") {
+        state = {
+            ...state,
+            mixes: action.mixes
+        };
+    } else if (action.type === "GET_WORLD_VIDEOS") {
+        state = {
+            ...state,
+            videos: action.videos
+        };
     } else if (action.type === "TOGGLE_THANK_YOU") {
-        console.log(action);
         state = {
             ...state,
             showThankYou: action.showThankYou

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import WorldVinyl from "./WorldVinyl";
 import WorldDigital from "./WorldDigital";
 import WorldVideos from "./WorldVideos";
+import WorldMixes from "./WorldMixes";
 import WorldMixtapes from "./WorldMixtapes";
 
 class World extends React.Component {
@@ -27,7 +28,7 @@ class World extends React.Component {
         e.currentTarget.parentElement.parentElement.children[3].style.height =
             "7%";
 
-        e.currentTarget.parentElement.style.height = "80%";
+        e.currentTarget.parentElement.style.height = "73%";
     }
 
     render() {
@@ -35,18 +36,22 @@ class World extends React.Component {
 
         return (
             <Container>
+                <DigitalContainer style={this.sectionContainerHeight}>
+                    <Title onClick={this.toggleSection}>TRACKS</Title>
+                    <WorldDigital />
+                </DigitalContainer>
+                <MixesContainer style={this.sectionContainerHeight}>
+                    <Title onClick={this.toggleSection}>MIXES</Title>
+                    <WorldMixes />
+                </MixesContainer>
+                <MixtapesContainer style={this.sectionContainerHeight}>
+                    <Title onClick={this.toggleSection}>MIXTAPES</Title>
+                    <WorldMixtapes />
+                </MixtapesContainer>
                 <VinylContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>VINYL</Title>
                     <WorldVinyl />
                 </VinylContainer>
-                <DigitalContainer style={this.sectionContainerHeight}>
-                    <Title onClick={this.toggleSection}>DOWNLOADS</Title>
-                    <WorldDigital />
-                </DigitalContainer>
-                <MixtapesContainer style={this.sectionContainerHeight}>
-                    <Title onClick={this.toggleSection}>PODCASTS</Title>
-                    <WorldMixtapes />
-                </MixtapesContainer>
                 <VideosContainer style={this.sectionContainerHeight}>
                     <Title onClick={this.toggleSection}>VIDEOS</Title>
                     <WorldVideos />
@@ -92,12 +97,12 @@ const sectionContainer = `
     }
 `;
 
-const VinylContainer = styled.div`
+const DigitalContainer = styled.div`
     ${sectionContainer} background-color: rgb(16, 16, 16);
     color: rgb(250, 250, 250);
 `;
 
-const DigitalContainer = styled.div`
+const MixesContainer = styled.div`
     ${sectionContainer} background-color: rgb(250, 250, 250);
     color: rgb(16, 16, 16);
 `;
@@ -107,9 +112,14 @@ const MixtapesContainer = styled.div`
     color: rgb(250, 250, 250);
 `;
 
-const VideosContainer = styled.div`
+const VinylContainer = styled.div`
     ${sectionContainer} background-color: rgb(16, 16, 16);
     color: rgb(250, 250, 250);
+`;
+
+const VideosContainer = styled.div`
+    ${sectionContainer} background-color: rgb(250, 250, 250);
+    color: rgb(16, 16, 16);
 `;
 
 const Title = styled.p`

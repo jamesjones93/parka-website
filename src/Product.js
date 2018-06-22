@@ -37,38 +37,6 @@ class Product extends React.Component {
         this.props.dispatch(clearProduct());
     }
 
-    // static getDerivedStateFromProps(props, state) {
-    //     console.log(state.addButtonText);
-    //     if (state.addButtonText === "ADDING...") {
-    //         return {
-    //             addButtonText: "ADDED",
-    //             buttonColor: "green",
-    //             buttonTextColor: "white"
-    //         };
-    //     } else {
-    //         return;
-    //     }
-    //     // this.setState({ addButtonText: "ADDED" });
-    //     // setTimeout(this.setState({ addButtonText: "ADD" }), 2000);
-    // }
-
-    componentDidUpdate() {
-        if (this.state.addButtonText === "ADDING...") {
-            this.setState({
-                addButtonText: "ADDED",
-                buttonColor: "green",
-                buttonTextColor: "white"
-            });
-            setTimeout(() => {
-                this.setState({
-                    addButtonText: "ADD",
-                    buttonColor: "",
-                    buttonTextColor: ""
-                });
-            }, 2000);
-        }
-    }
-
     goBack() {
         this.props.history.goBack();
     }
@@ -100,8 +68,21 @@ class Product extends React.Component {
         });
     }
 
-    addToCart() {
-        this.setState({ addButtonText: "ADDING..." });
+    addToCart(e) {
+        this.setState({ addButtonText: "ADDED" });
+
+        let addedButton = e.currentTarget;
+
+        addedButton.style.backgroundColor = "rgb(2, 105, 55)";
+        addedButton.style.border = "1px solid rgb(2, 105, 55)";
+        addedButton.style.color = "rgb(250, 250, 250)";
+
+        setTimeout(() => {
+            this.setState({ addButtonText: "ADD" });
+            addedButton.style.backgroundColor = "inherit";
+            addedButton.style.border = "1px solid rgb(16, 16, 16);";
+            addedButton.style.color = "rgb(16, 16, 16)";
+        }, 800);
 
         let productInfo = {
             id: this.props.product.variants[this.state.variantIndex].id,

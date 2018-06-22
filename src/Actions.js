@@ -312,8 +312,22 @@ export function getWorldDigital() {
         .catch(console.log);
 }
 
-export function getWorldMixtapes() {
+export function getWorldMixes() {
     const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU0NDIwNDM5MDk3"; //mixtapes
+
+    return client.collection
+        .fetchWithProducts(collectionId)
+        .then(collection => {
+            return {
+                type: "GET_WORLD_MIXES",
+                mixes: collection.products
+            };
+        })
+        .catch(console.log);
+}
+
+export function getWorldMixtapes() {
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU4Njc5Nzg3NTc3"; //mixtapes
 
     return client.collection
         .fetchWithProducts(collectionId)
@@ -324,4 +338,13 @@ export function getWorldMixtapes() {
             };
         })
         .catch(console.log);
+}
+
+export function getWorldVideos() {
+    return axios.get("/world-videos").then(function({ data }) {
+        return {
+            type: "GET_WORLD_VIDEOS",
+            videos: data.videos
+        };
+    });
 }

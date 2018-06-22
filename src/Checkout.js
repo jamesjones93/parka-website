@@ -77,6 +77,16 @@ class Checkout extends React.Component {
             );
         });
 
+        let splitUrl = checkout.webUrl.split(
+            "https://parka-records.myshopify.com"
+        );
+
+        console.log(splitUrl);
+
+        let paymentUrl = "http://shop.parka.world" + splitUrl[1];
+
+        console.log(paymentUrl);
+
         return (
             <Container>
                 <ProductsContainer>{checkoutItemList}</ProductsContainer>
@@ -86,7 +96,7 @@ class Checkout extends React.Component {
                     </TotalValue>
                 </TotalText>
 
-                <ProceedToCheckout href={checkout.webUrl}>
+                <ProceedToCheckout href={paymentUrl}>
                     Confirm and proceed to payment
                 </ProceedToCheckout>
             </Container>

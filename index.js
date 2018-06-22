@@ -15,6 +15,7 @@ const hash = require("./hash");
 var nodemailer = require("nodemailer");
 var mysql = require("mysql");
 const { dates } = require("./data/dates.json");
+const { videos } = require("./data/videos.json");
 
 app.use(
     bodyParser.urlencoded({
@@ -226,6 +227,12 @@ app.get("/", (req, res) => {
     } else {
         res.sendFile(__dirname + "/index.html");
     }
+});
+
+app.get("/world-videos", (req, res) => {
+    res.json({
+        videos: videos
+    });
 });
 
 // ========================================================================

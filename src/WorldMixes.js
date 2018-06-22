@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getWorldMixtapes, addToCart } from "./Actions";
+import { getWorldMixes, addToCart } from "./Actions";
 
-class Worldmixtape extends React.Component {
+class Worldmix extends React.Component {
     constructor(props) {
         super(props);
 
-        this.mixtapeMouseOver = this.mixtapeMouseOver.bind(this);
-        this.mixtapeMouseOut = this.mixtapeMouseOut.bind(this);
+        this.mixMouseOver = this.mixMouseOver.bind(this);
+        this.mixMouseOut = this.mixMouseOut.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(getWorldMixtapes());
+        this.props.dispatch(getWorldMixes());
     }
 
-    mixtapeMouseOver(tag, e) {
+    mixMouseOver(tag, e) {
         if (tag === "ComingSoon" || tag === "N/A") {
             e.currentTarget.children[0].style.filter = "blur(5px)";
             e.currentTarget.children[1].style.opacity = 1;
@@ -25,19 +25,20 @@ class Worldmixtape extends React.Component {
         e.currentTarget.children[3].style.opacity = 1;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
+
         this.track.play();
     }
 
-    mixtapeMouseOut(e) {
+    mixMouseOut(e) {
         e.currentTarget.children[0].style.opacity = 0;
         e.currentTarget.children[1].style.opacity = 0;
-        e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
+        e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         e.currentTarget.children[3].style.opacity = 0;
         this.track.pause();
         this.track.currentTime = 0;
     }
 
-    addToCart(mixtape, e) {
+    addToCart(mix, e) {
         let addedOverlayOpacity = e.currentTarget.children[2];
 
         addedOverlayOpacity.style.opacity = 1;
@@ -46,11 +47,11 @@ class Worldmixtape extends React.Component {
             addedOverlayOpacity.style.opacity = 0;
         }, 800);
 
-        if (mixtape.tags.length > 0) {
+        if (mix.tags.length > 0) {
             return;
         } else {
             let productInfo = {
-                id: mixtape.variants[0].id,
+                id: mix.variants[0].id,
                 quantity: 1
             };
 
@@ -59,47 +60,44 @@ class Worldmixtape extends React.Component {
     }
 
     render() {
-        if (!this.props.mixtapes) {
+        if (!this.props.mixes) {
             return <Loader />;
         }
 
-        let mixtapesList = this.props.mixtapes.map(mixtape => {
+        let mixesList = this.props.mixes.map(mix => {
             let tag;
-            if (mixtape.tags.length > 0) {
-                tag = mixtape.tags[0].value;
+            if (mix.tags.length > 0) {
+                tag = mix.tags[0].value;
             } else {
                 tag = null;
             }
             return (
-                <MixtapeContainer
-                    key={mixtape.id}
-                    onMouseOver={e => this.mixtapeMouseOver(tag, e)}
-                    onMouseOut={this.mixtapeMouseOut}
-                    onClick={e => this.addToCart(mixtape, e)}
+                <MixContainer
+                    key={mix.id}
+                    onMouseOver={e => this.mixMouseOver(tag, e)}
+                    onMouseOut={this.mixMouseOut}
+                    onClick={e => this.addToCart(mix, e)}
                 >
-                    <MixtapeImg src={mixtape.images[0].src} />
+                    <MixImg src={mix.images[0].src} />
 
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"tracks/" + mixtape.title + ".mp3"} />
+                        <source src={"tracks/" + mix.title + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
                     <TitleOverlay>
-                        <Title>
-                            {(track.tags.length && track.description) ||
-                                track.title}
-                        </Title>
+                        <Title>{(tag && mix.description) || mix.title}</Title>
                     </TitleOverlay>
-                </MixtapeContainer>
+                </MixContainer>
             );
         });
 
         return (
             <Container>
-                <MixtapesContainer>
-                    {(this.props.mixtapes && mixtapesList) || <Loader />}
-                </MixtapesContainer>
+                <MixesContainer>
+                    {(this.props.mixes && mixesList) || <Loader />}
+                </MixesContainer>
             </Container>
         );
     }
@@ -107,11 +105,11 @@ class Worldmixtape extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        mixtapes: state.mixtapes
+        mixes: state.mixes
     };
 };
 
-export default connect(mapStateToProps)(Worldmixtape);
+export default connect(mapStateToProps)(Worldmix);
 
 const transition = `
     -moz-transition: all 0.10s ease-in;
@@ -121,8 +119,8 @@ const transition = `
 `;
 
 const Container = styled.div`
-    background-color: rgb(227, 25, 54);
-    color: rgb(250, 250, 250);
+    background-color: rgb(250, 250, 250);
+    color: rgb(16, 16, 16);
     width: 90%;
     margin: 30px 0 0 0;
     padding: 2% 5% 10% 5%;
@@ -145,7 +143,7 @@ const Container = styled.div`
     }
 `;
 
-const MixtapesContainer = styled.div`
+const MixesContainer = styled.div`
     margin: 0 auto;
     width: 90%;
     height: 100%;
@@ -156,8 +154,8 @@ const MixtapesContainer = styled.div`
     align-items: center;
 `;
 
-const MixtapeContainer = styled.div`
-    background-color: rgb(16, 16, 16);
+const MixContainer = styled.div`
+    background-color: rgb(227, 25, 54);
     width: 200px;
     margin: 1.5%
     height: auto;
@@ -170,7 +168,7 @@ const MixtapeContainer = styled.div`
     position: relative;
 `;
 
-const MixtapeImg = styled.img`
+const MixImg = styled.img`
     ${transition} width: 100%;
     height: 100%;
     opacity: 0;

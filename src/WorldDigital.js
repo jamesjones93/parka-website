@@ -18,13 +18,13 @@ class WorldDigital extends React.Component {
     }
 
     digitalMouseOver(tag, e) {
-        if (tag === "ComingSoon") {
+        if (tag === "ComingSoon" || tag === "N/A") {
             e.currentTarget.children[0].style.filter = "blur(5px)";
             e.currentTarget.children[1].style.opacity = 1;
             e.currentTarget.style.cursor = "default";
         }
-
-        e.currentTarget.style.backgroundColor = "rgb(250, 250, 250)";
+        e.currentTarget.children[3].style.opacity = 1;
+        e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
         this.track.play();
     }
@@ -33,6 +33,7 @@ class WorldDigital extends React.Component {
         e.currentTarget.children[0].style.opacity = 0;
         e.currentTarget.children[1].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
+        e.currentTarget.children[3].style.opacity = 0;
         this.track.pause();
         this.track.currentTime = 0;
     }
@@ -44,7 +45,7 @@ class WorldDigital extends React.Component {
 
         setTimeout(() => {
             addedOverlayOpacity.style.opacity = 0;
-        }, 2000);
+        }, 800);
 
         if (track.tags.length > 0) {
             return;
@@ -85,6 +86,12 @@ class WorldDigital extends React.Component {
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
+                    <TitleOverlay>
+                        <Title>
+                            {(track.tags.length > 0 && track.description) ||
+                                track.title}
+                        </Title>
+                    </TitleOverlay>
                 </DigitalContainer>
             );
         });
@@ -115,8 +122,8 @@ const transition = `
 `;
 
 const Container = styled.div`
-    background-color: rgb(250, 250, 250);
-    color: rgb(16, 16, 16);
+    background-color: rgb(16, 16, 16);
+    color: rgb(250, 250, 250);
     width: 90%;
     margin: 30px 0 0 0;
     padding: 2% 5% 10% 5%;
@@ -176,6 +183,25 @@ const OverlayText = styled.p`
     opacity: 0;
 `;
 
+const TitleOverlay = styled.div`
+    ${transition} width: 200px;
+    height: 220px;
+    z-index: 3;
+    font-size: 12px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(16, 16, 16, 0.2);
+    color: rgb(250, 250, 250);
+    opacity: 0;
+`;
+
+const Title = styled.p`
+    width: 80%;
+    text-align: center;
+`;
+
 const AddedBackgroundOverlay = styled.div`
     ${transition} width: 200px;
     height: 220px;
@@ -195,8 +221,9 @@ const AddedText = styled.p`
 `;
 
 const Loader = styled.div`
+    position: relative;
     margin: 0 auto;
-    margin: 20%;
+    top: 120px;
     border: 16px solid #f3f3f3;
     border-top: 16px solid rgb(227, 25, 54);
     border-radius: 50%;
