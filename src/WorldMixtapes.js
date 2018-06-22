@@ -25,7 +25,7 @@ class Worldmixtape extends React.Component {
         e.currentTarget.children[3].style.opacity = 1;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
-        this.track.play();
+        this.mixtape.play();
     }
 
     mixtapeMouseOut(e) {
@@ -33,8 +33,8 @@ class Worldmixtape extends React.Component {
         e.currentTarget.children[1].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[3].style.opacity = 0;
-        this.track.pause();
-        this.track.currentTime = 0;
+        this.mixtape.pause();
+        this.mixtape.currentTime = 0;
     }
 
     addToCart(mixtape, e) {
@@ -79,7 +79,7 @@ class Worldmixtape extends React.Component {
                 >
                     <MixtapeImg src={mixtape.images[0].src} />
 
-                    <audio ref={audio => (this.track = audio)}>
+                    <audio ref={audio => (this.mixtape = audio)}>
                         <source src={"tracks/" + mixtape.title + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
@@ -87,8 +87,8 @@ class Worldmixtape extends React.Component {
                     </AddedBackgroundOverlay>
                     <TitleOverlay>
                         <Title>
-                            {(track.tags.length && track.description) ||
-                                track.title}
+                            {(mixtape.tags.length && mixtape.description) ||
+                                mixtape.title}
                         </Title>
                     </TitleOverlay>
                 </MixtapeContainer>

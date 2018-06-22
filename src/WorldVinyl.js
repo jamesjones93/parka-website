@@ -86,7 +86,10 @@ class WorldVinyl extends React.Component {
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
                     <TitleOverlay>
-                        <Title />
+                        <Title>
+                            {(vinyl.tags.length && vinyl.description) ||
+                                vinyl.title}
+                        </Title>
                     </TitleOverlay>
                 </VinylContainer>
             );
@@ -188,7 +191,7 @@ const TitleOverlay = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(16, 16, 16, 0);
+    background-color: rgba(16, 16, 16, 0.2);
     color: rgb(250, 250, 250);
     opacity: 0;
 `;
