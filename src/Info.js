@@ -16,7 +16,7 @@ export default function Info() {
                     Parka is as Parka does. On a mission to accelerate the
                     future. Join us.
                 </Description>
-                <Email>parkarecords[at]gmail.com</Email>
+                <Email href="mailto:info@par-ka.com">info@par-ka.com</Email>
             </RightContainer>
         </Container>
     );
@@ -68,7 +68,9 @@ const Description = styled.p`
     }
 `;
 
-const Email = styled.p`
+const Email = styled.a`
+    text-decoration: none;
+    color: rgb(16, 16, 16);
     margin: 5% 0;
     font-size: 14px;
 

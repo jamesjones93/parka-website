@@ -121,11 +121,9 @@ export function addToCart(productInfo) {
             return client.checkout
                 .addLineItems(productInfo.checkoutId, lineItemsToAdd)
                 .then(checkout => {
-                    console.log(checkout);
-                    // Do something with the updated checkout
                     return {
-                        type: "ADDED_PRODUCT_SUCCESS",
-                        addedSuccess: true
+                        type: "GET_CHECKOUT",
+                        checkout: checkout
                     };
                 })
                 .catch(console.log);

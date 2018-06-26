@@ -170,15 +170,6 @@ class Product extends React.Component {
                             </AddButton>
                         )) || <p />}
                     </QuantityAndAddContainer>
-
-                    <DeliveryText>
-                        Deliveries performed by CDEK company. Delivery will take
-                        2-4 days, depending on how remote your location is.
-                        Delivery price starts at 300 roubles, depending on the
-                        volume of your order and location of delivery
-                        destination. You can discuss the final price of delivery
-                        with call-centre operator.
-                    </DeliveryText>
                 </RightContainer>
             </Container>
         );

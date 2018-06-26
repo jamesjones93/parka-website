@@ -237,6 +237,17 @@ app.get("/world-videos", (req, res) => {
 
 // ========================================================================
 
+app.get("/check-for-cookie-accept", (req, res) => {
+    if (req.session.cookieAccepted) {
+        res.json({ cookieAccepted: true });
+    }
+});
+
+app.post("/accepted-cookie-banner", (req, res) => {
+    req.session.cookieAccepted = true;
+    res.json({ cookieAccepted: true });
+});
+
 app.get("*", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });

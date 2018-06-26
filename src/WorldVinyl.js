@@ -80,7 +80,7 @@ class WorldVinyl extends React.Component {
                 >
                     <VinylImg src={vinyl.images[0].src} />
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"tracks/" + vinyl.title + ".mp3"} />
+                        <source src={"/tracks/" + vinyl.title + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>

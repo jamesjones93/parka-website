@@ -44,17 +44,16 @@ class Header extends React.Component {
                     <HeaderLink to="/shop/all">SHOP</HeaderLink>
                     <HeaderLink to="/dates">DATES</HeaderLink>
                     <HeaderLink to="/info">INFO</HeaderLink>
-                    {(this.props.checkout && (
-                        <CartImg
-                            src="/icons/cartfull.svg"
-                            onClick={this.showCartClick}
-                        />
-                    )) || (
-                        <CartImg
-                            src="/icons/cartempty.svg"
-                            onClick={this.showCartClick}
-                        />
-                    )}
+                    <CartImgContainer onClick={this.showCartClick}>
+                        {(this.props.checkout && (
+                            <CartImg src="/icons/cartfull.svg" />
+                        )) || <CartImg src="/icons/cartempty.svg" />}
+                        <CartNumberItems>
+                            [{(this.props.checkout &&
+                                this.props.checkout.lineItems.length) ||
+                                0}]
+                        </CartNumberItems>
+                    </CartImgContainer>
                 </HeaderLinksContainer>
                 <ReactCSSTransitionGroup
                     transitionName="fade"
@@ -69,6 +68,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = function(state) {
+    console.log(state.checkout);
     return {
         showCart: state.showCart,
         checkout: state.checkout,
@@ -138,11 +138,25 @@ const HeaderLink = styled(Link)`
     }
 `;
 
-const CartImg = styled.img`
-    height: 16px;
+const CartImgContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    height: 22px;
+    width: 40px;
     cursor: pointer;
+    align-items: center;
+`;
+
+const CartImg = styled.img`
+    height: 20px;
 
     @media only screen and (max-device-width: 768px) {
         height: 26px;
     }
+`;
+
+const CartNumberItems = styled.p`
+    font-size: 12px;
+    color: rgb(227, 25, 54);
+    padding: 2px 0 0 0;
 `;

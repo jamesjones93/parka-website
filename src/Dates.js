@@ -217,10 +217,10 @@ const DatesListContainer = styled.div`
         display: none;
     }
 `;
-
+//change DateContainer height back to 32.4% when more dates are in
 const DateContainer = styled.div`
     width: 100%;
-    height: 32.4%;
+    height: 50%;
     padding: 0.2% 0 0 0;
     display: flex;
     flex-direction: row;
@@ -232,6 +232,7 @@ const DateContainer = styled.div`
     @media only screen and (max-device-width: 768px) {
         font-size: 30px;
     }
+    //
 `;
 
 const DateInfo = styled.p`
