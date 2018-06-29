@@ -47,5 +47,5 @@ const Container = styled.div`
     width: 100%;
     padding: 0;
     margin: 0;
-    background-color: rgb(227, 25, 54);
+    background-color: rgb(16, 16, 16);
 `;
