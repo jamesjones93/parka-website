@@ -94,7 +94,7 @@ const Container = styled.div`
     color: white;
     width: 35%;
     height: 100%;
-    padding: 0 7.5%;
+    padding: 0 7.55%;
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;
