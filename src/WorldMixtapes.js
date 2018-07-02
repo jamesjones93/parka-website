@@ -34,7 +34,7 @@ class Worldmixtape extends React.Component {
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.children[1].pause();
-        e.currentTarget.children[1].currentTime = 0;
+        // e.currentTarget.children[1].currentTime = 0;
     }
 
     addToCart(mixtape, e) {

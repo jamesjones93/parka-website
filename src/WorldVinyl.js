@@ -35,7 +35,7 @@ class WorldVinyl extends React.Component {
         e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         e.currentTarget.children[1].pause();
-        e.currentTarget.children[1].currentTime = 0;
+        // e.currentTarget.children[1].currentTime = 0;
     }
 
     addToCart(vinyl, e) {
