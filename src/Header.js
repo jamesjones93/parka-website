@@ -32,7 +32,7 @@ class Header extends React.Component {
                 <ParkaWorldHeader>
                     {(this.props.cookie && (
                         <Link to="/world">
-                            <Logo src="/logo/Logotype.svg" />
+                            <Logo src="/logo/parkalogowhite.png" />
                         </Link>
                     )) || (
                         <Link to="/">
@@ -99,7 +99,8 @@ const ParkaWorldHeader = styled.div`
 `;
 
 const Logo = styled.img`
-    ${transition} width: 180px;
+    ${transition} width: 80px;
+    margin: 3px 0 0 0;
 
     :hover {
         filter: brightness(50%);

@@ -26,7 +26,7 @@ class Worldmix extends React.Component {
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
 
-        this.track.play();
+        e.currentTarget.children[1].play();
     }
 
     mixMouseOut(e) {
@@ -34,8 +34,8 @@ class Worldmix extends React.Component {
         e.currentTarget.children[1].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         e.currentTarget.children[3].style.opacity = 0;
-        this.track.pause();
-        this.track.currentTime = 0;
+        e.currentTarget.children[1].pause();
+        e.currentTarget.children[1].currentTime = 0;
     }
 
     addToCart(mix, e) {
@@ -63,6 +63,7 @@ class Worldmix extends React.Component {
         if (!this.props.mixes) {
             return <Loader />;
         }
+        console.log("vinyl", this.props.mixes);
 
         let mixesList = this.props.mixes.map(mix => {
             let tag;
@@ -81,7 +82,7 @@ class Worldmix extends React.Component {
                     <MixImg src={mix.images[0].src} />
 
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"tracks/" + mix.title + ".mp3"} />
+                        <source src={"audio/" + mix.handle + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>

@@ -26,7 +26,7 @@ class WorldDigital extends React.Component {
         e.currentTarget.children[3].style.opacity = 1;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
-        this.track.play();
+        e.currentTarget.children[1].play();
     }
 
     digitalMouseOut(e) {
@@ -34,8 +34,8 @@ class WorldDigital extends React.Component {
         e.currentTarget.children[1].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
         e.currentTarget.children[3].style.opacity = 0;
-        this.track.pause();
-        this.track.currentTime = 0;
+        e.currentTarget.children[1].pause();
+        e.currentTarget.children[1].currentTime = 0;
     }
 
     addToCart(track, e) {
@@ -81,7 +81,7 @@ class WorldDigital extends React.Component {
                 >
                     <DigitalImg src={track.images[0].src} />
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"tracks/" + track.title + ".mp3"} />
+                        <source src={"audio/" + track.handle + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>

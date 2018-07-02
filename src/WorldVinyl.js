@@ -26,7 +26,7 @@ class WorldVinyl extends React.Component {
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
 
-        this.track.play();
+        e.currentTarget.children[1].play();
     }
 
     vinylMouseOut(e) {
@@ -34,8 +34,8 @@ class WorldVinyl extends React.Component {
         e.currentTarget.children[1].style.opacity = 0;
         e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
-        this.track.pause();
-        this.track.currentTime = 0;
+        e.currentTarget.children[1].pause();
+        e.currentTarget.children[1].currentTime = 0;
     }
 
     addToCart(vinyl, e) {
@@ -80,7 +80,7 @@ class WorldVinyl extends React.Component {
                 >
                     <VinylImg src={vinyl.images[0].src} />
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"/tracks/" + vinyl.title + ".mp3"} />
+                        <source src={"/audio/" + vinyl.handle + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>
