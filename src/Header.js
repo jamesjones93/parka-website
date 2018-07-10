@@ -36,7 +36,7 @@ class Header extends React.Component {
                         </Link>
                     )) || (
                         <Link to="/">
-                            <Logo src="/logo/Logotype.svg" />
+                            <Logo src="/logo/parkalogowhite.png" />
                         </Link>
                     )}
                 </ParkaWorldHeader>
