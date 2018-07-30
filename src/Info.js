@@ -13,10 +13,23 @@ export default function Info() {
             <RightContainer>
                 <Title>PARKA</Title>
                 <Description>
-                    Parka is as Parka does. On a mission to accelerate the
-                    future. Join us.
+                    Director of Operations:{" "}
+                    <Email href="mailto:ops@par-ka.com">ops@par-ka.com</Email>
                 </Description>
-                <Email href="mailto:info@par-ka.com">info@par-ka.com</Email>
+                <Description>
+                    Director of Propoganda:{" "}
+                    <Email href="mailto:press@par-ka.com">
+                        press@par-ka.com
+                    </Email>
+                </Description>
+                <Description>
+                    All other inquiries:{"  "}
+                    <Email href="mailto:info@par-ka.com">info@par-ka.com</Email>
+                </Description>
+                <DemosContainer>
+                    <Logo src="/logo/parkalogoblack.png" />
+                    <DemosText>is not accepting demos at this time.</DemosText>
+                </DemosContainer>
             </RightContainer>
         </Container>
     );
@@ -69,13 +82,40 @@ const Description = styled.p`
 `;
 
 const Email = styled.a`
-    text-decoration: none;
+    text-decoration: underline;
     color: rgb(16, 16, 16);
     margin: 5% 0;
     font-size: 14px;
 
     @media only screen and (max-device-width: 768px) {
         margin: 10% 0;
+        font-size: 28px;
+    }
+`;
+
+const DemosContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const Logo = styled.img`
+    height: 14px;
+    width: 52px;
+    margin: 0 7px 0 0;
+
+    @media only screen and (max-device-width: 768px) {
+        height: 28px;
+        width: 105px;
+    }
+`;
+
+const DemosText = styled.p`
+    font-size: 14px;
+    width: 50%;
+
+    @media only screen and (max-device-width: 768px) {
         font-size: 28px;
     }
 `;

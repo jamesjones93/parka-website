@@ -32,11 +32,11 @@ class Header extends React.Component {
                 <ParkaWorldHeader>
                     {(this.props.cookie && (
                         <Link to="/world">
-                            <Logo src="/logo/parkalogowhite.png" />
+                            <Logo src="/logo/parkalogoblack.png" />
                         </Link>
                     )) || (
                         <Link to="/">
-                            <Logo src="/logo/parkalogowhite.png" />
+                            <Logo src="/logo/parkalogoblack.png" />
                         </Link>
                     )}
                 </ParkaWorldHeader>
@@ -87,12 +87,12 @@ const transition = `
 
 const ParkaWorldHeader = styled.div`
     width: 50%;
-    height: 10%;
+    height: 7.5%;
     position: fixed;
     left: 0;
     top: 0;
     z-index: 20;
-    background-color: rgb(16, 16, 16);
+    background-color: rgb(250, 250, 250);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,7 +113,7 @@ const Logo = styled.img`
 
 const HeaderLinksContainer = styled.div`
     width: 50%;
-    height: 10%;
+    height: 7.5%;
     position: fixed;
     left: 50%;
     top: 0;

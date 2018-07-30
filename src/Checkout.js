@@ -122,7 +122,7 @@ const transition = `
 
 const Container = styled.div`
     width: 85%;
-    position: absolute;
+    position: fixed;
     top: 10%;
     overflow: scroll;
     padding: 2.5% 7.5%;

@@ -56,11 +56,14 @@ class Login extends React.Component {
                 />
                 <LoginButton onClick={this.loginUser}>LOGIN</LoginButton>
                 <ToRegisterLink onClick={this.swapToRegister}>
-                    Request access code
+                    request access code
                 </ToRegisterLink>
                 {this.props.error && (
                     <ErrorMessage>{this.props.error}</ErrorMessage>
                 )}
+                <ResendCodeLink to="/forgot-code">
+                    forgot access code? resend it here.
+                </ResendCodeLink>
             </Container>
         );
     }
@@ -195,4 +198,18 @@ const ErrorMessage = styled.p`
     color: rgb(227, 25, 54);
     padding: 0px;
     font-size: 12px;
+`;
+
+const ResendCodeLink = styled(Link)`
+    cursor: pointer;
+    padding: 0;
+    color: rgba(227, 25, 54, 0.6);
+    text-decoration: underline;
+    text-align: left;
+    font-size: 13px;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+        width: 80%;
+    }
 `;

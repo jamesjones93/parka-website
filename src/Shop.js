@@ -56,8 +56,7 @@ const transition = `
 
 const Container = styled.div`
     position: absolute;
-    top: 10%;
-    height: 100%;
+    top: 7.5%;
     width: 100%;
     text-align: center;
     background-color: rgb(250, 250, 250);

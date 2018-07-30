@@ -12,6 +12,7 @@ import { injectGlobal } from "styled-components";
 import styled from "styled-components";
 import Home from "./Home";
 import LoginSignUp from "./LoginSignUp";
+import ResendCode from "./ResendCode";
 import Release from "./Release";
 import Header from "./Header";
 import Shop from "./Shop";
@@ -82,6 +83,11 @@ class App extends React.Component {
                         <Route exact path="/dates" component={Dates} />
                         <Route exact path="/info" component={Info} />
                         <Route exact path="/checkout" component={Checkout} />
+                        <Route
+                            exact
+                            path="/forgot-code"
+                            component={ResendCode}
+                        />
                         {!this.state.cookieAccepted && (
                             <CookieBanner onClick={this.acceptCookies}>
                                 <p>

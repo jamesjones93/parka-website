@@ -75,6 +75,12 @@ export function userLogin(userData) {
     });
 }
 
+export function resendCode() {
+    return axios.post("/resend-code").then(function({ data }) {
+        console.log("back here");
+    });
+}
+
 // ===================================================================================== get products and collections
 
 export function getAllProducts() {

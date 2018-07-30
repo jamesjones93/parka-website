@@ -76,9 +76,9 @@ const transition = `
 
 const Container = styled.div`
     width: 100%;
-    height: 90%;
+    height: 92.5%;
     position: absolute;
-    top: 10%;
+    top: 7.5%;
     background-color: rgb(227, 25, 54);
     overflow: hidden;
 `;

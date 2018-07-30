@@ -44,6 +44,9 @@ class Home extends React.Component {
     render() {
         return (
             <Container>
+                <Tagline>
+                    ON A MISSION TO ACCELERATE THE PRESENT. JOIN US
+                </Tagline>
                 <LoginSignUpContainer>
                     {(this.props.cookie && <p />) ||
                         ((this.state.toggleParkaworldEntry &&
@@ -59,7 +62,7 @@ class Home extends React.Component {
                                     REQUEST ACCESS CODE
                                 </EnterParkaworldLink>
                                 <ToLoginLink onClick={this.swapToLogin}>
-                                    Or Sign In
+                                    or sign In
                                 </ToLoginLink>
                             </div>
                         ))}
@@ -93,8 +96,8 @@ const transition = `
 const Container = styled.div`
     color: white;
     width: 35%;
-    height: 100%;
-    padding: 0 7.55%;
+    height: 97.5%;
+    padding: 0 7.55% 2.5% 7.55%;
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;
@@ -106,6 +109,14 @@ const Container = styled.div`
         width: 40%;
         padding: 0 5%;
     }
+`;
+
+const Tagline = styled.p`
+    width: 80%;
+    padding: 0 10% 15% 10%;
+    text-align: center;
+    align-self: center;
+    position: absolute;
 `;
 
 const LoginSignUpContainer = styled.div`

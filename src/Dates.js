@@ -119,9 +119,9 @@ export default connect(mapStateToProps)(Dates);
 const Container = styled.div`
     width: 100%;
     margin: 0.15% 0 0 0;
-    height: 89.8%;
+    height: 92.3%;
     position: absolute;
-    top: 10%;
+    top: 7.5%;
     color: rgb(16, 16, 16);
     display: flex;
     flex-direction: column;

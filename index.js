@@ -109,14 +109,13 @@ app.post("/register-user", (req, res) => {
             req.body.phoneNumber = null;
         }
 
-        db
-            .signUp(
-                req.body.firstName,
-                req.body.lastName,
-                req.body.email,
-                req.body.phoneNumber,
-                accessCode
-            )
+        db.signUp(
+            req.body.firstName,
+            req.body.lastName,
+            req.body.email,
+            req.body.phoneNumber,
+            accessCode
+        )
             .then(result => {
                 req.session.user = {
                     email: result.rows[0].email,
@@ -144,8 +143,7 @@ app.post("/user-login", (req, res) => {
             error: "Incorrect email / password."
         });
     } else {
-        db
-            .checkLogin(req.body.email)
+        db.checkLogin(req.body.email)
             .then(results => {
                 if (!results.rows[0]) {
                     res.json({
@@ -179,6 +177,10 @@ app.post("/user-login", (req, res) => {
                 });
             });
     }
+});
+
+app.post("/resend-code", (req, res) => {
+    console.log("req body", req.body);
 });
 
 // ======================================================================== checkout x cookie
