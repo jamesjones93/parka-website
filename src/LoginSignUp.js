@@ -111,15 +111,29 @@ const Container = styled.div`
         padding: 0 5%;
     }
 `;
+// @media (max-height: 450px) {
+//     padding: 0 10% 5% 10%;
+// }
 
 const Tagline = styled.p`
     width: 80%;
-    padding: 0 10% 15% 10%;
+    padding: 0 10% 0 10%;
     text-align: center;
     align-self: center;
+    justify-self: center;
+    position: fixed;
+    top: 35%;
 
-    @media (max-height: 450px) {
-        padding: 0 10% 5% 10%;
+    @media (max-height: 630px) {
+        top: 25%;
+    }
+
+    @media (max-height: 510px) {
+        top: 15%;
+    }
+
+    @media (max-height: 410px) {
+        top: 5%;
     }
 `;
 
