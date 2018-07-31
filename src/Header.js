@@ -107,7 +107,7 @@ const Logo = styled.img`
     }
 
     @media only screen and (max-device-width: 768px) {
-        width: 250px;
+        width: 97px;
     }
 `;
 
@@ -117,7 +117,7 @@ const HeaderLinksContainer = styled.div`
     position: fixed;
     left: 50%;
     top: 0;
-    z-index: 2;
+    z-index: 20;
     background-color: rgb(250, 250, 250);
     display: flex;
     flex-direction: row;

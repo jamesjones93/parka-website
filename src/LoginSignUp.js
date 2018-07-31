@@ -107,8 +107,8 @@ const Container = styled.div`
     align-items: center;
 
     @media only screen and (max-device-width: 768px) {
-        width: 40%;
-        padding: 0 5%;
+        width: 35%;
+        padding: 0 7.5% 7.5% 7.5%;
     }
 `;
 // @media (max-height: 450px) {
@@ -116,12 +116,11 @@ const Container = styled.div`
 // }
 
 const Tagline = styled.p`
-    width: 80%;
-    padding: 0 10% 0 10%;
     text-align: center;
     align-self: center;
     justify-self: center;
     position: fixed;
+    line-height: 1.2;
     top: 35%;
 
     @media (max-height: 630px) {
@@ -134,6 +133,11 @@ const Tagline = styled.p`
 
     @media (max-height: 410px) {
         top: 5%;
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 30px;
+        width: 60%;
     }
 `;
 

@@ -8,9 +8,9 @@ export default function EnterParkaSite() {
 
 const Container = styled.div`
     position: absolute;
-    top: 0;
+    top: 5%;
     left: 50%;
     width: 50%;
     background-color: rgb(227, 25, 54);
-    height: 100%;
+    height: 95%;
 `;

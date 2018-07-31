@@ -45,7 +45,7 @@ export default connect(mapStateToProps)(Home);
 
 const Container = styled.div`
     width: 100%;
-    padding: 0;
+    height: 100%;
     margin: 0;
     background-color: rgb(16, 16, 16);
 `;
