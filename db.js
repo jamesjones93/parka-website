@@ -35,3 +35,13 @@ exports.checkLogin = function(...params) {
         params
     );
 };
+
+exports.getCode = function(...params) {
+    return db.query(
+        `
+        SELECT access_code FROM users
+        WHERE email = $1
+        `,
+        params
+    );
+};

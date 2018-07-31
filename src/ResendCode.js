@@ -16,6 +16,7 @@ class ForgotCode extends React.Component {
             email: ""
         };
         this.resendCodeClick = this.resendCodeClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(e) {
@@ -25,7 +26,7 @@ class ForgotCode extends React.Component {
     }
 
     resendCodeClick() {
-        this.props.dispatch(resendCode(this.state.email));
+        this.props.dispatch(resendCode(this.state));
     }
 
     render() {
@@ -47,11 +48,10 @@ class ForgotCode extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    return {
-        toggleLoginSignUp: state.toggleLoginSignUp,
-        cookie: state.cookie,
-        signUpSuccess: state.signUpSuccess
-    };
+    if (state.redirectToHome) {
+        location.pathname = "/";
+    }
+    return {};
 };
 
 export default connect(mapStateToProps)(ForgotCode);

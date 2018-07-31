@@ -75,9 +75,12 @@ export function userLogin(userData) {
     });
 }
 
-export function resendCode() {
-    return axios.post("/resend-code").then(function({ data }) {
-        console.log("back here");
+export function resendCode(email) {
+    return axios.post("/resend-code", email).then(function({ data }) {
+        return {
+            type: "CODE_RESENT",
+            success: true
+        };
     });
 }
 

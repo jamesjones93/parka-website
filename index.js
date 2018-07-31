@@ -85,6 +85,25 @@ let sendMail = function(userEmail, accessCode) {
     });
 };
 
+let sendCode = function(userEmail, accessCode) {
+    var mailOptions = {
+        from: "parkarecords@gmail.com",
+        to: userEmail,
+        subject: "Your Access Code",
+        html: `
+        <h2 style="font-size: 18px;">Here is the Parka.World access code for ${userEmail}: <strong>${accessCode}</strong></h2>
+`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sent: " + info.response);
+        }
+    });
+};
+
 // ======================================================================== Login SignUp
 
 app.get("/check-for-cookie", (req, res) => {
@@ -180,7 +199,16 @@ app.post("/user-login", (req, res) => {
 });
 
 app.post("/resend-code", (req, res) => {
-    console.log("req body", req.body);
+    console.log("here now", req.body);
+    db.getCode(req.body.email).then(result => {
+        console.log(result.rows[0].access_code);
+
+        sendCode(req.body.email, result.rows[0].access_code);
+
+        res.json({
+            success: true
+        });
+    });
 });
 
 // ======================================================================== checkout x cookie

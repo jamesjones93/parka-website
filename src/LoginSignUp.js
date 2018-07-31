@@ -45,7 +45,8 @@ class Home extends React.Component {
         return (
             <Container>
                 <Tagline>
-                    ON A MISSION TO ACCELERATE THE PRESENT. JOIN US
+                    ON A MISSION TO ACCELERATE <br />
+                    THE PRESENT. JOIN US
                 </Tagline>
                 <LoginSignUpContainer>
                     {(this.props.cookie && <p />) ||
@@ -96,8 +97,8 @@ const transition = `
 const Container = styled.div`
     color: white;
     width: 35%;
-    height: 97.5%;
-    padding: 0 7.55% 2.5% 7.55%;
+    height: 95%;
+    padding: 0 7.55% 5% 7.55%;
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;

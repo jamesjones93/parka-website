@@ -89,7 +89,10 @@ class App extends React.Component {
                             component={ResendCode}
                         />
                         {!this.state.cookieAccepted && (
-                            <CookieBanner onClick={this.acceptCookies}>
+                            <CookieBanner
+                                onClick={this.acceptCookies}
+                                style={{ opacity: 0.7 }}
+                            >
                                 <p>
                                     This site uses cookies. By continuing to use
                                     this site, you are agreeing to our use of

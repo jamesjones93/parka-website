@@ -40,6 +40,11 @@ export default function(state = {}, action) {
             ...state,
             user: action.user
         };
+    } else if (action.type === "CODE_RESENT") {
+        state = {
+            ...state,
+            redirectToHome: true
+        };
     } else if (action.type === "GET_PRODUCTS") {
         state = {
             ...state,
