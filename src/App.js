@@ -91,7 +91,10 @@ class App extends React.Component {
                         {!this.state.cookieAccepted && (
                             <CookieBanner
                                 onClick={this.acceptCookies}
-                                style={{ opacity: 0.7 }}
+                                style={{
+                                    opacity: 0.7,
+                                    position: "fixed"
+                                }}
                             >
                                 <p>
                                     This site uses cookies. By continuing to use

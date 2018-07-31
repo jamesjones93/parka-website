@@ -102,9 +102,9 @@ const Container = styled.div`
     position: fixed;
     background-color: rgb(16, 16, 16);
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 
     @media only screen and (max-device-width: 768px) {
         width: 40%;
@@ -117,7 +117,10 @@ const Tagline = styled.p`
     padding: 0 10% 15% 10%;
     text-align: center;
     align-self: center;
-    position: absolute;
+
+    @media (max-height: 450px) {
+        padding: 0 10% 5% 10%;
+    }
 `;
 
 const LoginSignUpContainer = styled.div`
