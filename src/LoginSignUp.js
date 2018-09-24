@@ -46,7 +46,8 @@ class Home extends React.Component {
             <Container>
                 <Tagline>
                     ON A MISSION TO ACCELERATE <br />
-                    THE PRESENT. JOIN US
+                    THE PRESENT <br />
+                    <br /> JOIN US
                 </Tagline>
                 <LoginSignUpContainer>
                     {(this.props.cookie && <p />) ||
@@ -96,8 +97,9 @@ const transition = `
 
 const Container = styled.div`
     color: white;
+    left: 25%;
     width: 35%;
-    height: 95%;
+    height: 92.5%;
     padding: 0 7.55% 5% 7.55%;
     position: fixed;
     background-color: rgb(16, 16, 16);
@@ -149,10 +151,10 @@ const LoginSignUpContainer = styled.div`
 const EnterParkaworldLink = styled.button`
     ${transition} color: white;
     height: 50px;
-    width: 100%;
+    width: 70%;
     padding: 0 10px;
-    margin: 40px 0 10px 0;
-    font-size: 20px;
+    margin: 40px 15% 10px 15%;
+    font-size: 12px;
     background-color: inherit;
     text-align: center;
     border: none;
@@ -183,6 +185,7 @@ const ToLoginLink = styled.p`
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
+    margin: 0 15%;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 35px;

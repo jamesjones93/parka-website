@@ -111,8 +111,8 @@ const LoginTitle = styled.p`
 const InputField = styled.input`
     ${transition} color: white;
     height: 30px;
-    width: 100%;
-    margin: 0px 0 10px 0;
+    width: 70%;
+    margin: 0px 15% 10px 15%;
     padding: 0;
     font-size: 12px;
     background-color: inherit;
@@ -153,10 +153,10 @@ const InputField = styled.input`
 const LoginButton = styled.button`
     ${transition} color: white;
     height: 50px;
-    width: 100%;
+    width: 70%;
     padding: 0 10px;
-    margin: 40px 0 10px 0;
-    font-size: 20px;
+    margin: 40px 15% 10px 15%;
+    font-size: 12px;
     background-color: inherit;
     text-align: center;
     border: none;
@@ -186,6 +186,7 @@ const ToRegisterLink = styled.p`
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
+    margin: 0 15% 10px 15%;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 35px;
@@ -207,6 +208,7 @@ const ResendCodeLink = styled(Link)`
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
+    margin: 0 15%;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 35px;
