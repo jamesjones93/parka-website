@@ -87,7 +87,7 @@ const transition = `
 
 const ParkaWorldHeader = styled.div`
     width: 50%;
-    height: 5%;
+    height: 7.5%;
     position: fixed;
     left: 0;
     top: 0;
