@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { toRegister, userLogin } from "./Actions";
 
 export default function Info() {
     return (

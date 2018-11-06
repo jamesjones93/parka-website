@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCart, getShop, updateProduct, removeProduct } from "./Actions";
-import ThankYou from "./ThankYou";
+import { getCart, getShop, updateProduct, removeProduct } from "../../store/action/Actions";
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -29,8 +27,8 @@ class Checkout extends React.Component {
         });
     }
 
-    updateItem(productId, e) {
-        let productInfo = {
+    updateItem(productId) {
+        const productInfo = {
             id: productId,
             quantity: this.state.productQuantity
         };
@@ -38,67 +36,42 @@ class Checkout extends React.Component {
         this.props.dispatch(updateProduct(productInfo));
     }
 
-    removeItem(productId, e) {
-        console.log(productId);
+    removeItem(productId) {
         this.props.dispatch(removeProduct(productId));
     }
 
     render() {
-        if (!this.props.checkout) {
-            return <Loader />;
-        }
+        if (!this.props.checkout) return <Loader />;
+        const { checkout } = this.props;
 
-        let checkout = this.props.checkout;
-
-        let checkoutItemList = checkout.lineItems.map(product => {
-            console.log(product);
-            return (
-                <ProductContainer key={product.id}>
-                    <ProductImg src={product.variant.image.src} />
-                    <ProductTitle>{product.title}</ProductTitle>
-                    <QuantityInput
-                        type="number"
-                        placeholder={product.quantity}
-                        ref={input => {
-                            this.quantity = input;
-                        }}
-                        onChange={this.quantityChange}
-                    />
-                    <ProductPrice>
-                        ${product.variant.price * product.quantity}
-                    </ProductPrice>
-                    <UpdateLink onClick={e => this.updateItem(product.id, e)}>
-                        Update
-                    </UpdateLink>
-                    <DeleteLink onClick={e => this.removeItem(product.id, e)}>
-                        Delete
-                    </DeleteLink>
-                </ProductContainer>
-            );
-        });
-
-        let splitUrl = checkout.webUrl.split(
-            "https://parka-records.myshopify.com"
-        );
-
-        console.log(splitUrl);
-
-        let paymentUrl = "http://shop.parka.world" + splitUrl[1];
-
-        console.log(paymentUrl);
+        const splitUrl = checkout.webUrl.split("https://parka-records.myshopify.com");
+        const paymentUrl = `http://shop.parka.world${splitUrl[1]}`;
 
         return (
             <Container>
-                <ProductsContainer>{checkoutItemList}</ProductsContainer>
-                <TotalText>
-                    TOTAL:<TotalValue>
-                        ${this.props.checkout.subtotalPrice}
-                    </TotalValue>
-                </TotalText>
+                <ProductsContainer>{
+                    checkout.lineItems.map(product => {
+                        const { id, variant: { price, image: { src } }, title, quantity } = product;
 
-                <ProceedToCheckout href={paymentUrl}>
-                    Confirm and proceed to payment
-                </ProceedToCheckout>
+                        return (
+                            <ProductContainer key={id}>
+                                <ProductImg src={src} />
+                                <ProductTitle>{title}</ProductTitle>
+                                <QuantityInput
+                                    type="number"
+                                    placeholder={quantity}
+                                    ref={input => this.quantity = input}
+                                    onChange={this.quantityChange}
+                                />
+                                <ProductPrice>${price * quantity}</ProductPrice>
+                                <UpdateLink onClick={() => this.updateItem(id)}>Update</UpdateLink>
+                                <DeleteLink onClick={() => this.removeItem(id)}>Delete</DeleteLink>
+                            </ProductContainer>
+                        )
+                    })
+                }</ProductsContainer>
+                <TotalText>TOTAL:<TotalValue>${this.props.checkout.subtotalPrice}</TotalValue></TotalText>
+                <ProceedToCheckout href={paymentUrl}>Confirm and proceed to payment</ProceedToCheckout>
             </Container>
         );
     }

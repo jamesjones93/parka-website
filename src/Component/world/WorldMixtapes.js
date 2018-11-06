@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getWorldMixtapes, addToCart } from "./Actions";
+import { getWorldMixtapes, addToCart } from "../../store/action/Actions";
 
 class Worldmixtape extends React.Component {
     constructor(props) {

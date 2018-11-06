@@ -1,12 +1,10 @@
 import React from "react";
-import { AppProvider, Page, Card, Button } from "@shopify/polaris";
+import { AppProvider } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllProducts, getRecords } from "./Actions";
+import { getAllProducts, getRecords } from "../../store/action/Actions";
 import AllProductsContainer from "./AllProductsContainer";
-import Product from "./Product";
 
 class Shop extends React.Component {
     constructor(props) {
@@ -18,17 +16,13 @@ class Shop extends React.Component {
     }
 
     render() {
-        if (!this.props.products) {
-            return <Loader />;
-        }
+        if (!this.props.products) return <Loader />;
 
         return (
             <Container>
                 <ShopHeaderContainer>
                     <ShopHeaderLink to="/shop/records">RECORDS</ShopHeaderLink>
-                    <ShopHeaderLink to="/shop/merchandise">
-                        MERCHANDISE
-                    </ShopHeaderLink>
+                    <ShopHeaderLink to="/shop/merchandise">MERCHANDISE</ShopHeaderLink>
                 </ShopHeaderContainer>
 
                 <div>
@@ -56,7 +50,7 @@ const transition = `
 
 const Container = styled.div`
     position: absolute;
-    top: 5%;
+    top: 7.5%;
     width: 100%;
     text-align: center;
     background-color: rgb(250, 250, 250);
@@ -69,7 +63,7 @@ const ShopHeaderContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: absolute;
+    position: relative;
     left: 50%;
 `;
 

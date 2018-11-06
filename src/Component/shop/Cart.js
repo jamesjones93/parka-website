@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { hideCart, getCart, removeProduct } from "./Actions";
+import { hideCart, getCart, removeProduct } from "../../store/action/Actions";
 
 class Cart extends React.Component {
     constructor(props) {
@@ -23,57 +23,41 @@ class Cart extends React.Component {
         this.props.dispatch(hideCart());
     }
 
-    removeItem(productId, e) {
-        console.log(productId);
+    removeItem(productId) {
         this.props.dispatch(removeProduct(productId));
     }
 
     render() {
-        if (!this.props.checkout) {
-            return <p />;
-        }
-
-        let checkout = this.props.checkout;
-
-        let checkoutItemList = checkout.lineItems.map(product => {
-            return (
-                <ProductContainer key={product.id}>
-                    <CartImage src={product.variant.image.src} />
-                    <InfoContainer>
-                        <ProductTitle>{product.title}</ProductTitle>
-                        <ProductQuantity>
-                            QTY: {product.quantity}
-                        </ProductQuantity>
-                        <ProductQuantity>
-                            SIZE: {product.variant.title}
-                        </ProductQuantity>
-                        <ProductPrice>
-                            ${product.variant.price * product.quantity}
-                        </ProductPrice>
-                    </InfoContainer>
-                    <SmallCross
-                        src="/icons/cross.png"
-                        onClick={e => this.removeItem(product.id, e)}
-                    />
-                </ProductContainer>
-            );
-        });
+        if (!this.props.checkout) return <span />;
+        const { checkout, checkout: { subtotalPrice } } = this.props;
 
         return (
             <Overlay ref={div => (this.overlay = div)}>
                 <CartContainer>
                     <Cross src="/icons/cross.png" onClick={this.closeCart} />
-                    <ProductsContainer>{checkoutItemList}</ProductsContainer>
+                    <ProductsContainer>
+                        {checkout.lineItems.map(product => {
+                            const { id, variant, variant: { image: { src }, price }, title, quantity } = product;
+                            return (
+                                <ProductContainer key={id}>
+                                    <CartImage src={src} />
+                                    <InfoContainer>
+                                        <ProductTitle>{title}</ProductTitle>
+                                        <ProductQuantity>QTY: {quantity}</ProductQuantity>
+                                        <ProductQuantity>SIZE: {variant.title}</ProductQuantity>
+                                        <ProductPrice>${price * quantity}</ProductPrice>
+                                    </InfoContainer>
+                                    <SmallCross src="/icons/cross.png" onClick={() => this.removeItem(id)} />
+                                </ProductContainer>
+                            );
+                        })}
+                    </ProductsContainer>
                     <SubtotalContainer>
                         <SubtotalLabel>Subtotal:</SubtotalLabel>
-                        <SubtotalValue>
-                            ${this.props.checkout.subtotalPrice}
-                        </SubtotalValue>
+                        <SubtotalValue>${subtotalPrice}</SubtotalValue>
                     </SubtotalContainer>
                     <Link to="/checkout">
-                        <CheckoutButton onClick={this.closeCart}>
-                            Checkout
-                        </CheckoutButton>
+                        <CheckoutButton onClick={this.closeCart}>Checkout</CheckoutButton>
                     </Link>
                 </CartContainer>
             </Overlay>
@@ -99,12 +83,12 @@ const transition = `
 
 const Overlay = styled.div`
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
     background-color: rgba(16, 16, 16, 0.5);
-    z-index: 10;
+    z-index: 25;
 
     @media only screen and (max-device-width: 768px) {
         z-index: 25;
@@ -113,14 +97,14 @@ const Overlay = styled.div`
 
 const CartContainer = styled.div`
     width: 40%;
-    position: relative;
+    position: fixed;
     left: 50%;
     top: 0;
     padding: 5%;
     height 100%;
     background-color: rgb(250, 250, 250);
     margin: 0;
-    z-index: 15;
+    z-index: 30;
 
     @media only screen and (max-device-width: 768px) {
         width: 85%;

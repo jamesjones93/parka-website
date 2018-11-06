@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import reducer from "./reducers";
+import reducer from "./store/reducer/Reducers";
 import reduxPromise from "redux-promise";
 import { Provider } from "react-redux";
-import { HashRouter, Route, Link, Switch } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 

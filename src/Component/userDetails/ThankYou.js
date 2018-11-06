@@ -1,19 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import axios from "./axios";
-import { hideThankYou } from "./Actions";
+import { hideThankYou } from "../../store/action/Actions";
 
 class ThankYou extends React.Component {
     constructor(props) {
         super(props);
 
         this.closeThankYou = this.closeThankYou.bind(this);
-    }
-
-    componentDidMount() {
-        console.log("hello");
     }
 
     closeThankYou() {
@@ -24,10 +18,7 @@ class ThankYou extends React.Component {
     render() {
         return (
             <Overlay>
-                <Cross
-                    src="/icons/crosswhite.png"
-                    onClick={this.closeThankYou}
-                />
+                <Cross src="/icons/crosswhite.png" onClick={this.closeThankYou}/>
                 <Container>
                     <Title>THANK YOU!</Title>
                     <OrderPlacedText>

@@ -1,26 +1,18 @@
 import React from "react";
 import axios from "./axios";
-import { Link } from "react-router-dom";
-import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { HashRouter, Route, BrowserRouter } from "react-router-dom";
-import { render } from "react-dom";
-import * as PropTypes from "prop-types";
-import { Page, Card, Button } from "@shopify/polaris";
-import { EmbeddedApp } from "@shopify/polaris/embedded";
 import { injectGlobal } from "styled-components";
 import styled from "styled-components";
-import Home from "./Home";
-import LoginSignUp from "./LoginSignUp";
-import ResendCode from "./ResendCode";
-import Release from "./Release";
-import Header from "./Header";
-import Shop from "./Shop";
-import Product from "./Product";
-import World from "./World";
-import Dates from "./Dates";
-import Info from "./Info";
-import Checkout from "./Checkout";
+import Home from "./Component/home/Home";
+import ResendCode from "./Component/codeResend/ResendCode";
+import Header from "./Component/header/Header";
+import Shop from "./Component/shop/Shop";
+import Product from "./Component/shop/Product";
+import World from "./Component/world/World";
+import Dates from "./Component/dates/Dates";
+import Info from "./Component/info/Info";
+import Checkout from "./Component/shop/Checkout";
 
 injectGlobal`
     @font-face {
@@ -53,10 +45,7 @@ class App extends React.Component {
 
     componentDidMount() {
         axios.get("/check-for-cookie-accept").then(function({ data }) {
-            if (data.cookieAccepted === true) {
-                console.log("in here");
-                this.setState({ cookieAccepted: true });
-            }
+            if (data.cookieAccepted === true) this.setState({ cookieAccepted: true });
         });
     }
 
@@ -72,7 +61,6 @@ class App extends React.Component {
                     <div>
                         <Header />
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/release" component={Release} />
                         <Route exact path="/shop/:filter" component={Shop} />
                         <Route
                             exact

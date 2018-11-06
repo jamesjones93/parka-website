@@ -2,85 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { toLogin, signUp } from "./Actions";
+import { toRegister, userLogin } from "../../store/action/Actions";
 
-class SignUp extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
 
-        this.swapToLogin = this.swapToLogin.bind(this);
-        this.signUp = this.signUp.bind(this);
+        this.swapToRegister = this.swapToRegister.bind(this);
+        this.loginUser = this.loginUser.bind(this);
     }
 
-    swapToLogin() {
-        this.props.dispatch(toLogin());
+    swapToRegister() {
+        this.props.dispatch(toRegister());
     }
 
-    signUp() {
-        console.log(this.email.value);
-        let userData = {
-            firstName: this.firstName.value,
-            lastName: this.lastName.value,
+    loginUser() {
+        const userDetails = {
             email: this.email.value,
-            phoneNumber: this.phoneNumber.value
+            accessCode: this.accessCode.value
         };
-        this.props.dispatch(signUp(userData));
+
+        this.props.dispatch(userLogin(userDetails));
     }
 
     render() {
         return (
             <Container>
                 <InputField
-                    placeholder="first name"
                     type="text"
-                    innerRef={input => {
-                        this.firstName = input;
-                    }}
-                    onKeyPress={e => {
-                        if (e.key == "Enter") {
-                            this.signUp();
-                        }
-                    }}
-                />
-                <InputField
-                    placeholder="last name"
-                    type="text"
-                    innerRef={input => {
-                        this.lastName = input;
-                    }}
-                    onKeyPress={e => {
-                        if (e.key == "Enter") {
-                            this.signUp();
-                        }
-                    }}
-                />
-                <InputField
                     placeholder="email"
-                    type="text"
-                    innerRef={input => {
-                        this.email = input;
-                    }}
+                    innerRef={input => this.email = input}
                     onKeyPress={e => {
-                        if (e.key == "Enter") {
-                            this.signUp();
-                        }
+                        if (e.key === "Enter") this.loginUser();
                     }}
                 />
                 <InputField
-                    placeholder="number (optional)"
                     type="text"
-                    innerRef={input => {
-                        this.phoneNumber = input;
+                    placeholder="access code"
+                    innerRef={input => this.accessCode = input}
+                    onKeyPress={e => {
+                        if (e.key === "Enter") this.loginUser();
                     }}
                 />
-                <RegisterButton onClick={this.signUp}>
-                    REQUEST ACCESS CODE
-                </RegisterButton>
-
-                <ToLoginLink onClick={this.swapToLogin}>or sign in</ToLoginLink>
-                {this.props.error && (
-                    <ErrorMessage>{this.props.error}</ErrorMessage>
-                )}
+                <LoginButton onClick={this.loginUser}>LOGIN</LoginButton>
+                <ToRegisterLink onClick={this.swapToRegister}>request access code</ToRegisterLink>
+                {this.props.error && <ErrorMessage>{this.props.error}</ErrorMessage>}
+                <ResendCodeLink to="/forgot-code">forgot access code? resend it here.</ResendCodeLink>
             </Container>
         );
     }
@@ -92,7 +59,7 @@ const mapStateToProps = function(state) {
     };
 };
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(Login);
 
 const transition = `
     -moz-transition: all 0.15s ease-in;
@@ -110,20 +77,20 @@ const Container = styled.div`
     position: relative;
 `;
 
-// const ReqAccessCode = styled.p`
-//     font-size: 25px;
-//     line-height: 1.2;
-//     padding: 0 0 15px 0;
-//     text-align: left;
-//
-//     @media only screen and (max-device-width: 768px) {
-//         font-size: 45px;
-//         width: 80%;
-//         margin: 0 auto;
-//
-//         text-align: center;
-//     }
-// `;
+const LoginTitle = styled.p`
+    font-size: 25px;
+    line-height: 1.2;
+    padding: 0 0 15px 0;
+    text-align: left;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 45px;
+        width: 80%;
+        margin: 0 auto;
+
+        text-align: center;
+    }
+`;
 
 const InputField = styled.input`
     ${transition} color: white;
@@ -138,7 +105,7 @@ const InputField = styled.input`
     border-bottom: 1.3px solid white;
 
     :hover {
-        border-bottom: 1.3px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
         ::placeholder {
             color: rgba(255, 255, 255, 0.5);
@@ -167,7 +134,7 @@ const InputField = styled.input`
     }
 `;
 
-const RegisterButton = styled.button`
+const LoginButton = styled.button`
     ${transition} color: white;
     height: 50px;
     width: 70%;
@@ -197,9 +164,31 @@ const RegisterButton = styled.button`
     }
 `;
 
-const ToLoginLink = styled.p`
+const ToRegisterLink = styled.p`
     ${transition} cursor: pointer;
     padding: 0;
+    text-decoration: underline;
+    text-align: left;
+    font-size: 13px;
+    margin: 0 15% 10px 15%;
+
+    @media only screen and (max-device-width: 768px) {
+        font-size: 35px;
+        width: 80%;
+    }
+`;
+
+const ErrorMessage = styled.p`
+    text-align: left;
+    color: rgb(227, 25, 54);
+    padding: 0px;
+    font-size: 12px;
+`;
+
+const ResendCodeLink = styled(Link)`
+    cursor: pointer;
+    padding: 0;
+    color: rgba(227, 25, 54, 0.6);
     text-decoration: underline;
     text-align: left;
     font-size: 13px;
@@ -207,14 +196,6 @@ const ToLoginLink = styled.p`
 
     @media only screen and (max-device-width: 768px) {
         font-size: 35px;
-    }
-`;
-
-const ErrorMessage = styled.p`
-    color: rgb(227, 25, 54);
-    text-align: left;
-
-    @media only screen and (max-device-width: 768px) {
-        font-size: 27px;
+        width: 80%;
     }
 `;

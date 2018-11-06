@@ -1,31 +1,23 @@
 import React from "react";
-import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllProducts, getRecords } from "./Actions";
+import { getAllProducts, getRecords } from "../../store/action/Actions";
 
 class AllProductsContainer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.dispatch(getAllProducts());
     }
 
     render() {
-        if (!this.props.products) {
-            return <Loader />;
-        }
+        if (!this.props.products) return <Loader />;
 
         let products;
 
         if (this.props.params.filter === "all") {
             products = this.props.products.filter(
-                product =>
-                    product.productType === "Merchandise" ||
-                    product.productType === "Record"
+                product => product.productType === "Merchandise" || product.productType === "Record"
             );
         } else if (this.props.params.filter === "merchandise") {
             products = this.props.products.filter(
@@ -37,48 +29,36 @@ class AllProductsContainer extends React.Component {
             );
         }
 
-        let productsList = products.map(product => {
-            let productUrl = "/shop/product/" + product.handle;
+        return (
+            <ProductsContainer>
+            {products.map(product => {
+                    const availability = !product.variants.every(item => item.available === false);
+                    const greyText = !availability ? { opacity: 0.3 } : {};
 
-            let availability = false;
-
-            product.variants.forEach(item => {
-                if (item.available === true) {
-                    availability = true;
-                }
-            });
-
-            let greyText = {};
-
-            if (!availability) {
-                greyText = {
-                    opacity: 0.3
-                };
+                    return (
+                        <ProductContainerLink
+                            to={`/shop/product/${product.handle}`}
+                            params={{ product: product }}
+                            key={product.id}
+                        >
+                            <ProductContainer>
+                                <ProductImageContainer>
+                                    {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
+                                    <ProductImage src={product.images[0].src} />
+                                </ProductImageContainer>
+                                <ProductInfoDiv style={greyText}>
+                                    <ProductPrice className="price">
+                                        ${product.variants[0].price}
+                                    </ProductPrice>
+                                    <ProductTitle>{product.title}</ProductTitle>
+                                </ProductInfoDiv>
+                            </ProductContainer>
+                        </ProductContainerLink>
+                    );
+                })
             }
-
-            return (
-                <ProductContainerLink
-                    to={productUrl}
-                    params={{ product: product }}
-                    key={product.id}
-                >
-                    <ProductContainer>
-                        <ProductImageContainer>
-                            {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
-                            <ProductImage src={product.images[0].src} />
-                        </ProductImageContainer>
-                        <ProductInfoDiv style={greyText}>
-                            <ProductPrice className="price">
-                                ${product.variants[0].price}
-                            </ProductPrice>
-                            <ProductTitle>{product.title}</ProductTitle>
-                        </ProductInfoDiv>
-                    </ProductContainer>
-                </ProductContainerLink>
-            );
-        });
-
-        return <ProductsContainer>{productsList}</ProductsContainer>;
+            </ProductsContainer>
+        );
     }
 }
 

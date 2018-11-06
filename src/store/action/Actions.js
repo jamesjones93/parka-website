@@ -1,11 +1,11 @@
-import axios from "./axios";
-import * as io from "socket.io-client";
+import axios from "../../axios";
 import Client from "shopify-buy";
 
 const client = Client.buildClient({
     domain: "parka-records.myshopify.com",
     storefrontAccessToken: "e3b25dce26eb25d4dd3595fd82ecb0ad"
 });
+
 
 export function checkLogin() {
     return axios.get("/check-login").then(function({ data }) {
@@ -209,7 +209,6 @@ export function removeProduct(productId) {
                 return client.checkout
                     .removeLineItems(checkoutId, productId)
                     .then(checkout => {
-                        console.log(checkout);
                         return {
                             type: "GET_CHECKOUT",
                             checkout: checkout
@@ -320,7 +319,7 @@ export function getWorldDigital() {
 }
 
 export function getWorldMixes() {
-    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU0NDIwNDM5MDk3"; //mixtapes
+    const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzU0NDIwNDM5MDk3"; //mixes
 
     return client.collection
         .fetchWithProducts(collectionId)

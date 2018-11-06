@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getWorldVideos } from "./Actions";
+import { getWorldVideos } from "../../store/action/Actions";
 
 class WorldVideos extends React.Component {
     constructor(props) {

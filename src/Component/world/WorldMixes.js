@@ -1,22 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getWorldVinyl, addToCart } from "./Actions";
+import { getWorldMixes, addToCart } from "../../store/action/Actions";
 
-class WorldVinyl extends React.Component {
+class Worldmix extends React.Component {
     constructor(props) {
         super(props);
 
-        this.vinylMouseOver = this.vinylMouseOver.bind(this);
-        this.vinylMouseOut = this.vinylMouseOut.bind(this);
+        this.mixMouseOver = this.mixMouseOver.bind(this);
+        this.mixMouseOut = this.mixMouseOut.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(getWorldVinyl());
+        this.props.dispatch(getWorldMixes());
     }
 
-    vinylMouseOver(tag, e) {
+    mixMouseOver(tag, e) {
         if (tag === "ComingSoon" || tag === "N/A") {
             e.currentTarget.children[0].style.filter = "blur(5px)";
             e.currentTarget.children[1].style.opacity = 1;
@@ -29,16 +28,16 @@ class WorldVinyl extends React.Component {
         e.currentTarget.children[1].play();
     }
 
-    vinylMouseOut(e) {
+    mixMouseOut(e) {
         e.currentTarget.children[0].style.opacity = 0;
         e.currentTarget.children[1].style.opacity = 0;
-        e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
+        e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.children[1].pause();
         // e.currentTarget.children[1].currentTime = 0;
     }
 
-    addToCart(vinyl, e) {
+    addToCart(mix, e) {
         let addedOverlayOpacity = e.currentTarget.children[2];
 
         addedOverlayOpacity.style.opacity = 1;
@@ -47,59 +46,58 @@ class WorldVinyl extends React.Component {
             addedOverlayOpacity.style.opacity = 0;
         }, 800);
 
-        if (vinyl.tags.length > 0) {
+        if (mix.tags.length > 0) {
             return;
         } else {
             let productInfo = {
-                id: vinyl.variants[0].id,
+                id: mix.variants[0].id,
                 quantity: 1
             };
+
             this.props.dispatch(addToCart(productInfo));
         }
     }
 
     render() {
-        if (!this.props.vinyls) {
+        if (!this.props.mixes) {
             return <Loader />;
         }
+        console.log("vinyl", this.props.mixes);
 
-        let vinylsList = this.props.vinyls.map(vinyl => {
+        let mixesList = this.props.mixes.map(mix => {
             let tag;
-            if (vinyl.tags.length > 0) {
-                tag = vinyl.tags[0].value;
+            if (mix.tags.length > 0) {
+                tag = mix.tags[0].value;
             } else {
                 tag = null;
             }
-
             return (
-                <VinylContainer
-                    key={vinyl.id}
-                    onMouseOver={e => this.vinylMouseOver(tag, e)}
-                    onMouseOut={this.vinylMouseOut}
-                    onClick={e => this.addToCart(vinyl, e)}
+                <MixContainer
+                    key={mix.id}
+                    onMouseOver={e => this.mixMouseOver(tag, e)}
+                    onMouseOut={this.mixMouseOut}
+                    onClick={e => this.addToCart(mix, e)}
                 >
-                    <VinylImg src={vinyl.images[0].src} />
+                    <MixImg src={mix.images[0].src} />
+
                     <audio ref={audio => (this.track = audio)}>
-                        <source src={"/audio/" + vinyl.handle + ".mp3"} />
+                        <source src={"audio/" + mix.handle + ".mp3"} />
                     </audio>
                     <AddedBackgroundOverlay>
                         <AddedText>ADDED</AddedText>
                     </AddedBackgroundOverlay>
                     <TitleOverlay>
-                        <Title>
-                            {(vinyl.tags.length && vinyl.description) ||
-                                vinyl.title}
-                        </Title>
+                        <Title>{(tag && mix.description) || mix.title}</Title>
                     </TitleOverlay>
-                </VinylContainer>
+                </MixContainer>
             );
         });
 
         return (
             <Container>
-                <ReleasesContainer>
-                    {(this.props.vinyls && vinylsList) || <Loader />}
-                </ReleasesContainer>
+                <MixesContainer>
+                    {(this.props.mixes && mixesList) || <Loader />}
+                </MixesContainer>
             </Container>
         );
     }
@@ -107,11 +105,11 @@ class WorldVinyl extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        vinyls: state.vinyls
+        mixes: state.mixes
     };
 };
 
-export default connect(mapStateToProps)(WorldVinyl);
+export default connect(mapStateToProps)(Worldmix);
 
 const transition = `
     -moz-transition: all 0.10s ease-in;
@@ -121,8 +119,8 @@ const transition = `
 `;
 
 const Container = styled.div`
-    background-color: rgb(16, 16, 16);
-    color: rgb(250, 250, 250);
+    background-color: rgb(250, 250, 250);
+    color: rgb(16, 16, 16);
     width: 90%;
     margin: 30px 0 0 0;
     padding: 2% 5% 10% 5%;
@@ -145,7 +143,7 @@ const Container = styled.div`
     }
 `;
 
-const ReleasesContainer = styled.div`
+const MixesContainer = styled.div`
     margin: 0 auto;
     width: 90%;
     height: 100%;
@@ -156,7 +154,7 @@ const ReleasesContainer = styled.div`
     align-items: center;
 `;
 
-const VinylContainer = styled.div`
+const MixContainer = styled.div`
     background-color: rgb(227, 25, 54);
     width: 200px;
     margin: 1.5%
@@ -170,7 +168,7 @@ const VinylContainer = styled.div`
     position: relative;
 `;
 
-const VinylImg = styled.img`
+const MixImg = styled.img`
     ${transition} width: 100%;
     height: 100%;
     opacity: 0;

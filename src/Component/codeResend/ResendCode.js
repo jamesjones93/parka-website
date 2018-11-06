@@ -1,12 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import ThankYou from "./ThankYou";
-import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { resendCode } from "./Actions";
+import { resendCode } from "../../store/action/Actions";
 
 class ForgotCode extends React.Component {
     constructor(props) {
@@ -31,7 +26,7 @@ class ForgotCode extends React.Component {
 
     render() {
         return (
-            <div>
+            <Background>
                 <Container>
                     <EmailInput
                         onChange={this.handleChange}
@@ -41,8 +36,7 @@ class ForgotCode extends React.Component {
                         RESEND
                     </ResendButton>
                 </Container>
-                <ContainerTwo />
-            </div>
+            </Background>
         );
     }
 }
@@ -63,13 +57,20 @@ const transition = `
     transition: all 0.15s ease-in;
 `;
 
+const Background = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: rgb(16, 16, 16);
+    position: fixed;
+`;
+
 const Container = styled.div`
     color: white;
-    width: 35%;
+    width: 25%;
     height: 100%;
     padding: 0 7.5%;
-    position: fixed;
     background-color: rgb(16, 16, 16);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -81,13 +82,7 @@ const Container = styled.div`
     }
 `;
 
-const ContainerTwo = styled.div`
-    width: 50%;
-    height: 100%;
-    left: 50%;
-    position: fixed;
-    background-color: rgb(227, 25, 54);
-`;
+
 
 const EmailInput = styled.input`
     ${transition} color: white;
@@ -136,7 +131,7 @@ const ResendButton = styled.button`
     width: 92.5%;
     padding: 0 10px;
     margin: 40px 0 10px 0;
-    font-size: 20px;
+    font-size: 12px;
     background-color: inherit;
     text-align: center;
     border: none;

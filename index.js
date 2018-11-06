@@ -1,19 +1,11 @@
 const express = require("express");
 const app = express();
-const https = require("https");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csrf = require("csurf");
-const multer = require("multer");
-const uidSafe = require("uid-safe");
-const path = require("path");
-const fs = require("fs");
-const server = require("http").Server(app);
 const db = require("./db");
-const hash = require("./hash");
-var nodemailer = require("nodemailer");
-var mysql = require("mysql");
+const nodemailer = require("nodemailer");
 const { dates } = require("./data/dates.json");
 const { videos } = require("./data/videos.json");
 
@@ -54,7 +46,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         user: "parkarecords",
@@ -64,7 +56,7 @@ var transporter = nodemailer.createTransport({
 
 // ======================================================================== Nodemailer
 
-let sendMail = function(userEmail, accessCode) {
+const sendMail = function(userEmail, accessCode) {
     var mailOptions = {
         from: "parkarecords@gmail.com",
         to: userEmail,
@@ -85,7 +77,7 @@ let sendMail = function(userEmail, accessCode) {
     });
 };
 
-let sendCode = function(userEmail, accessCode) {
+const sendCode = function(userEmail, accessCode) {
     var mailOptions = {
         from: "parkarecords@gmail.com",
         to: userEmail,
@@ -189,8 +181,6 @@ app.post("/user-login", (req, res) => {
                 }
             })
             .catch(error => {
-                console.log("Error: " + error);
-
                 res.json({
                     error: "Incorrect email / password."
                 });
@@ -199,10 +189,7 @@ app.post("/user-login", (req, res) => {
 });
 
 app.post("/resend-code", (req, res) => {
-    console.log("here now", req.body);
     db.getCode(req.body.email).then(result => {
-        console.log(result.rows[0].access_code);
-
         sendCode(req.body.email, result.rows[0].access_code);
 
         res.json({

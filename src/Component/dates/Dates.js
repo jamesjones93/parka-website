@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getDates } from "./Actions";
+import { getDates } from "../../store/action/Actions";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
 class Dates extends React.Component {
@@ -108,7 +107,6 @@ class Dates extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log(state);
     return {
         dates: state.dates
     };

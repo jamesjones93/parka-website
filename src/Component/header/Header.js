@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { showCart, getCart, checkForCookie } from "./Actions";
-import Cart from "./Cart";
+import { showCart, getCart, checkForCookie } from "../../store/action/Actions";
+import Cart from "../shop/Cart";
 
 class Header extends React.Component {
     constructor(props) {
@@ -27,10 +27,12 @@ class Header extends React.Component {
     }
 
     render() {
+        const { cookie, checkout, showCart } = this.props;
+
         return (
             <div>
                 <ParkaWorldHeader>
-                    {(this.props.cookie && (
+                    {(cookie && (
                         <Link to="/world">
                             <Logo src="/logo/parkalogoblack.png" />
                         </Link>
@@ -45,14 +47,10 @@ class Header extends React.Component {
                     <HeaderLink to="/dates">DATES</HeaderLink>
                     <HeaderLink to="/info">INFO</HeaderLink>
                     <CartImgContainer onClick={this.showCartClick}>
-                        {(this.props.checkout && (
+                        {(checkout && (
                             <CartImg src="/icons/cartfull.svg" />
                         )) || <CartImg src="/icons/cartempty.svg" />}
-                        <CartNumberItems>
-                            [{(this.props.checkout &&
-                                this.props.checkout.lineItems.length) ||
-                                0}]
-                        </CartNumberItems>
+                        <CartNumberItems>[{(checkout && checkout.lineItems.length) || 0}]</CartNumberItems>
                     </CartImgContainer>
                 </HeaderLinksContainer>
                 <ReactCSSTransitionGroup
@@ -60,7 +58,7 @@ class Header extends React.Component {
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={500}
                 >
-                    {(this.props.showCart && <Cart key="1" />) || <p key="2" />}
+                    {(showCart && <Cart key="1" />) || <p key="2" />}
                 </ReactCSSTransitionGroup>
             </div>
         );
@@ -68,7 +66,6 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    console.log(state.checkout);
     return {
         showCart: state.showCart,
         checkout: state.checkout,

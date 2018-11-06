@@ -1,9 +1,8 @@
 import React from "react";
-import { AppProvider, Page, Card, Button } from "@shopify/polaris";
 import styled from "styled-components";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProduct, addToCart, clearProduct } from "./Actions";
+import { getProduct, addToCart, clearProduct } from "../../store/action/Actions";
 import DOMPurify from "dompurify";
 
 class Product extends React.Component {
@@ -42,16 +41,7 @@ class Product extends React.Component {
     }
 
     changeSize() {
-        let variantIndex;
-
-        if (
-            this.state.variantIndex ===
-            this.props.product.variants.length - 1
-        ) {
-            variantIndex = 0;
-        } else {
-            variantIndex = this.state.variantIndex += 1;
-        }
+        const variantIndex = this.state.variantIndex === this.props.product.variants.length - 1 ? 0 : this.state.variantIndex + 1;
 
         if (this.props.product.variants[variantIndex].available) {
             this.setState({
@@ -70,53 +60,43 @@ class Product extends React.Component {
 
     addToCart(e) {
         this.setState({ addButtonText: "ADDED" });
+        const addedButtonStyle = e.currentTarget.style;
 
-        let addedButton = e.currentTarget;
-
-        addedButton.style.backgroundColor = "rgb(2, 105, 55)";
-        addedButton.style.border = "1px solid rgb(2, 105, 55)";
-        addedButton.style.color = "rgb(250, 250, 250)";
+        addedButtonStyle.backgroundColor = "rgb(2, 105, 55)";
+        addedButtonStyle.border = "1px solid rgb(2, 105, 55)";
+        addedButtonStyle.color = "rgb(250, 250, 250)";
 
         setTimeout(() => {
             this.setState({ addButtonText: "ADD" });
-            addedButton.style.backgroundColor = "inherit";
-            addedButton.style.border = "1px solid rgb(16, 16, 16);";
-            addedButton.style.color = "rgb(16, 16, 16)";
+            addedButtonStyle.backgroundColor = "inherit";
+            addedButtonStyle.border = "1px solid rgb(16, 16, 16);";
+            addedButtonStyle.color = "rgb(16, 16, 16)";
         }, 800);
 
         let productInfo = {
             id: this.props.product.variants[this.state.variantIndex].id,
             quantity: this.state.productQuantity
         };
-        console.log(productInfo);
 
         this.props.dispatch(addToCart(productInfo));
     }
 
     render() {
-        if (!this.props.product) {
-            return <Loader />;
-        }
+        if (!this.props.product) return <Loader />;
+        const { product } = this.props;
+        const upperTitle = product.title.toUpperCase();
+        const description = product.descriptionHtml;
 
-        let product = this.props.product;
-        let upperTitle = product.title.toUpperCase();
-        let description = product.descriptionHtml;
-
-        let availableVariants = [];
-
-        product.variants.map(variant => {
-            if (variant.available == true) {
-                availableVariants.push(variant);
-            }
-        });
+        const availableVariants = product.variants.reduce((prev, curr) => {
+            if (curr.available === true) prev.push(curr);
+            return prev;
+        }, []);
 
         return (
             <Container>
                 <ShopHeaderContainer>
                     <ShopHeaderLink to="/shop/records">RECORDS</ShopHeaderLink>
-                    <ShopHeaderLink to="/shop/merchandise">
-                        MERCHANDISE
-                    </ShopHeaderLink>
+                    <ShopHeaderLink to="/shop/merchandise">MERCHANDISE</ShopHeaderLink>
                 </ShopHeaderContainer>
                 <Leftcontainer>
                     <MainImage src={product.images[0].src} />
@@ -130,30 +110,19 @@ class Product extends React.Component {
                         <Size onClick={this.changeSize}>
                             {(availableVariants.length &&
                                 (product.variants[this.state.variantIndex] &&
-                                    product.variants[this.state.variantIndex]
-                                        .selectedOptions[0].value)) || (
-                                <p>Sold Out</p>
-                            )}
+                                    product.variants[this.state.variantIndex].selectedOptions[0].value)) ||
+                            <p>Sold Out</p>}
                         </Size>
-                        <Cross
-                            src="/icons/cross.png"
-                            onClick={this.goBack.bind(this)}
-                        />
+                        <Cross src="/icons/cross.png" onClick={this.goBack.bind(this)} />
                     </TopContainer>
-                    <Description
-                        dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(description)
-                        }}
-                    />
+                    <Description dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description)}} />
 
                     <QuantityAndAddContainer>
                         {(availableVariants.length && (
                             <QuantityInput
                                 type="number"
                                 placeholder="1"
-                                ref={input => {
-                                    this.quantity = input;
-                                }}
+                                ref={input => this.quantity = input}
                                 onChange={this.quantityChange}
                             />
                         )) || <p />}

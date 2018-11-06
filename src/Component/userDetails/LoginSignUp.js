@@ -1,12 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import ThankYou from "./ThankYou";
-import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { checkForCookie, toLogin } from "./Actions";
+import { checkForCookie, toLogin } from "../../store/action/Actions";
 
 class Home extends React.Component {
     constructor(props) {
@@ -46,8 +43,8 @@ class Home extends React.Component {
             <Container>
                 <Tagline>
                     ON A MISSION TO ACCELERATE <br />
-                    THE PRESENT <br />
-                    <br /> JOIN US
+                    THE PRESENT <br /><br />
+                    JOIN US
                 </Tagline>
                 <LoginSignUpContainer>
                     {(this.props.cookie && <p />) ||
@@ -58,14 +55,8 @@ class Home extends React.Component {
                                 <SignUp id="signup-component" key="2" />
                             ))) || (
                             <div>
-                                <EnterParkaworldLink
-                                    onClick={this.enterParkaWorldClick}
-                                >
-                                    REQUEST ACCESS CODE
-                                </EnterParkaworldLink>
-                                <ToLoginLink onClick={this.swapToLogin}>
-                                    or sign In
-                                </ToLoginLink>
+                                <EnterParkaworldLink onClick={this.enterParkaWorldClick}>REQUEST ACCESS CODE</EnterParkaworldLink>
+                                <ToLoginLink onClick={this.swapToLogin}>or sign In</ToLoginLink>
                             </div>
                         ))}
                 </LoginSignUpContainer>
@@ -75,9 +66,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    if (state.cookie) {
-        location.pathname = "/world";
-    }
+    if (state.cookie) location.pathname = "/world";
 
     return {
         toggleLoginSignUp: state.toggleLoginSignUp,

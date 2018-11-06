@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getWorldDigital, addToCart } from "./Actions";
+import { getWorldDigital, addToCart } from "../../store/action/Actions";
 
 class WorldDigital extends React.Component {
     constructor(props) {

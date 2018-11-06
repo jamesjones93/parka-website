@@ -1,23 +1,11 @@
 import React from "react";
-import axios from "./axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import * as PropTypes from "prop-types";
-import { Page, Card, Button } from "@shopify/polaris";
-import { EmbeddedApp } from "@shopify/polaris/embedded";
-import LoginSignUp from "./LoginSignUp";
-import ThankYou from "./ThankYou";
+import LoginSignUp from "../userDetails/LoginSignUp";
 import EnterParkaSite from "./EnterParkaSite";
-import { checkLogin } from "./Actions";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {}
 
     render() {
         return (
