@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { compose } from 'redux';
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { checkForCookie, toLogin } from "../../store/action/Actions";
+import { checkForCookie } from '../../store/action/user/userActions';
+import { toLogin } from '../../store/action/toggle/toggleActions';
 
 class Home extends React.Component {
     constructor(props) {
@@ -21,6 +23,10 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(checkForCookie());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.cookie) location.pathname = "/world";
     }
 
     swapToLogin() {
@@ -66,16 +72,18 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = function(state) {
-    if (state.cookie) location.pathname = "/world";
-
     return {
-        toggleLoginSignUp: state.toggleLoginSignUp,
-        cookie: state.cookie,
+        toggleLoginSignUp: state.toggleReducer.toggleLoginSignUp,
+        cookie: state.userReducer.cookie,
         signUpSuccess: state.signUpSuccess
     };
 };
 
-export default connect(mapStateToProps)(Home);
+const enhance = compose(
+    connect(mapStateToProps)
+);
+
+export default enhance(Home);
 
 const transition = `
     -moz-transition: all 0.15s ease-in;

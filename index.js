@@ -207,7 +207,7 @@ app.get("/get-checkout", (req, res) => {
         });
     } else {
         res.json({
-            cart: false
+            checkoutId: null
         });
     }
 });

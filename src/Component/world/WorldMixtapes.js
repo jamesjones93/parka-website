@@ -59,11 +59,9 @@ class Worldmixtape extends React.Component {
     }
 
     render() {
-        if (!this.props.mixtapes) {
-            return <Loader />;
-        }
+        if (!this.props.mixtapes) return <Loader />;
 
-        let mixtapesList = this.props.mixtapes.map(mixtape => {
+        const mixtapesList = this.props.mixtapes.map(mixtape => {
             let tag;
             if (mixtape.tags.length > 0) {
                 tag = mixtape.tags[0].value;

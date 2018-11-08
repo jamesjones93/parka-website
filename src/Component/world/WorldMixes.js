@@ -59,12 +59,9 @@ class Worldmix extends React.Component {
     }
 
     render() {
-        if (!this.props.mixes) {
-            return <Loader />;
-        }
-        console.log("vinyl", this.props.mixes);
+        if (!this.props.mixes) return <Loader />;
 
-        let mixesList = this.props.mixes.map(mix => {
+        const mixesList = this.props.mixes.map(mix => {
             let tag;
             if (mix.tags.length > 0) {
                 tag = mix.tags[0].value;

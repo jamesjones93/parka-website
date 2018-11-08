@@ -1,6 +1,5 @@
 export default function(state = {}, action) {
     if (action.type === "COOKIE_STATUS") {
-        console.log("----", action.cookie);
         state = {
             ...state,
             cookie: true

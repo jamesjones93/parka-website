@@ -3,16 +3,11 @@ import { AppProvider } from "@shopify/polaris";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllProducts, getRecords } from "../../store/action/Actions";
 import AllProductsContainer from "./AllProductsContainer";
 
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        this.props.dispatch(getAllProducts());
     }
 
     render() {
@@ -35,7 +30,7 @@ class Shop extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        products: state.products
+        products: state.shopifyReducer.products
     };
 };
 

@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProduct, addToCart, clearProduct } from "../../store/action/Actions";
+import { addToCart, clearProduct } from "../../store/action/Actions";
+import { getProduct } from '../../store/action/shopify/shopifyActions';
 import DOMPurify from "dompurify";
 
 class Product extends React.Component {
@@ -24,16 +25,20 @@ class Product extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getProduct(this.props.match.params.product));
-
         this.setState({
             variantIndex: 0,
-            addButtonText: "ADD"
+            addButtonText: "ADD",
+            product: null
         });
+        this.props.dispatch(getProduct(this.props.match.params.product));
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ product: nextProps.product });
     }
 
     componentWillUnmount() {
-        this.props.dispatch(clearProduct());
+        this.setState({ product: null });
     }
 
     goBack() {
@@ -82,8 +87,8 @@ class Product extends React.Component {
     }
 
     render() {
-        if (!this.props.product) return <Loader />;
-        const { product } = this.props;
+        if (!this.state.product) return <Loader />;
+        const { product } = this.state;
         const upperTitle = product.title.toUpperCase();
         const description = product.descriptionHtml;
 
@@ -147,7 +152,7 @@ class Product extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        product: state.product,
+        product: state.shopifyReducer.product,
         addedSuccess: state.addedSuccess
     };
 };

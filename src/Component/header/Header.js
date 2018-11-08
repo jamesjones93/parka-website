@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { showCart, getCart, checkForCookie } from "../../store/action/Actions";
+import { checkForCookie } from '../../store/action/user/userActions';
+import { toggleCart } from '../../store/action/toggle/toggleActions';
+import { getCart } from '../../store/action/shopify/shopifyActions';
 import Cart from "../shop/Cart";
 
 class Header extends React.Component {
@@ -23,7 +25,7 @@ class Header extends React.Component {
     }
 
     showCartClick() {
-        this.props.dispatch(showCart());
+        this.props.dispatch(toggleCart(true));
     }
 
     render() {
@@ -67,7 +69,7 @@ class Header extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        showCart: state.showCart,
+        cartVisible: state.toggleReducer.showCart,
         checkout: state.checkout,
         cookie: state.cookie
     };

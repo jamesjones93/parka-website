@@ -13,11 +13,9 @@ class WorldVideos extends React.Component {
     }
 
     render() {
-        if (!this.props.videos) {
-            return <Loader />;
-        }
+        if (!this.props.videos) return <Loader />;
 
-        let videoContainerList = this.props.videos.map((video, index) => {
+        const videoContainerList = this.props.videos.map((video, index) => {
             return (
                 <iframe
                     key={index}

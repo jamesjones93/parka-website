@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { toRegister, userLogin } from "../../store/action/Actions";
+import { userLogin } from '../../store/action/user/userActions';
+import { toRegister } from '../../store/action/toggle/toggleActions';
+import { compose } from 'redux';
 
 class Login extends React.Component {
     constructor(props) {
@@ -59,7 +61,11 @@ const mapStateToProps = function(state) {
     };
 };
 
-export default connect(mapStateToProps)(Login);
+const enhance = compose(
+    connect(mapStateToProps)
+);
+
+export default enhance(Login);
 
 const transition = `
     -moz-transition: all 0.15s ease-in;

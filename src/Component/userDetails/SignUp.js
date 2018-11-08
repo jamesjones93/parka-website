@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { toLogin, signUp } from "../../store/action/Actions";
+import { toLogin } from '../../store/action/toggle/toggleActions';
+import { signUp } from '../../store/action/user/userActions';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -68,7 +69,7 @@ class SignUp extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        error: state.error
+        error: state.userReducer.error
     };
 };
 
@@ -89,21 +90,6 @@ const Container = styled.div`
     justify-content: center;
     position: relative;
 `;
-
-// const ReqAccessCode = styled.p`
-//     font-size: 25px;
-//     line-height: 1.2;
-//     padding: 0 0 15px 0;
-//     text-align: left;
-//
-//     @media only screen and (max-device-width: 768px) {
-//         font-size: 45px;
-//         width: 80%;
-//         margin: 0 auto;
-//
-//         text-align: center;
-//     }
-// `;
 
 const InputField = styled.input`
     ${transition} color: white;
@@ -193,6 +179,9 @@ const ToLoginLink = styled.p`
 const ErrorMessage = styled.p`
     color: rgb(227, 25, 54);
     text-align: left;
+    font-size: 12px;
+    margin: 0 auto;
+    padding-top: 20px;
 
     @media only screen and (max-device-width: 768px) {
         font-size: 27px;

@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { hideCart, getCart, removeProduct } from "../../store/action/Actions";
+import { getCart, removeProduct } from "../../store/action/Actions";
+import { toggleCart } from '../../store/action/toggle/toggleActions';
 
 class Cart extends React.Component {
     constructor(props) {
@@ -16,11 +17,11 @@ class Cart extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getCart());
+        // this.props.dispatch(getCart());
     }
 
     closeCart() {
-        this.props.dispatch(hideCart());
+        this.props.dispatch(toggleCart(false));
     }
 
     removeItem(productId) {

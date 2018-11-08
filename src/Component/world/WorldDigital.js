@@ -59,11 +59,9 @@ class WorldDigital extends React.Component {
     }
 
     render() {
-        if (!this.props.digital) {
-            return <Loader />;
-        }
+        if (!this.props.digital) return <Loader />;
 
-        let digitalList = this.props.digital.map(track => {
+        const digitalList = this.props.digital.map(track => {
             let tag;
             if (track.tags.length > 0) {
                 tag = track.tags[0].value;

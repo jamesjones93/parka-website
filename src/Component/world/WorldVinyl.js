@@ -58,11 +58,9 @@ class WorldVinyl extends React.Component {
     }
 
     render() {
-        if (!this.props.vinyls) {
-            return <Loader />;
-        }
+        if (!this.props.vinyls) return <Loader />;
 
-        let vinylsList = this.props.vinyls.map(vinyl => {
+        const vinylsList = this.props.vinyls.map(vinyl => {
             let tag;
             if (vinyl.tags.length > 0) {
                 tag = vinyl.tags[0].value;

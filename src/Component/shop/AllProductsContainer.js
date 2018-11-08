@@ -2,16 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllProducts, getRecords } from "../../store/action/Actions";
+import { getAllProducts } from '../../store/action/shopify/shopifyActions';
 
 class AllProductsContainer extends React.Component {
 
     componentDidMount() {
-        this.props.dispatch(getAllProducts());
+        this.props.dispatch(getAllProducts(null));
     }
 
     render() {
-        if (!this.props.products) return <Loader />;
+        if (!this.props.products.length) return <Loader />;
 
         let products;
 
@@ -31,32 +31,32 @@ class AllProductsContainer extends React.Component {
 
         return (
             <ProductsContainer>
-            {products.map(product => {
-                    const availability = !product.variants.every(item => item.available === false);
-                    const greyText = !availability ? { opacity: 0.3 } : {};
+                {products.map(product => {
+                        const availability = !product.variants.every(item => item.available === false);
+                        const greyText = !availability ? { opacity: 0.3 } : {};
 
-                    return (
-                        <ProductContainerLink
-                            to={`/shop/product/${product.handle}`}
-                            params={{ product: product }}
-                            key={product.id}
-                        >
-                            <ProductContainer>
-                                <ProductImageContainer>
-                                    {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
-                                    <ProductImage src={product.images[0].src} />
-                                </ProductImageContainer>
-                                <ProductInfoDiv style={greyText}>
-                                    <ProductPrice className="price">
-                                        ${product.variants[0].price}
-                                    </ProductPrice>
-                                    <ProductTitle>{product.title}</ProductTitle>
-                                </ProductInfoDiv>
-                            </ProductContainer>
-                        </ProductContainerLink>
-                    );
-                })
-            }
+                        return (
+                            <ProductContainerLink
+                                to={`/shop/product/${product.handle}`}
+                                params={{ product: product }}
+                                key={product.id}
+                            >
+                                <ProductContainer>
+                                    <ProductImageContainer>
+                                        {!availability && <SoldOut>OUT OF STOCK</SoldOut>}
+                                        <ProductImage src={product.images[0].src} />
+                                    </ProductImageContainer>
+                                    <ProductInfoDiv style={greyText}>
+                                        <ProductPrice className="price">
+                                            ${product.variants[0].price}
+                                        </ProductPrice>
+                                        <ProductTitle>{product.title}</ProductTitle>
+                                    </ProductInfoDiv>
+                                </ProductContainer>
+                            </ProductContainerLink>
+                        );
+                    })
+                }
             </ProductsContainer>
         );
     }
@@ -64,7 +64,7 @@ class AllProductsContainer extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        products: state.products
+        products: state.shopifyReducer.products
     };
 };
 
@@ -213,7 +213,7 @@ const SoldOut = styled.div`
 `;
 
 const Loader = styled.div`
-    position: absolute;
+    position: fixed;
     margin: 0 auto;
     top: 35%;
     left: 49%;

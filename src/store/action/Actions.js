@@ -7,110 +7,110 @@ const client = Client.buildClient({
 });
 
 
-export function checkLogin() {
-    return axios.get("/check-login").then(function({ data }) {
-        return {
-            type: "CHECK_LOGIN",
-            user: data.user
-        };
-    });
-}
+// export function checkLogin() {
+//     return axios.get("/check-login").then(function({ data }) {
+//         return {
+//             type: "CHECK_LOGIN",
+//             user: data.user
+//         };
+//     });
+// }
 
-export function checkForCookie() {
-    return axios.get("/check-for-cookie").then(function({ data }) {
-        if (data.cookie) {
-            return {
-                type: "COOKIE_STATUS",
-                cookie: true
-            };
-        }
-    });
-}
+// export function checkForCookie() {
+//     return axios.get("/check-for-cookie").then(function({ data }) {
+//         if (data.cookie) {
+//             return {
+//                 type: "COOKIE_STATUS",
+//                 cookie: true
+//             };
+//         }
+//     });
+// }
 
-export function toRegister() {
-    return {
-        type: "TOGGLE_TO_SIGNUP",
-        toggleLoginSignUp: false
-    };
-}
+// export function toRegister() {
+//     return {
+//         type: "TOGGLE_TO_SIGNUP",
+//         toggleLoginSignUp: false
+//     };
+// }
 
-export function toLogin() {
-    return {
-        type: "TOGGLE_TO_LOGIN",
-        toggleLoginSignUp: true
-    };
-}
+// export function toLogin() {
+//     return {
+//         type: "TOGGLE_TO_LOGIN",
+//         toggleLoginSignUp: true
+//     };
+// }
 
-export function signUp(userData) {
-    return axios.post("/register-user", userData).then(function({ data }) {
-        if (data.user) {
-            return {
-                type: "SIGNUP_SUCCESS",
-                signUpSuccess: true
-            };
-        } else {
-            location.pathname = "/world";
-            return {
-                type: "SIGNUP_ERROR",
-                error: data.error
-            };
-        }
-    });
-}
+// export function signUp(userData) {
+//     return axios.post("/register-user", userData).then(function({ data }) {
+//         if (data.user) {
+//             return {
+//                 type: "SIGNUP_SUCCESS",
+//                 signUpSuccess: true
+//             };
+//         } else {
+//             location.pathname = "/world";
+//             return {
+//                 type: "SIGNUP_ERROR",
+//                 error: data.error
+//             };
+//         }
+//     });
+// }
 
-export function userLogin(userData) {
-    return axios.post("/user-login", userData).then(function({ data }) {
-        if (data.error) {
-            return {
-                type: "LOGIN_ERROR",
-                error: data.error
-            };
-        } else {
-            location.pathname = "/world";
-            return {
-                type: "COOKIE_SUCCESS",
-                cookie: true
-            };
-        }
-    });
-}
+// export function userLogin(userData) {
+//     return axios.post("/user-login", userData).then(function({ data }) {
+//         if (data.error) {
+//             return {
+//                 type: "LOGIN_ERROR",
+//                 error: data.error
+//             };
+//         } else {
+//             location.pathname = "/world";
+//             return {
+//                 type: "COOKIE_SUCCESS",
+//                 cookie: true
+//             };
+//         }
+//     });
+// }
 
-export function resendCode(email) {
-    return axios.post("/resend-code", email).then(function({ data }) {
-        return {
-            type: "CODE_RESENT",
-            success: true
-        };
-    });
-}
+// export function resendCode(email) {
+//     return axios.post("/resend-code", email).then(function({ data }) {
+//         return {
+//             type: "CODE_RESENT",
+//             success: true
+//         };
+//     });
+// }
 
 // ===================================================================================== get products and collections
 
-export function getAllProducts() {
-    return client.product.fetchAll().then(products => {
-        products.reverse();
-        return {
-            type: "GET_PRODUCTS",
-            products: products
-        };
-    });
-}
+// export function getAllProducts() {
+//     return client.product.fetchAll().then(products => {
+//         products.reverse();
+//         return {
+//             type: "GET_PRODUCTS",
+//             products: products
+//         };
+//     });
+// }
 
-export function getProduct(params) {
-    return client.product.fetchAll().then(products => {
-        let product = products.filter(product => product.handle === params);
-        return {
-            type: "GET_PRODUCT",
-            product: product[0]
-        };
-    });
-}
+// export function getProduct(params) {
+//     return client.product.fetchAll().then(products => {
+//         let product = products.filter(product => product.handle === params);
+//         return {
+//             type: "GET_PRODUCT",
+//             product: product[0]
+//         };
+//     });
+// }
 
-export function clearProduct() {
-    return {
-        type: "CLEAR_PRODUCT"
-    };
-}
+// export function clearProduct() {
+//     return {
+//         type: "CLEAR_PRODUCT"
+//     };
+// }
 
 // ===================================================================================== shopping cart
 
@@ -243,19 +243,19 @@ export function updateProduct(productInfo) {
     });
 }
 
-export function showCart() {
-    return {
-        type: "TOGGLE_CART",
-        showCart: true
-    };
-}
-
-export function hideCart() {
-    return {
-        type: "TOGGLE_CART",
-        showCart: false
-    };
-}
+// export function showCart() {
+//     return {
+//         type: "TOGGLE_CART",
+//         showCart: true
+//     };
+// }
+//
+// export function hideCart() {
+//     return {
+//         type: "TOGGLE_CART",
+//         showCart: false
+//     };
+// }
 
 // ===================================================================================== checkout
 
@@ -279,14 +279,14 @@ export function hideThankYou() {
 
 // ===================================================================================== dates
 
-export function getDates() {
-    return axios.get("/get-dates").then(function({ data }) {
-        return {
-            type: "GET_DATES",
-            dates: data.dates
-        };
-    });
-}
+// export function getDates() {
+//     return axios.get("/get-dates").then(function({ data }) {
+//         return {
+//             type: "GET_DATES",
+//             dates: data.dates
+//         };
+//     });
+// }
 
 // ===================================================================================== World
 
