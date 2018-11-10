@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="42500c95-3f1f-4f08-8883-25e4f35bb541" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/codeResend/ResendCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/codeResend/ResendCode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/dates/Dates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/dates/Dates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/header/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/home/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/shop/AllProductsContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/shop/AllProductsContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/shop/Cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/shop/Cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/shop/Checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/shop/Checkout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/shop/Product.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/shop/Product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/shop/Shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/shop/Shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/userDetails/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/userDetails/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/userDetails/LoginSignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/userDetails/LoginSignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/userDetails/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/userDetails/SignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/userDetails/ThankYou.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/userDetails/ThankYou.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/World.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/world/World.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/WorldDigital.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/world/WorldComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/WorldMixes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/WorldMixtapes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/WorldVideos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Component/world/WorldVideos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Component/world/WorldVinyl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/Actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/Actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/shopify/shopifyActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/shopify/shopifyActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/epic/shopify/shopifyEpic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/epic/shopify/shopifyEpic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/epic/user/userEpic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/epic/user/userEpic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducer/shopify/shopifyReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer/shopify/shopifyReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducer/toggle/toggleReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducer/toggle/toggleReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/root.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/root.js" afterDir="false" />
-    </list>
+    <list default="true" id="42500c95-3f1f-4f08-8883-25e4f35bb541" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -154,8 +125,8 @@
       <file leaf-file-name="Header.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Component/header/Header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="39" column="42" lean-forward="true" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+            <state relative-caret-position="323">
+              <caret line="19" column="59" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="59" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -275,7 +246,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="834" />
+    <option name="width" value="1680" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -513,12 +484,12 @@
       <workItem from="1540572731635" duration="7227000" />
       <workItem from="1540850991831" duration="53000" />
       <workItem from="1541011223147" duration="6859000" />
-      <workItem from="1541574898834" duration="28350000" />
+      <workItem from="1541574898834" duration="29041000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46514000" />
+    <option name="totallyTimeSpent" value="47205000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
@@ -946,8 +917,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Component/header/Header.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="39" column="42" lean-forward="true" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+        <state relative-caret-position="323">
+          <caret line="19" column="59" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="59" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
