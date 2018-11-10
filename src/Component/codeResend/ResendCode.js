@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { resendCode } from "../../store/action/Actions";
+import { resendCode } from '../../store/action/user/userActions';
 
 class ForgotCode extends React.Component {
     constructor(props) {
@@ -41,10 +41,7 @@ class ForgotCode extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
-    if (state.redirectToHome) {
-        location.pathname = "/";
-    }
+const mapStateToProps = (state) => {
     return {};
 };
 
@@ -77,8 +74,8 @@ const Container = styled.div`
     align-items: center;
 
     @media only screen and (max-device-width: 768px) {
-        width: 40%;
-        padding: 0 5%;
+        width: 70%;
+        padding: 0 15%;
     }
 `;
 

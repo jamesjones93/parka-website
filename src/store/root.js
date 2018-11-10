@@ -17,8 +17,13 @@ import {
     getAllProductsEpic,
     getProductEpic,
     filterProductsEpic,
-    createCartEpic,
-    getCartEpic
+    createCheckoutEpic,
+    getCheckoutEpic,
+    fetchCheckoutEpic,
+    saveCheckoutToCookie,
+    addToCheckoutEpic,
+    removeFromCheckoutEpic,
+    updateProductInCheckoutEpic
 } from './epic/shopify/shopifyEpic';
 
 import userReducer from './reducer/user/userReducer';
@@ -28,17 +33,25 @@ import shopifyReducer from './reducer/shopify/shopifyReducer';
 
 
 export const rootEpic = combineEpics(
+    // parka epic
     checkForCookieEpic,
     checkLoginEpic,
     signUpEpic,
     userLoginEpic,
     resendCodeEpic,
+
+    // shopify epic
     getAllProductsEpic,
     getDatesEpic,
     getProductEpic,
     filterProductsEpic,
-    createCartEpic,
-    getCartEpic
+    createCheckoutEpic,
+    getCheckoutEpic,
+    fetchCheckoutEpic,
+    saveCheckoutToCookie,
+    addToCheckoutEpic,
+    removeFromCheckoutEpic,
+    updateProductInCheckoutEpic
 );
 
 export const rootReducer = combineReducers({

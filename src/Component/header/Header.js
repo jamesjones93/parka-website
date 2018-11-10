@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactCSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import { isEmpty } from 'lodash';
 import { checkForCookie } from '../../store/action/user/userActions';
 import { toggleCart } from '../../store/action/toggle/toggleActions';
-import { getCart } from '../../store/action/shopify/shopifyActions';
+import { getCheckout } from '../../store/action/shopify/shopifyActions';
 import Cart from "../shop/Cart";
 
 class Header extends React.Component {
@@ -20,16 +21,17 @@ class Header extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getCart());
+        this.props.dispatch(getCheckout());
         this.props.dispatch(checkForCookie());
     }
 
     showCartClick() {
+        if (!this.props.checkout.lineItems.length) return;
         this.props.dispatch(toggleCart(true));
     }
 
     render() {
-        const { cookie, checkout, showCart } = this.props;
+        const { cookie, checkout, checkoutOverlayVisible } = this.props;
 
         return (
             <div>
@@ -49,10 +51,10 @@ class Header extends React.Component {
                     <HeaderLink to="/dates">DATES</HeaderLink>
                     <HeaderLink to="/info">INFO</HeaderLink>
                     <CartImgContainer onClick={this.showCartClick}>
-                        {(checkout && (
+                        {(!isEmpty(checkout) && (
                             <CartImg src="/icons/cartfull.svg" />
                         )) || <CartImg src="/icons/cartempty.svg" />}
-                        <CartNumberItems>[{(checkout && checkout.lineItems.length) || 0}]</CartNumberItems>
+                        <CartNumberItems>[{!isEmpty(checkout) ? checkout.lineItems ? checkout.lineItems.length : 0 : 0}]</CartNumberItems>
                     </CartImgContainer>
                 </HeaderLinksContainer>
                 <ReactCSSTransitionGroup
@@ -60,18 +62,18 @@ class Header extends React.Component {
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={500}
                 >
-                    {(showCart && <Cart key="1" />) || <p key="2" />}
+                    {(checkoutOverlayVisible && <Cart key="1" />) || <p key="2" />}
                 </ReactCSSTransitionGroup>
             </div>
         );
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
-        cartVisible: state.toggleReducer.showCart,
-        checkout: state.checkout,
-        cookie: state.cookie
+        checkoutOverlayVisible: state.toggleReducer.checkoutOverlayVisible,
+        checkout: state.shopifyReducer.checkout,
+        cookie: state.userReducer.cookie
     };
 };
 

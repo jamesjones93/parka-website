@@ -23,7 +23,7 @@ export const checkLoginEpic = (action$, store) =>
 
 export const signUpEpic = (action$, store) =>
     action$.ofType(userActions.signUp().type).mergeMap(action =>
-         Observable.fromPromise(axios.post('/register-user', action.payload)).mergeMap(({data}) => {
+         Observable.fromPromise(axios.post('/register-user', action.payload)).mergeMap(({ data }) => {
             if (data.user) {
                 location.pathname = '/world';
                 return Observable.of(userActions.signUpSuccess(true));
@@ -37,7 +37,7 @@ export const signUpEpic = (action$, store) =>
 
 export const userLoginEpic = (action$, store) =>
     action$.ofType(userActions.userLogin().type).mergeMap(action =>
-        Observable.fromPromise(axios.post('/user-login', action.payload)).mergeMap(({data}) => {
+        Observable.fromPromise(axios.post('/user-login', action.payload)).mergeMap(({ data }) => {
             if (data.error) {
                 return Observable.of(userActions.userLoginFailure(data.error))
             } else {
@@ -51,9 +51,10 @@ export const userLoginEpic = (action$, store) =>
 
 export const resendCodeEpic = (action$, store) =>
     action$.ofType(userActions.userLogin().type).mergeMap(action =>
-        Observable.fromPromise(axios.post('/resend-code', action.payload)).mergeMap(({data}) =>
-            Observable.of(userActions.resendCodeSuccess(true))
-        )
+        Observable.fromPromise(axios.post('/resend-code', action.payload)).mergeMap(({ data }) => {
+            location.pathname = '/';
+            return Observable.of(userActions.resendCodeSuccess(true))
+        })
             .catch(error => Observable.of(userActions.userLoginFailure(error)))
     );
 

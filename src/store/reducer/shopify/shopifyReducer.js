@@ -3,7 +3,8 @@ import { shopifyActions } from '../../action/shopify/shopifyActions';
 const initialState = {
     products: [],
     product: {},
-    checkoutId: ''
+    checkoutId: '',
+    checkout: {}
 };
 
 const shopifyReducer = (state = initialState, action) => {
@@ -14,8 +15,11 @@ const shopifyReducer = (state = initialState, action) => {
         case shopifyActions.filterProductsSuccess().type: {
             return { ...state, product: action.payload };
         }
-        case shopifyActions.getCartSuccess().type: {
-            return { ...state, checkoutId: action.payload };
+        case shopifyActions.getCheckoutSuccess().type: {
+            return { ...state, checkoutId: action.payload }
+        }
+        case shopifyActions.updateCheckout().type: {
+            return { ...state, checkout: action.payload }
         }
         default: {
             return { ...state };

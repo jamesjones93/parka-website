@@ -23,7 +23,7 @@ class Home extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         user: state.user
     };

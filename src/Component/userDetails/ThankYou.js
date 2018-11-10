@@ -36,7 +36,7 @@ class ThankYou extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {};
 };
 

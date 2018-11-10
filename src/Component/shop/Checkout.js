@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { getCart, getShop, updateProduct, removeProduct } from "../../store/action/Actions";
+import { isEmpty } from 'lodash';
+// import { getCart, getShop, updateProduct, removeProduct } from "../../store/action/Actions";
+import { updateProductInCheckout, removeFromCheckout } from '../../store/action/shopify/shopifyActions';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -16,10 +18,10 @@ class Checkout extends React.Component {
         this.removeItem = this.removeItem.bind(this);
     }
 
-    componentDidMount() {
-        this.props.dispatch(getShop());
-        this.props.dispatch(getCart());
-    }
+    // componentDidMount() {
+    //     this.props.dispatch(getShop());
+    //     this.props.dispatch(getCart());
+    // }
 
     quantityChange(e) {
         this.setState({
@@ -30,19 +32,20 @@ class Checkout extends React.Component {
     updateItem(productId) {
         const productInfo = {
             id: productId,
-            quantity: this.state.productQuantity
+            quantity: parseInt(this.state.productQuantity)
         };
 
-        this.props.dispatch(updateProduct(productInfo));
+        this.props.dispatch(updateProductInCheckout(productInfo));
     }
 
     removeItem(productId) {
-        this.props.dispatch(removeProduct(productId));
+        this.props.dispatch(removeFromCheckout(productId));
     }
 
     render() {
-        if (!this.props.checkout) return <Loader />;
         const { checkout } = this.props;
+        if (isEmpty(checkout)) return <Loader />;
+
 
         const splitUrl = checkout.webUrl.split("https://parka-records.myshopify.com");
         const paymentUrl = `http://shop.parka.world${splitUrl[1]}`;
@@ -77,9 +80,9 @@ class Checkout extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
-        checkout: state.checkout,
+        checkout: state.shopifyReducer.checkout,
         showThankYou: state.showThankYou
     };
 };

@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addToCart, clearProduct } from "../../store/action/Actions";
-import { getProduct } from '../../store/action/shopify/shopifyActions';
+import { getProduct, addToCheckout } from '../../store/action/shopify/shopifyActions';
 import DOMPurify from "dompurify";
 
 class Product extends React.Component {
@@ -20,7 +19,7 @@ class Product extends React.Component {
 
         this.changeSize = this.changeSize.bind(this);
         this.quantityChange = this.quantityChange.bind(this);
-        this.addToCart = this.addToCart.bind(this);
+        this.addToCheckout = this.addToCheckout.bind(this);
         this.goBack = this.goBack.bind(this);
     }
 
@@ -63,7 +62,7 @@ class Product extends React.Component {
         });
     }
 
-    addToCart(e) {
+    addToCheckout(e) {
         this.setState({ addButtonText: "ADDED" });
         const addedButtonStyle = e.currentTarget.style;
 
@@ -71,19 +70,19 @@ class Product extends React.Component {
         addedButtonStyle.border = "1px solid rgb(2, 105, 55)";
         addedButtonStyle.color = "rgb(250, 250, 250)";
 
+        const productInfo = {
+            variantId: this.props.product.variants[this.state.variantIndex].id,
+            quantity: parseInt(this.state.productQuantity)
+        };
+
+        this.props.dispatch(addToCheckout(productInfo));
+
         setTimeout(() => {
             this.setState({ addButtonText: "ADD" });
             addedButtonStyle.backgroundColor = "inherit";
             addedButtonStyle.border = "1px solid rgb(16, 16, 16);";
             addedButtonStyle.color = "rgb(16, 16, 16)";
         }, 800);
-
-        let productInfo = {
-            id: this.props.product.variants[this.state.variantIndex].id,
-            quantity: this.state.productQuantity
-        };
-
-        this.props.dispatch(addToCart(productInfo));
     }
 
     render() {
@@ -91,11 +90,7 @@ class Product extends React.Component {
         const { product } = this.state;
         const upperTitle = product.title.toUpperCase();
         const description = product.descriptionHtml;
-
-        const availableVariants = product.variants.reduce((prev, curr) => {
-            if (curr.available === true) prev.push(curr);
-            return prev;
-        }, []);
+        const availableVariants = product.variants.some((variant => variant.available === true));
 
         return (
             <Container>
@@ -113,7 +108,7 @@ class Product extends React.Component {
                             <Price>${product.variants[0].price}</Price>
                         </TitleAndPrice>
                         <Size onClick={this.changeSize}>
-                            {(availableVariants.length &&
+                            {(availableVariants &&
                                 (product.variants[this.state.variantIndex] &&
                                     product.variants[this.state.variantIndex].selectedOptions[0].value)) ||
                             <p>Sold Out</p>}
@@ -123,7 +118,7 @@ class Product extends React.Component {
                     <Description dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description)}} />
 
                     <QuantityAndAddContainer>
-                        {(availableVariants.length && (
+                        {(availableVariants && (
                             <QuantityInput
                                 type="number"
                                 placeholder="1"
@@ -131,9 +126,9 @@ class Product extends React.Component {
                                 onChange={this.quantityChange}
                             />
                         )) || <p />}
-                        {(availableVariants.length && (
+                        {(availableVariants && (
                             <AddButton
-                                onClick={this.addToCart}
+                                onClick={this.addToCheckout}
                                 style={{
                                     color: this.state.buttonTextColor,
                                     backgroundColor: this.state.buttonColor,
@@ -150,7 +145,7 @@ class Product extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         product: state.shopifyReducer.product,
         addedSuccess: state.addedSuccess

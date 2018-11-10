@@ -2,7 +2,7 @@ import { toggleActions } from '../../action/toggle/toggleActions';
 
 const initialState = {
     toggleLoginSignUp: null,
-    cartVisible: false
+    checkoutOverlayVisible: false
 };
 
 const toggleReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const toggleReducer = (state = initialState, action) => {
             return { ...state, toggleLoginSignUp: true };
         }
         case toggleActions.toggleCart().type: {
-            return { ...state, cartVisible: action.payload };
+            return { ...state, checkoutOverlayVisible: action.payload };
         }
         default: {
             return { ...state };

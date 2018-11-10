@@ -50,29 +50,82 @@ export const filterProductsEpic = (action$, store) =>
         .catch(error => Observable.of(shopifyActions.filterProductsFailure(error)));
 
 
-export const createCartEpic = (action$, store) =>
-    action$.ofType(shopifyActions.createCart().type).mergeMap(action =>
+export const createCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.createCheckout().type).mergeMap(action =>
         Observable.fromPromise(client.checkout.create()).mergeMap(checkout =>
-            Observable.fromPromise(axios.post('/save-checkout-to-cookie', {checkoutId: checkout.id})).mergeMap(resp =>
-                Observable.of(shopifyActions.getCartSuccess(checkout.id))
-            )
-                .catch(error => Observable.of(shopifyActions.createCartFailure(error)))
+            Observable.of(shopifyActions.saveCheckoutToCookie(checkout.id))
         )
-            .catch(error => Observable.of(shopifyActions.createCartFailure(error)))
+            .catch(error => Observable.of(shopifyActions.createCheckoutFailure(error)))
     );
 
 
-export const getCartEpic = (action$, store) =>
-    action$.ofType(shopifyActions.getCart().type).mergeMap(action =>
+export const saveCheckoutToCookie = (action$, store) =>
+    action$.ofType(shopifyActions.saveCheckoutToCookie().type).mergeMap(action =>
+        Observable.fromPromise(axios.post('/save-checkout-to-cookie', { checkoutId: action.payload })).mergeMap(resp =>
+            Observable.of(shopifyActions.updateCheckout(action.payload))
+        )
+            .catch(error => Observable.of(shopifyActions.saveCheckoutToCookieFailure(error)))
+    );
+
+
+export const getCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.getCheckout().type).mergeMap(action =>
         Observable.fromPromise(axios.get('/get-checkout')).mergeMap(({ data }) => {
             const { checkoutId } = data;
 
-            return checkoutId ? Observable.of(shopifyActions.getCartSuccess(checkoutId)) :
-                Observable.of(shopifyActions.createCart(checkoutId));
+            return checkoutId ? Observable.concat(
+                Observable.of(shopifyActions.fetchCheckout(checkoutId)),
+                Observable.of(shopifyActions.getCheckoutSuccess(checkoutId))
+            ) : Observable.of(shopifyActions.createCheckout(checkoutId));
         })
-            .catch(error => Observable.of(shopifyActions.getCartFailure(error)))
+            .catch(error => Observable.of(shopifyActions.getCheckoutFailure(error)))
     );
 
 
-// add another epic to fetch the chart using the shopifyAPI
+export const fetchCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.fetchCheckout().type).mergeMap(action =>
+        Observable.fromPromise(client.checkout.fetch(action.payload)).mergeMap(checkout =>
+            Observable.of(shopifyActions.updateCheckout(checkout))
+        )
+            .catch(error => Observable.of(shopifyActions.fetchCheckoutFailure(error)))
+    );
 
+
+export const addToCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.addToCheckout().type).mergeMap(action => {
+        const state = store.getState();
+        const checkoutId = state.shopifyReducer.checkoutId;
+        const lineItemsToAdd = [action.payload];
+
+        return Observable.fromPromise(client.checkout.addLineItems(checkoutId, lineItemsToAdd)).mergeMap(checkout =>
+            Observable.of(shopifyActions.updateCheckout(checkout))
+        )
+            .catch(error => Observable.of(shopifyActions.addToCheckoutFailure(error)))
+    });
+
+
+export const removeFromCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.removeFromCheckout().type).mergeMap(action => {
+        const state = store.getState();
+        const checkoutId = state.shopifyReducer.checkoutId;
+        const productId = action.payload;
+
+        return Observable.fromPromise(client.checkout.removeLineItems(checkoutId, productId)).mergeMap(checkout =>
+            Observable.of(shopifyActions.updateCheckout(checkout))
+        )
+            .catch(error => Observable.of(shopifyActions.removeFromCheckoutFailure(error)))
+    });
+
+
+
+export const updateProductInCheckoutEpic = (action$, store) =>
+    action$.ofType(shopifyActions.updateProductInCheckout().type).mergeMap(action => {
+        const state = store.getState();
+        const checkoutId = state.shopifyReducer.checkoutId;
+        const lineItemsToUpdate = [action.payload];
+
+        return Observable.fromPromise(client.checkout.updateLineItems(checkoutId, lineItemsToUpdate)).mergeMap(checkout =>
+            Observable.of(shopifyActions.updateCheckout(checkout))
+        )
+            .catch(error => Observable.of(shopifyActions.updateProductInCheckoutFailure(error)))
+    });

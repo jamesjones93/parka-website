@@ -67,7 +67,7 @@ class SignUp extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         error: state.userReducer.error
     };

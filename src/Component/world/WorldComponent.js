@@ -1,21 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { getWorldVinyl, addToCart } from "../../store/action/Actions";
+import { addToCheckout } from '../../store/action/shopify/shopifyActions';
 
-class WorldVinyl extends React.Component {
+class WoldComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        this.vinylMouseOver = this.vinylMouseOver.bind(this);
-        this.vinylMouseOut = this.vinylMouseOut.bind(this);
+        this.digitalMouseOver = this.digitalMouseOver.bind(this);
+        this.digitalMouseOut = this.digitalMouseOut.bind(this);
+        this.addToCheckout = this.addToCheckout.bind(this);
     }
 
-    componentDidMount() {
-        this.props.dispatch(getWorldVinyl());
-    }
-
-    vinylMouseOver(tag, e) {
+    digitalMouseOver(tag, e) {
         if (tag === "ComingSoon" || tag === "N/A") {
             e.currentTarget.children[0].style.filter = "blur(5px)";
             e.currentTarget.children[1].style.opacity = 1;
@@ -24,91 +21,78 @@ class WorldVinyl extends React.Component {
         e.currentTarget.children[3].style.opacity = 1;
         e.currentTarget.style.backgroundColor = "rgb(16, 16, 16)";
         e.currentTarget.children[0].style.opacity = 1;
-
         e.currentTarget.children[1].play();
     }
 
-    vinylMouseOut(e) {
+    digitalMouseOut(e) {
         e.currentTarget.children[0].style.opacity = 0;
         e.currentTarget.children[1].style.opacity = 0;
-        e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.style.backgroundColor = "rgb(227, 25, 54)";
+        e.currentTarget.children[3].style.opacity = 0;
         e.currentTarget.children[1].pause();
-        // e.currentTarget.children[1].currentTime = 0;
     }
 
-    addToCart(vinyl, e) {
+    addToCheckout(item, e) {
         let addedOverlayOpacity = e.currentTarget.children[2];
-
         addedOverlayOpacity.style.opacity = 1;
 
-        setTimeout(() => {
-            addedOverlayOpacity.style.opacity = 0;
-        }, 800);
+        setTimeout(() => addedOverlayOpacity.style.opacity = 0, 800);
 
-        if (vinyl.tags.length > 0) {
-            return;
-        } else {
-            let productInfo = {
-                id: vinyl.variants[0].id,
-                quantity: 1
-            };
-            this.props.dispatch(addToCart(productInfo));
-        }
+        if (item.tags.length > 0) return;
+
+        const productInfo = {
+            id: item.variants[0].id,
+            quantity: 1
+        };
+
+        this.props.dispatch(addToCheckout(productInfo));
     }
 
     render() {
-        if (!this.props.vinyls) return <Loader />;
-
-        const vinylsList = this.props.vinyls.map(vinyl => {
-            let tag;
-            if (vinyl.tags.length > 0) {
-                tag = vinyl.tags[0].value;
-            } else {
-                tag = null;
-            }
-
-            return (
-                <VinylContainer
-                    key={vinyl.id}
-                    onMouseOver={e => this.vinylMouseOver(tag, e)}
-                    onMouseOut={this.vinylMouseOut}
-                    onClick={e => this.addToCart(vinyl, e)}
-                >
-                    <VinylImg src={vinyl.images[0].src} />
-                    <audio ref={audio => (this.track = audio)}>
-                        <source src={"/audio/" + vinyl.handle + ".mp3"} />
-                    </audio>
-                    <AddedBackgroundOverlay>
-                        <AddedText>ADDED</AddedText>
-                    </AddedBackgroundOverlay>
-                    <TitleOverlay>
-                        <Title>
-                            {(vinyl.tags.length && vinyl.description) ||
-                                vinyl.title}
-                        </Title>
-                    </TitleOverlay>
-                </VinylContainer>
-            );
-        });
+        const { info, colorStyles, circleStyles } = this.props;
 
         return (
-            <Container>
+            <Container style={colorStyles}>
                 <ReleasesContainer>
-                    {(this.props.vinyls && vinylsList) || <Loader />}
+                    {info && info.map(item => {
+                        const tag = item.tags.length ? item.tags[0].value : null;
+
+                        return (
+                            <DigitalContainer
+                                key={item.id}
+                                onMouseOver={e => this.digitalMouseOver(tag, e)}
+                                onMouseOut={this.digitalMouseOut}
+                                onClick={e => this.addToCheckout(item, e)}
+                                style={circleStyles}
+                            >
+                                <DigitalImg src={item.images[0].src} />
+                                <audio ref={audio => (this.item = audio)}>
+                                    <source src={"audio/" + item.handle + ".mp3"} />
+                                </audio>
+                                <AddedBackgroundOverlay>
+                                    <AddedText>ADDED</AddedText>
+                                </AddedBackgroundOverlay>
+                                <TitleOverlay>
+                                    <Title>
+                                        {(item.tags.length > 0 && item.description) ||
+                                        item.title}
+                                    </Title>
+                                </TitleOverlay>
+                            </DigitalContainer>
+                        );
+                    }) || <span />}
                 </ReleasesContainer>
             </Container>
         );
     }
 }
 
-const mapStateToProps = function(state) {
-    return {
-        vinyls: state.vinyls
-    };
+const mapStateToProps = (state) => {
+    return {}
 };
 
-export default connect(mapStateToProps)(WorldVinyl);
+export default connect(mapStateToProps)(WoldComponent);
+
 
 const transition = `
     -moz-transition: all 0.10s ease-in;
@@ -118,8 +102,6 @@ const transition = `
 `;
 
 const Container = styled.div`
-    background-color: rgb(16, 16, 16);
-    color: rgb(250, 250, 250);
     width: 90%;
     margin: 30px 0 0 0;
     padding: 2% 5% 10% 5%;
@@ -153,7 +135,7 @@ const ReleasesContainer = styled.div`
     align-items: center;
 `;
 
-const VinylContainer = styled.div`
+const DigitalContainer = styled.div`
     background-color: rgb(227, 25, 54);
     width: 200px;
     margin: 1.5%
@@ -167,7 +149,7 @@ const VinylContainer = styled.div`
     position: relative;
 `;
 
-const VinylImg = styled.img`
+const DigitalImg = styled.img`
     ${transition} width: 100%;
     height: 100%;
     opacity: 0;

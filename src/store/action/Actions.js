@@ -114,116 +114,116 @@ const client = Client.buildClient({
 
 // ===================================================================================== shopping cart
 
-export function addToCart(productInfo) {
-    return axios
-        .get("/get-checkout")
-        .then(function({ data }) {
-            productInfo.checkoutId = data.checkoutId;
-            return productInfo;
-        })
-        .then(productInfo => {
-            let quantity = parseInt(productInfo.quantity);
-            const lineItemsToAdd = [
-                { variantId: productInfo.id, quantity: quantity }
-            ];
+// export function addToCart(productInfo) {
+//     return axios
+//         .get("/get-checkout")
+//         .then(function({ data }) {
+//             productInfo.checkoutId = data.checkoutId;
+//             return productInfo;
+//         })
+//         .then(productInfo => {
+//             let quantity = parseInt(productInfo.quantity);
+//             const lineItemsToAdd = [
+//                 { variantId: productInfo.id, quantity: quantity }
+//             ];
+//
+//             return client.checkout
+//                 .addLineItems(productInfo.checkoutId, lineItemsToAdd)
+//                 .then(checkout => {
+//                     return {
+//                         type: "GET_CHECKOUT",
+//                         checkout: checkout
+//                     };
+//                 })
+//                 .catch(console.log);
+//         })
+//         .catch(console.log);
+// }
 
-            return client.checkout
-                .addLineItems(productInfo.checkoutId, lineItemsToAdd)
-                .then(checkout => {
-                    return {
-                        type: "GET_CHECKOUT",
-                        checkout: checkout
-                    };
-                })
-                .catch(console.log);
-        })
-        .catch(console.log);
-}
+// export function getCart() {
+//     return axios
+//         .get("/get-checkout")
+//         .then(function({ data }) {
+//             const checkoutId = data.checkoutId;
+//
+//             if (data.checkoutId) {
+//                 return client.checkout
+//                     .fetch(checkoutId)
+//                     .then(checkout => {
+//                         if (checkout.completedAt) {
+//                             return client.checkout
+//                                 .create()
+//                                 .then(checkout => {
+//                                     return axios
+//                                         .post("/save-checkout-to-cookie", {
+//                                             checkoutId: checkout.id
+//                                         })
+//                                         .catch(console.log);
+//
+//                                     return {
+//                                         type: "GET_CHECKOUT",
+//                                         checkout: checkout
+//                                     };
+//                                 })
+//                                 .catch(console.log);
+//                         } else {
+//                             return {
+//                                 type: "GET_CHECKOUT",
+//                                 checkout: checkout
+//                             };
+//                         }
+//                     })
+//                     .catch(console.log);
+//             } else {
+//                 return client.checkout
+//                     .create()
+//                     .then(checkout => {
+//                         return axios
+//                             .post("/save-checkout-to-cookie", {
+//                                 checkoutId: checkout.id
+//                             })
+//                             .catch(console.log);
+//
+//                         return {
+//                             type: "GET_CHECKOUT",
+//                             checkout: checkout
+//                         };
+//                     })
+//                     .catch(console.log);
+//
+//                 return {
+//                     type: "NO_CART",
+//                     noCheckout: "Nothing has been added to the cart yet."
+//                 };
+//             }
+//         })
+//         .catch(console.log);
+// }
 
-export function getCart() {
-    return axios
-        .get("/get-checkout")
-        .then(function({ data }) {
-            const checkoutId = data.checkoutId;
-
-            if (data.checkoutId) {
-                return client.checkout
-                    .fetch(checkoutId)
-                    .then(checkout => {
-                        if (checkout.completedAt) {
-                            return client.checkout
-                                .create()
-                                .then(checkout => {
-                                    return axios
-                                        .post("/save-checkout-to-cookie", {
-                                            checkoutId: checkout.id
-                                        })
-                                        .catch(console.log);
-
-                                    return {
-                                        type: "GET_CHECKOUT",
-                                        checkout: checkout
-                                    };
-                                })
-                                .catch(console.log);
-                        } else {
-                            return {
-                                type: "GET_CHECKOUT",
-                                checkout: checkout
-                            };
-                        }
-                    })
-                    .catch(console.log);
-            } else {
-                return client.checkout
-                    .create()
-                    .then(checkout => {
-                        return axios
-                            .post("/save-checkout-to-cookie", {
-                                checkoutId: checkout.id
-                            })
-                            .catch(console.log);
-
-                        return {
-                            type: "GET_CHECKOUT",
-                            checkout: checkout
-                        };
-                    })
-                    .catch(console.log);
-
-                return {
-                    type: "NO_CART",
-                    noCheckout: "Nothing has been added to the cart yet."
-                };
-            }
-        })
-        .catch(console.log);
-}
-
-export function removeProduct(productId) {
-    return axios
-        .get("/get-checkout")
-        .then(function({ data }) {
-            const checkoutId = data.checkoutId;
-            if (data.checkoutId) {
-                return client.checkout
-                    .removeLineItems(checkoutId, productId)
-                    .then(checkout => {
-                        return {
-                            type: "GET_CHECKOUT",
-                            checkout: checkout
-                        };
-                    })
-                    .catch(console.log);
-            } else {
-                return {
-                    type: "NO_CART",
-                    noCheckout: "Nothing has been added to the cart yet."
-                };
-            }
-        })
-        .catch(console.log);
-}
+// export function removeProduct(productId) {
+//     return axios
+//         .get("/get-checkout")
+//         .then(function({ data }) {
+//             const checkoutId = data.checkoutId;
+//             if (data.checkoutId) {
+//                 return client.checkout
+//                     .removeLineItems(checkoutId, productId)
+//                     .then(checkout => {
+//                         return {
+//                             type: "GET_CHECKOUT",
+//                             checkout: checkout
+//                         };
+//                     })
+//                     .catch(console.log);
+//             } else {
+//                 return {
+//                     type: "NO_CART",
+//                     noCheckout: "Nothing has been added to the cart yet."
+//                 };
+//             }
+//         })
+//         .catch(console.log);
+// }
 
 export function updateProduct(productInfo) {
     return axios.get("/get-checkout").then(function({ data }) {

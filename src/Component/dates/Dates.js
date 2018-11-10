@@ -105,7 +105,7 @@ class Dates extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         dates: state.parkaReducer.dates
     };

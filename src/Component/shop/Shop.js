@@ -28,7 +28,7 @@ class Shop extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         products: state.shopifyReducer.products
     };

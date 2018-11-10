@@ -71,7 +71,7 @@ class Home extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
         toggleLoginSignUp: state.toggleReducer.toggleLoginSignUp,
         cookie: state.userReducer.cookie,
@@ -106,8 +106,9 @@ const Container = styled.div`
     align-items: center;
 
     @media only screen and (max-device-width: 768px) {
-        width: 35%;
-        padding: 0 7.5% 7.5% 7.5%;
+        width: 70%;
+        left: 15%;
+        padding: 0;
     }
 `;
 // @media (max-height: 450px) {
@@ -143,6 +144,10 @@ const Tagline = styled.p`
 const LoginSignUpContainer = styled.div`
     width: 100%;
     margin: 0 0 10% 0;
+    
+     @media only screen and (max-device-width: 768px) {
+        margin: 0 30% 10% 0;
+    }
 `;
 
 const EnterParkaworldLink = styled.button`

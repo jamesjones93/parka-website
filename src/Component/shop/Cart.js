@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCart, removeProduct } from "../../store/action/Actions";
 import { toggleCart } from '../../store/action/toggle/toggleActions';
+import { removeFromCheckout } from '../../store/action/shopify/shopifyActions';
 
 class Cart extends React.Component {
     constructor(props) {
@@ -16,16 +16,12 @@ class Cart extends React.Component {
         this.removeItem = this.removeItem.bind(this);
     }
 
-    componentDidMount() {
-        // this.props.dispatch(getCart());
-    }
-
     closeCart() {
         this.props.dispatch(toggleCart(false));
     }
 
     removeItem(productId) {
-        this.props.dispatch(removeProduct(productId));
+        this.props.dispatch(removeFromCheckout(productId));
     }
 
     render() {
@@ -66,10 +62,9 @@ class Cart extends React.Component {
     }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = (state) => {
     return {
-        checkout: state.checkout,
-        cart: state.cart
+        checkout: state.shopifyReducer.checkout,
     };
 };
 
